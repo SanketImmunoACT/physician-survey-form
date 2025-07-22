@@ -2984,6 +2984,7 @@ import { Separator } from '@/components/ui/separator';
 import { MultiSelect } from '@/components/ui/multi-select';
 import { Stethoscope, Hospital, Users, CreditCard, Activity, BarChart3 } from 'lucide-react';
 import Image from "next/image";
+import Link from 'next/link';
 
 export default function HealthcareSurveyForm() {
   // Dynamic hospital codes - can be fetched from API
@@ -3327,7 +3328,7 @@ export default function HealthcareSurveyForm() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="flex flex-col sm:flex-row items-center lg:items-end justify-center gap-3 mb-4 text-center">
+          <div className="flex flex-row items-center justify-between gap-3 mb-4 lg:mb-0 text-center">
             <Image
               src="/assets/common/ImmunoACT_Logo.png"
               alt="ImmunoACT Logo"
@@ -3337,7 +3338,27 @@ export default function HealthcareSurveyForm() {
               unoptimized
               priority
             />
-            <h1 className="text-3xl font-bold text-gray-800">Healthcare Survey Form</h1>
+            <div className="flex gap-3">
+              <Link href="/">
+              </Link>
+
+              {/* <Link href="/analytics">
+                <Button className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white cursor-pointer">
+                  <Activity className="w-4 h-4" />
+                  Analytics
+                </Button>
+              </Link> */}
+
+              <Link href="/dashboard">
+                <Button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer">
+                  <BarChart3 className="w-4 h-4" />
+                  Dashboard
+                </Button>
+              </Link>
+            </div>
+          </div>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <h2 className="text-3xl font-bold text-gray-800">Healthcare Survey Form</h2>
           </div>
           <p className="text-base md:text-lg text-gray-600">Physician Data Collection for Sales Representatives</p>
         </div>
@@ -3709,7 +3730,7 @@ export default function HealthcareSurveyForm() {
             <CardHeader className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white">
               <CardTitle className="flex items-center gap-2">
                 <BarChart3 className="w-5 h-5" />
-                Patient Distribution (Table 7)
+                Patient Distribution
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6">
