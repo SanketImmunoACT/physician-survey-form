@@ -18,11 +18,7 @@ A modern and scalable Market Survey Tool built with Next.js 15, Tailwind CSS 4, 
 
 🚀 Tech Stack
 
-Layer
-
-Technology
-
-Frontend
+Frontend:
 
 Next.js 15, React 19
 
@@ -30,25 +26,28 @@ Styling
 
 Tailwind CSS 4
 
-Backend
+
+Backend:
 
 Supabase (Auth + DB)
 
-UI
+
+UI:
 
 Radix UI, Lucide Icons
 
-Tooling
+
+Tooling:
 
 ESLint, PostCSS, Tailwind Merge
 
-📊 Survey Flow & Logic
+📊 Survey Flow & Logic:
 
 👤 User Role
 
 A salesperson logs in and initiates a new physician survey.
 
-📝 Physician Details
+📝 Physician Details:
 
 Full Name
 
