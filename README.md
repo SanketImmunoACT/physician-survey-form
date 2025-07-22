@@ -120,7 +120,9 @@ Physician search & autocomplete
 
 🙋‍♂️ Author
 
-Sanket RathodLead Software Developer @ ImmunoACTHelping build better tools to fight cancer 🧬
+Sanket Rathod
+Lead Software Developer @ ImmunoACT
+Helping build better tools to fight cancer 🧬
 
 GitHub • LinkedIn
 
