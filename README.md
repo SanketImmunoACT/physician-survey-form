@@ -142,13 +142,6 @@ cd physician-survey-form
 
 npm install
 
-3. Set Up Environment Variables
-
-Create a .env.local file:
-
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-
 4. Run the App
 
 npm run dev
@@ -170,13 +163,10 @@ Multi-device support
 
 Physician search & autocomplete
 
-📄 License
-
-Licensed under the MIT License.
 
 🙋‍♂️ Author
 
-Sanket RathodSoftware Developer @ Healthcare CompanyHelping build better tools to fight cancer 🧬
+Sanket RathodLead Software Developer @ ImmunoACTHelping build better tools to fight cancer 🧬
 
 GitHub • LinkedIn
 
