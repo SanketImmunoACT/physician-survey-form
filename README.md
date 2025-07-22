@@ -18,28 +18,15 @@ A modern and scalable Market Survey Tool built with Next.js 15, Tailwind CSS 4, 
 
 🚀 Tech Stack
 
-Frontend:
+Frontend: Next.js 15, React 19
 
-Next.js 15, React 19
+Styling: Tailwind CSS 4
 
-Styling
+Backend: Supabase (Auth + DB)
 
-Tailwind CSS 4
+UI: Radix UI, Lucide Icons
 
-
-Backend:
-
-Supabase (Auth + DB)
-
-
-UI:
-
-Radix UI, Lucide Icons
-
-
-Tooling:
-
-ESLint, PostCSS, Tailwind Merge
+Tooling: ESLint, PostCSS, Tailwind Merge
 
 📊 Survey Flow & Logic:
 
