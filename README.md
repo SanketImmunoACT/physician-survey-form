@@ -106,38 +106,6 @@ Survey data linked to authenticated user
 
 Responses stored in Supabase Tables (normalized)
 
-📁 Project Structure
-
-/
-├── app/                   # Next.js 15 App Directory
-│   └── survey/            # Survey form pages and logic
-├── components/            # Reusable UI components
-├── supabase/              # Supabase client and helpers
-├── utils/                 # Data transformation and validation utils
-├── styles/                # Tailwind & global stylesheets
-└── package.json           # Project dependencies and scripts
-
-🛠️ Getting Started
-
-1. Clone the Repository
-
-git clone https://github.com/your-username/physician-survey-form.git
-cd physician-survey-form
-
-2. Install Dependencies
-
-npm install
-
-4. Run the App
-
-npm run dev
-
-🧪 Scripts
-
-npm run dev     # Start dev server
-npm run build   # Create production build
-npm run start   # Start production server
-npm run lint    # Run linter
 
 ✅ Future Enhancements
 
