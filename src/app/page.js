@@ -3437,6 +3437,9 @@ export default function HealthcareSurveyForm() {
                   {errors.visitingHospitals && (
                     <p className="text-red-500 text-sm">{errors.visitingHospitals}</p>
                   )}
+                  <p className="text-xs text-gray-500">
+                    Ask the doctor how many hospitals they regularly consult at.
+                  </p>
                 </div>
 
                 <div className="space-y-2 md:col-span-2">
@@ -3727,7 +3730,7 @@ export default function HealthcareSurveyForm() {
 
           {/* Patient Distribution (Table 7) */}
           <Card className="shadow-lg border-0">
-            <CardHeader className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white">
+            <CardHeader className="bg-gradient-to-r from-gray-600 to-gray-700 text-white">
               <CardTitle className="flex items-center gap-2">
                 <BarChart3 className="w-5 h-5" />
                 Patient Distribution

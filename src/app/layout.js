@@ -1,5 +1,5 @@
 // "use client";
-import "./globals.css";
+import "@/app/styles/globals.css";
 import { Mukta } from "next/font/google";
 
 const mukta = Mukta({
