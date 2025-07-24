@@ -121,7 +121,7 @@ export function MultiSelect({
               <input
                 ref={searchInputRef}
                 type="text"
-                placeholder="Search hospital codes..."
+                placeholder="Search hospitals by name..."
                 className="w-full pl-8 pr-2 py-2 text-sm bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -131,7 +131,7 @@ export function MultiSelect({
           <div className="max-h-60 overflow-auto">
             {filteredOptions.length === 0 ? (
               <div className="p-2 text-sm text-gray-500 text-center">
-                No hospital codes found
+                No hospitals found
               </div>
             ) : (
               filteredOptions.map((option) => (

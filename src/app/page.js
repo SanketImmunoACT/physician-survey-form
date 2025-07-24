@@ -2985,6 +2985,12 @@ import { MultiSelect } from '@/components/ui/multi-select';
 import { Stethoscope, Hospital, Users, CreditCard, Activity, BarChart3 } from 'lucide-react';
 import Image from "next/image";
 import Link from 'next/link';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 
 export default function HealthcareSurveyForm() {
   // Dynamic hospital codes - can be fetched from API
@@ -3104,9 +3110,9 @@ export default function HealthcareSurveyForm() {
       // setHospitalCodes(data);
 
       // For now, using static data
-      console.log('Hospital codes loaded:', hospitalCodes.length);
+      console.log('Hospitals loaded:', hospitalCodes.length);
     } catch (error) {
-      console.error('Error fetching hospital codes:', error);
+      console.error('Error fetching hospitals:', error);
     }
   };
 
@@ -3327,8 +3333,9 @@ export default function HealthcareSurveyForm() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex flex-row items-center justify-between gap-3 mb-4 lg:mb-0 text-center">
+        <div className="text-center mb-6">
+          {/* <div className="flex flex-row items-center justify-between gap-3 mb-4 lg:mb-0 text-center"> */}
+          <div className="flex items-center justify-center mb-4">
             <Image
               src="/assets/common/ImmunoACT_Logo.png"
               alt="ImmunoACT Logo"
@@ -3338,16 +3345,17 @@ export default function HealthcareSurveyForm() {
               unoptimized
               priority
             />
-            <div className="flex gap-3">
+          </div>
+          {/* <div className="flex gap-3">
               <Link href="/">
               </Link>
 
-              {/* <Link href="/analytics">
+              <Link href="/analytics">
                 <Button className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white cursor-pointer">
                   <Activity className="w-4 h-4" />
                   Analytics
                 </Button>
-              </Link> */}
+              </Link>
 
               <Link href="/dashboard">
                 <Button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer">
@@ -3355,8 +3363,8 @@ export default function HealthcareSurveyForm() {
                   Dashboard
                 </Button>
               </Link>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
           <div className="flex items-center justify-center gap-3 mb-4">
             <h2 className="text-3xl font-bold text-gray-800">Healthcare Survey Form</h2>
           </div>
@@ -3422,7 +3430,7 @@ export default function HealthcareSurveyForm() {
                   )}
                 </div>
 
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="visitingHospitals" className="text-sm font-medium">
                     Number of Visiting Hospitals *
                   </Label>
@@ -3440,21 +3448,21 @@ export default function HealthcareSurveyForm() {
                   <p className="text-xs text-gray-500">
                     Ask the doctor how many hospitals they regularly consult at.
                   </p>
-                </div>
+                </div> */}
 
                 <div className="space-y-2 md:col-span-2">
                   <Label className="text-sm font-medium">
-                    Select Hospital Codes *
+                    Select Hospitals *
                   </Label>
                   <MultiSelect
                     options={hospitalCodeOptions}
                     value={formData.selectedHospitalCodes}
                     onChange={handleHospitalCodesChange}
-                    placeholder="Select hospital codes to survey..."
+                    placeholder="Select hospitals to survey..."
                     className="w-full"
                   />
                   <p className="text-xs text-gray-500">
-                    Select the hospital codes you want to collect data for. Only selected hospitals will appear in the form below.
+                    Select the hospitals you want to collect data for. Only selected hospitals will appear in the form below.
                   </p>
                 </div>
               </div>
@@ -3473,221 +3481,231 @@ export default function HealthcareSurveyForm() {
               <CardContent className="p-6">
                 <div className="space-y-8">
                   {/* Render only selected hospital codes */}
-                  {formData.selectedHospitalCodes.map((hospitalCode, index) => {
-                    const hospitalName = getHospitalName(hospitalCode);
-                    const hospitalCodeDisplay = getHospitalCode(hospitalCode);
-                    const colors = [
-                      { border: 'border-green-200', bg: 'bg-green-50', text: 'text-green-800', accent: 'bg-green-100' },
-                      { border: 'border-blue-200', bg: 'bg-blue-50', text: 'text-blue-800', accent: 'bg-blue-100' },
-                      { border: 'border-purple-200', bg: 'bg-purple-50', text: 'text-purple-800', accent: 'bg-purple-100' },
-                      { border: 'border-orange-200', bg: 'bg-orange-50', text: 'text-orange-800', accent: 'bg-orange-100' },
-                      { border: 'border-pink-200', bg: 'bg-pink-50', text: 'text-pink-800', accent: 'bg-pink-100' },
-                      { border: 'border-indigo-200', bg: 'bg-indigo-50', text: 'text-indigo-800', accent: 'bg-indigo-100' },
-                      { border: 'border-red-200', bg: 'bg-red-50', text: 'text-red-800', accent: 'bg-red-100' },
-                      { border: 'border-yellow-200', bg: 'bg-yellow-50', text: 'text-yellow-800', accent: 'bg-yellow-100' },
-                      { border: 'border-teal-200', bg: 'bg-teal-50', text: 'text-teal-800', accent: 'bg-teal-100' },
-                      { border: 'border-cyan-200', bg: 'bg-cyan-50', text: 'text-cyan-800', accent: 'bg-cyan-100' }
-                    ];
-                    const colorScheme = colors[index % colors.length];
-                    const sourceTotal = calculateSourceTotal(hospitalCode);
-                    const monthlyPatients = parseInt(formData.hospitalData[hospitalCode]?.monthlyPatients) || 0;
-                    const sourcePercentage = monthlyPatients > 0 ? (sourceTotal / monthlyPatients) * 100 : 0;
+                  <Accordion type="multiple" defaultValue={[formData.selectedHospitalCodes[0]]} className="w-full space-y-4">
+                    {formData.selectedHospitalCodes.map((hospitalCode, index) => {
+                      const hospitalName = getHospitalName(hospitalCode);
+                      const hospitalCodeDisplay = getHospitalCode(hospitalCode);
+                      const colors = [
+                        { border: 'border-green-200', bg: 'bg-green-50', text: 'text-green-800', accent: 'bg-green-100' },
+                        { border: 'border-blue-200', bg: 'bg-blue-50', text: 'text-blue-800', accent: 'bg-blue-100' },
+                        { border: 'border-purple-200', bg: 'bg-purple-50', text: 'text-purple-800', accent: 'bg-purple-100' },
+                        { border: 'border-orange-200', bg: 'bg-orange-50', text: 'text-orange-800', accent: 'bg-orange-100' },
+                        { border: 'border-pink-200', bg: 'bg-pink-50', text: 'text-pink-800', accent: 'bg-pink-100' },
+                        { border: 'border-indigo-200', bg: 'bg-indigo-50', text: 'text-indigo-800', accent: 'bg-indigo-100' },
+                        { border: 'border-red-200', bg: 'bg-red-50', text: 'text-red-800', accent: 'bg-red-100' },
+                        { border: 'border-yellow-200', bg: 'bg-yellow-50', text: 'text-yellow-800', accent: 'bg-yellow-100' },
+                        { border: 'border-teal-200', bg: 'bg-teal-50', text: 'text-teal-800', accent: 'bg-teal-100' },
+                        { border: 'border-cyan-200', bg: 'bg-cyan-50', text: 'text-cyan-800', accent: 'bg-cyan-100' }
+                      ];
+                      const colorScheme = colors[index % colors.length];
+                      const sourceTotal = calculateSourceTotal(hospitalCode);
+                      const monthlyPatients = parseInt(formData.hospitalData[hospitalCode]?.monthlyPatients) || 0;
+                      const sourcePercentage = monthlyPatients > 0 ? (sourceTotal / monthlyPatients) * 100 : 0;
 
-                    return (
-                      <div key={hospitalCode} className={`border-2 ${colorScheme.border} rounded-lg p-6 ${colorScheme.bg}`}>
-                        <h3 className={`text-xl font-bold ${colorScheme.text} mb-6 text-center`}>
-                          {hospitalName} ({hospitalCodeDisplay})
-                        </h3>
+                      return (
+                        <AccordionItem value={hospitalCode} key={hospitalCode}>
+                          <AccordionTrigger className={`px-4 py-3 rounded-md ${colorScheme.accent} ${colorScheme.text}`}>
+                            {hospitalName} ({hospitalCodeDisplay})
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div key={hospitalCode} className={`border-2 ${colorScheme.border} rounded-lg p-6 ${colorScheme.bg}`}>
+                              <h3 className={`text-xl font-bold ${colorScheme.text} mb-6 text-center`}>
+                                {hospitalName} ({hospitalCodeDisplay})
+                              </h3>
 
-                        {/* Basic Hospital Data */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                          <div className="space-y-2">
-                            <Label className={`text-sm font-medium ${colorScheme.text.replace('800', '700')}`}>Number of BMT Patients</Label>
-                            <Input
-                              type="number"
-                              value={formData.hospitalData[hospitalCode]?.bmtPatients || ''}
-                              onChange={(e) => handleHospitalDataChange(hospitalCode, 'bmtPatients', e.target.value)}
-                              placeholder="0"
-                              className="bg-white"
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label className={`text-sm font-medium ${colorScheme.text.replace('800', '700')}`}>Number of Patients in a Month</Label>
-                            <Input
-                              type="number"
-                              value={formData.hospitalData[hospitalCode]?.monthlyPatients || ''}
-                              onChange={(e) => handleHospitalDataChange(hospitalCode, 'monthlyPatients', e.target.value)}
-                              placeholder="0"
-                              className="bg-white"
-                            />
-                          </div>
-                        </div>
+                              {/* Basic Hospital Data */}
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div className="space-y-2">
+                                  <Label className={`text-sm font-medium ${colorScheme.text.replace('800', '700')}`}>Number of BMT Patients</Label>
+                                  <Input
+                                    type="number"
+                                    value={formData.hospitalData[hospitalCode]?.bmtPatients || ''}
+                                    onChange={(e) => handleHospitalDataChange(hospitalCode, 'bmtPatients', e.target.value)}
+                                    placeholder="0"
+                                    className="bg-white"
+                                  />
+                                </div>
+                                <div className="space-y-2">
+                                  <Label className={`text-sm font-medium ${colorScheme.text.replace('800', '700')}`}>Number of Patients in a Month</Label>
+                                  <Input
+                                    type="number"
+                                    value={formData.hospitalData[hospitalCode]?.monthlyPatients || ''}
+                                    onChange={(e) => handleHospitalDataChange(hospitalCode, 'monthlyPatients', e.target.value)}
+                                    placeholder="0"
+                                    className="bg-white"
+                                  />
+                                </div>
+                              </div>
 
-                        {/* Source of Funds - Show for every hospital */}
-                        <div className="mb-6">
-                          <h4 className={`text-lg font-semibold ${colorScheme.text.replace('800', '700')} mb-4`}>Source of Funds:</h4>
-                          {warnings[`${hospitalCode}_sourceFunds`] && (
-                            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                              <p className="text-red-600 text-sm font-medium">{warnings[`${hospitalCode}_sourceFunds`]}</p>
-                            </div>
-                          )}
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">OOP without Insurance</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.sourceFunds[hospitalCode]?.oopWithoutInsurance || ''}
-                                onChange={(e) => handleSourceFundsChange(hospitalCode, 'oopWithoutInsurance', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
-                              <p className="text-xs text-gray-500">out of {monthlyPatients} patients</p>
-                            </div>
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">OOP with Insurance</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.sourceFunds[hospitalCode]?.oopWithInsurance || ''}
-                                onChange={(e) => handleSourceFundsChange(hospitalCode, 'oopWithInsurance', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
-                            </div>
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">CGHS</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.sourceFunds[hospitalCode]?.cghs || ''}
-                                onChange={(e) => handleSourceFundsChange(hospitalCode, 'cghs', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
-                            </div>
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">ESI</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.sourceFunds[hospitalCode]?.esi || ''}
-                                onChange={(e) => handleSourceFundsChange(hospitalCode, 'esi', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
-                            </div>
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">Railways</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.sourceFunds[hospitalCode]?.railways || ''}
-                                onChange={(e) => handleSourceFundsChange(hospitalCode, 'railways', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
-                            </div>
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">ECHS</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.sourceFunds[hospitalCode]?.echs || ''}
-                                onChange={(e) => handleSourceFundsChange(hospitalCode, 'echs', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
-                            </div>
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">PSUs</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.sourceFunds[hospitalCode]?.psus || ''}
-                                onChange={(e) => handleSourceFundsChange(hospitalCode, 'psus', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
-                            </div>
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">State Government</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.sourceFunds[hospitalCode]?.stateGovt || ''}
-                                onChange={(e) => handleSourceFundsChange(hospitalCode, 'stateGovt', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
-                            </div>
-                          </div>
-                          <div className={`mt-4 p-3 ${colorScheme.accent} rounded-lg flex justify-between items-center`}>
-                            <span className={`text-sm font-medium ${colorScheme.text}`}>
-                              Total Source of Funds: {sourceTotal} patients ({sourcePercentage}%)
-                            </span>
-                            {sourcePercentage > 100 && (
-                              <span className="text-red-600 text-sm font-medium">⚠ Exceeds 100%</span>
-                            )}
-                          </div>
-                        </div>
+                              {/* Source of Funds - Show for every hospital */}
+                              <div className="mb-6">
+                                <h4 className={`text-lg font-semibold ${colorScheme.text.replace('800', '700')} mb-4`}>Source of Funds:</h4>
+                                {warnings[`${hospitalCode}_sourceFunds`] && (
+                                  <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                    <p className="text-red-600 text-sm font-medium">{warnings[`${hospitalCode}_sourceFunds`]}</p>
+                                  </div>
+                                )}
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">OOP without Insurance</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.sourceFunds[hospitalCode]?.oopWithoutInsurance || ''}
+                                      onChange={(e) => handleSourceFundsChange(hospitalCode, 'oopWithoutInsurance', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                    <p className="text-xs text-gray-500">out of {monthlyPatients} patients</p>
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">OOP with Insurance</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.sourceFunds[hospitalCode]?.oopWithInsurance || ''}
+                                      onChange={(e) => handleSourceFundsChange(hospitalCode, 'oopWithInsurance', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">CGHS</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.sourceFunds[hospitalCode]?.cghs || ''}
+                                      onChange={(e) => handleSourceFundsChange(hospitalCode, 'cghs', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">ESI</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.sourceFunds[hospitalCode]?.esi || ''}
+                                      onChange={(e) => handleSourceFundsChange(hospitalCode, 'esi', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">Railways</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.sourceFunds[hospitalCode]?.railways || ''}
+                                      onChange={(e) => handleSourceFundsChange(hospitalCode, 'railways', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">ECHS</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.sourceFunds[hospitalCode]?.echs || ''}
+                                      onChange={(e) => handleSourceFundsChange(hospitalCode, 'echs', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">PSUs</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.sourceFunds[hospitalCode]?.psus || ''}
+                                      onChange={(e) => handleSourceFundsChange(hospitalCode, 'psus', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">State Government</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.sourceFunds[hospitalCode]?.stateGovt || ''}
+                                      onChange={(e) => handleSourceFundsChange(hospitalCode, 'stateGovt', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                  </div>
+                                </div>
+                                <div className={`mt-4 p-3 ${colorScheme.accent} rounded-lg flex justify-between items-center`}>
+                                  <span className={`text-sm font-medium ${colorScheme.text}`}>
+                                    Total Source of Funds: {sourceTotal} patients ({sourcePercentage}%)
+                                  </span>
+                                  {sourcePercentage > 100 && (
+                                    <span className="text-red-600 text-sm font-medium">⚠ Exceeds 100%</span>
+                                  )}
+                                </div>
+                              </div>
 
-                        {/* Patient Case Distribution */}
-                        <div>
-                          <h4 className={`text-lg font-semibold ${colorScheme.text.replace('800', '700')} mb-4`}>Patient Case Distribution By Hospital:</h4>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">Newly Diagnosed %</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.hospitalCodeBreakdown[hospitalCode]?.newlyDiagnosed || ''}
-                                onChange={(e) => handleHospitalCodeBreakdownChange(hospitalCode, 'newlyDiagnosed', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
+                              {/* Patient Case Distribution */}
+                              <div>
+                                <h4 className={`text-lg font-semibold ${colorScheme.text.replace('800', '700')} mb-4`}>Patient Case Distribution By Hospital:</h4>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">Newly Diagnosed %</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.hospitalCodeBreakdown[hospitalCode]?.newlyDiagnosed || ''}
+                                      onChange={(e) => handleHospitalCodeBreakdownChange(hospitalCode, 'newlyDiagnosed', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">Relapsed/Refractory %</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.hospitalCodeBreakdown[hospitalCode]?.relapsedRefractory || ''}
+                                      onChange={(e) => handleHospitalCodeBreakdownChange(hospitalCode, 'relapsedRefractory', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label className="text-sm font-medium">2nd Opinion %</Label>
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      value={formData.hospitalCodeBreakdown[hospitalCode]?.secondOpinion || ''}
+                                      onChange={(e) => handleHospitalCodeBreakdownChange(hospitalCode, 'secondOpinion', e.target.value)}
+                                      placeholder="0"
+                                      className="bg-white"
+                                    />
+                                  </div>
+                                </div>
+                                <div className={`mt-4 p-3 ${colorScheme.accent} rounded-lg`}>
+                                  <span className={`text-sm font-medium ${colorScheme.text}`}>
+                                    Total Patient Cases: {(
+                                      (parseFloat(formData.hospitalCodeBreakdown[hospitalCode]?.newlyDiagnosed) || 0) +
+                                      (parseFloat(formData.hospitalCodeBreakdown[hospitalCode]?.relapsedRefractory) || 0) +
+                                      (parseFloat(formData.hospitalCodeBreakdown[hospitalCode]?.secondOpinion) || 0)
+                                    )}%
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">Relapsed/Refractory %</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.hospitalCodeBreakdown[hospitalCode]?.relapsedRefractory || ''}
-                                onChange={(e) => handleHospitalCodeBreakdownChange(hospitalCode, 'relapsedRefractory', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
-                            </div>
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">2nd Opinion %</Label>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                value={formData.hospitalCodeBreakdown[hospitalCode]?.secondOpinion || ''}
-                                onChange={(e) => handleHospitalCodeBreakdownChange(hospitalCode, 'secondOpinion', e.target.value)}
-                                placeholder="0"
-                                className="bg-white"
-                              />
-                            </div>
-                          </div>
-                          <div className={`mt-4 p-3 ${colorScheme.accent} rounded-lg`}>
-                            <span className={`text-sm font-medium ${colorScheme.text}`}>
-                              Total Patient Cases: {(
-                                (parseFloat(formData.hospitalCodeBreakdown[hospitalCode]?.newlyDiagnosed) || 0) +
-                                (parseFloat(formData.hospitalCodeBreakdown[hospitalCode]?.relapsedRefractory) || 0) +
-                                (parseFloat(formData.hospitalCodeBreakdown[hospitalCode]?.secondOpinion) || 0)
-                              )}%
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                          </AccordionContent>
+                        </AccordionItem>
+                      );
+                    })}
+                  </Accordion>
 
                   {/* Overall Totals - Only show if hospitals are selected */}
                   <div className="bg-gray-100 p-6 rounded-lg">
                     <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">
-                      Overall Totals ({formData.selectedHospitalCodes.length} Hospitals Selected)
+                      Overall Totals ({formData.selectedHospitalCodes.length}{" "}
+                      {formData.selectedHospitalCodes.length === 1 ? "Hospital" : "Hospitals"} Selected)
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="bg-white p-4 rounded-lg text-center">
@@ -3718,11 +3736,11 @@ export default function HealthcareSurveyForm() {
             <Card className="shadow-lg border-0 border-dashed border-gray-300">
               <CardContent className="p-12 text-center">
                 <Hospital className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-600 mb-2">No Hospital Codes Selected</h3>
+                <h3 className="text-xl font-semibold text-gray-600 mb-2">No Hospitals Selected</h3>
                 <p className="text-gray-500">
-                  Please select hospital codes from the dropdown above to begin data collection.
+                  Please select Hospitals from the dropdown above to begin data collection.
                   <br />
-                  <span className="text-sm">({hospitalCodes.length} hospital codes available)</span>
+                  <span className="text-sm">({hospitalCodes.length} hospitals are available)</span>
                 </p>
               </CardContent>
             </Card>
