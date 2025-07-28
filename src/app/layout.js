@@ -13,9 +13,6 @@ export const metadata = {
   description: "Created by ImmunoACT",
 };
 
-/**
- * Root layout for the entire app.
- */
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth hydrated">

@@ -48,4 +48,33 @@ const Button = React.forwardRef(
 
 Button.displayName = "Button";
 
-export { Button, buttonVariants };
+// ✅ SignInButton component using default styles
+const SignInButton = React.forwardRef(
+  ({ className, children = "Sign In", ...props }, ref) => {
+    return (
+      <Button
+        ref={ref}
+        variant="default"
+        size="default"
+        // className={className}
+        // {...props}
+        className={cn(
+          // Gradient background
+          "bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-500 text-white",
+          // Hover darkening
+          "hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600",
+          // Click effect
+          "active:scale-95 transition-all",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </Button>
+    );
+  }
+);
+
+SignInButton.displayName = "SignInButton";
+
+export { Button, buttonVariants, SignInButton };
