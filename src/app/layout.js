@@ -1,6 +1,7 @@
 // "use client";
 import "@/app/styles/globals.css";
 import { Mukta } from "next/font/google";
+import { Toaster } from "sonner";
 
 const mukta = Mukta({
   subsets: ["latin"],
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="scroll-smooth hydrated">
       <body className={`${mukta.className} bg-background text-foreground`}>
         {children}
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );

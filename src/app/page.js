@@ -396,7 +396,10 @@ export default function HealthcareSurveyForm() {
     if (!newHospitalName.trim()) return;
     // Generate a unique id
     const id = `custom_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
-    setCustomHospitals((prev) => [...prev, { id, name: newHospitalName.trim() }]);
+    setCustomHospitals((prev) => [
+      ...prev,
+      { id, name: newHospitalName.trim() },
+    ]);
     setFormData((prev) => ({
       ...prev,
       selectedHospitalCodes: [...prev.selectedHospitalCodes, id],
@@ -430,7 +433,9 @@ export default function HealthcareSurveyForm() {
     setCustomHospitals((prev) => prev.filter((h) => h.id !== id));
     setFormData((prev) => {
       const updated = { ...prev };
-      updated.selectedHospitalCodes = updated.selectedHospitalCodes.filter((code) => code !== id);
+      updated.selectedHospitalCodes = updated.selectedHospitalCodes.filter(
+        (code) => code !== id
+      );
       delete updated.hospitalData[id];
       delete updated.sourceFunds[id];
       delete updated.hospitalCodeBreakdown[id];
@@ -663,10 +668,11 @@ export default function HealthcareSurveyForm() {
                       handleInputChange("physicianName", e.target.value)
                     }
                     placeholder="Enter physician name"
-                    className={`transition-all duration-200 ${errors.physicianName
-                      ? "border-red-500"
-                      : "border-gray-300"
-                      }`}
+                    className={`transition-all duration-200 ${
+                      errors.physicianName
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
                   />
                   {errors.physicianName && (
                     <p className="text-red-500 text-sm">
@@ -702,8 +708,9 @@ export default function HealthcareSurveyForm() {
                       handleInputChange("speciality", e.target.value)
                     }
                     placeholder="Enter speciality"
-                    className={`transition-all duration-200 ${errors.speciality ? "border-red-500" : "border-gray-300"
-                      }`}
+                    className={`transition-all duration-200 ${
+                      errors.speciality ? "border-red-500" : "border-gray-300"
+                    }`}
                   />
                   {errors.speciality && (
                     <p className="text-red-500 text-sm">{errors.speciality}</p>
@@ -746,15 +753,27 @@ export default function HealthcareSurveyForm() {
                       <Input
                         type="text"
                         value={newHospitalName}
-                        onChange={e => setNewHospitalName(e.target.value)}
+                        onChange={(e) => setNewHospitalName(e.target.value)}
                         placeholder="Enter new hospital name"
                         className="w-1/2"
                         autoFocus
                       />
-                      <Button type="button" onClick={handleAddCustomHospital} className="bg-green-600 hover:bg-green-700 text-white cursor-pointer">
+                      <Button
+                        type="button"
+                        onClick={handleAddCustomHospital}
+                        className="bg-green-600 hover:bg-green-700 text-white cursor-pointer"
+                      >
                         Add
                       </Button>
-                      <Button type="button" variant="outline" className="cursor-pointer" onClick={() => { setShowAddHospitalInput(false); setNewHospitalName(""); }}>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setShowAddHospitalInput(false);
+                          setNewHospitalName("");
+                        }}
+                      >
                         Cancel
                       </Button>
                     </div>
@@ -869,13 +888,17 @@ export default function HealthcareSurveyForm() {
                             value={hospitalCode}
                             key={hospitalCode}
                           >
-                            {customHospitals.some((h) => h.id === hospitalCode) && (
+                            {customHospitals.some(
+                              (h) => h.id === hospitalCode
+                            ) && (
                               <div className="flex justify-end mb-2">
                                 <Button
                                   type="button"
                                   size="icon"
                                   variant="ghost"
-                                  onClick={() => handleDeleteCustomHospital(hospitalCode)}
+                                  onClick={() =>
+                                    handleDeleteCustomHospital(hospitalCode)
+                                  }
                                   title="Delete this hospital"
                                   className="text-red-600 hover:text-red-800"
                                 >
@@ -964,7 +987,7 @@ export default function HealthcareSurveyForm() {
                                       <p className="text-red-600 text-sm font-medium">
                                         {
                                           warnings[
-                                          `${hospitalCode}_sourceFunds`
+                                            `${hospitalCode}_sourceFunds`
                                           ]
                                         }
                                       </p>
