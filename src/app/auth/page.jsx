@@ -45,7 +45,7 @@ export default function AuthPage() {
       }
 
       // ✅ Login or registration was successful
-      window.location.href = "/dashboard";
+      window.location.href = "/salesperson";
     } catch (err) {
       setError(err.message);
     } finally {
