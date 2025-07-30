@@ -1,0 +1,1012 @@
+[
+    {
+        "status": "Approved",
+        "id": "MUM/ABC/06",
+        "code": "HC001",
+        "name": "ABCDEFG",
+        "address": "Rose Minar, 87 Annel Church, Chapel Rd, Reclamation, Bandra West, Mumbai, Maharashtra 400050, India",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Government Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/ACT/02",
+        "code": "HC002",
+        "name": "ACTREC, Mumbai",
+        "address": "Sector 22, Utsav Chowk - CISF Rd, Owe Camp, Kharghar, Navi Mumbai, Maharashtra 410210",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Government Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HYD/AIG/04",
+        "code": "HC003",
+        "name": "AIG Hospital, Hyderabad",
+        "address": "Survey No 136, 4/5, Plot No 2/3, Mindspace Rd, P Janardhan Reddy Nagar, Gachibowli, Hyderabad, Telangana 500032",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEL/AII/07",
+        "code": "HC004",
+        "name": "All India Institutes of Medical Sciences, Delhi",
+        "address": "Sri Aurobindo Marg, Ansari Nagar, Ansari Nagar East, New Delhi, Delhi 110029",
+        "city": "Delhi",
+        "cityCode": "DEL",
+        "type": "Government Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "THR/AIM/01",
+        "code": "HC005",
+        "name": "Amala Institute of Medical Sciences, Thrissur",
+        "address": "Amala Institute of Medical Sciences Amala Nagar PO, Thrissur - 680555, Kerala, INDIA",
+        "city": "Thrissur",
+        "cityCode": "THR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "FAR/AMH/01",
+        "code": "HC006",
+        "name": "Amrita Hospital, Faridabad",
+        "address": "Mata Amritanandamayi Marg, RPS City, Sector 88, Faridabad, Haryana 121002",
+        "city": "Faridabad",
+        "cityCode": "FAR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "COK/AMH/01",
+        "code": "HC007",
+        "name": "Amrita Hospital, Kochi",
+        "address": "Ponekkara Rd, P. O, Edappally, Kochi, Ernakulam, Kerala 682041",
+        "city": "Kochi",
+        "cityCode": "COK",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "CNN/ACC/02",
+        "code": "HC008",
+        "name": "Apollo Cancer Centre, Chennai",
+        "address": "Nandanam, 320, Anna Salai, Teynampet, Chennai, Tamil Nadu 600035",
+        "city": "Chennai",
+        "cityCode": "CNN",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "GDN/APH/01",
+        "code": "HC009",
+        "name": "Apollo CBCC Cancer Care Hospital, Gandhinagar",
+        "address": "Plot No. 1 A, Bhat, G.I.D.C. Industrial Estate, Gandhinagar, Gujarat 382428",
+        "city": "Gandhinagar",
+        "cityCode": "GDN",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "BLR/APH/04",
+        "code": "HC010",
+        "name": "Apollo Hospitals, Bangalore",
+        "address": "Apollo Hospitals, Bannerghatta Road, Bengaluru-560076",
+        "city": "Bengaluru",
+        "cityCode": "BLR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HYD/APH/05",
+        "code": "HC011",
+        "name": "Apollo Hospitals, Hyderabad",
+        "address": "Road No 72 Opp. Bharatiya Vidya Bhavan School Film Nagar, Jubilee Hills, Hyderabad, Telangana 500033",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/APH/07",
+        "code": "HC012",
+        "name": "Apollo Hospitals, Mumbai",
+        "address": "Apollo Hospitals, Plot#13, Parsik Hill Rd, off Uran Road, Sector 23, CBD Belapur, Navi Mumbai, Maharashtra 400614",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "VKP/APH/01",
+        "code": "HC013",
+        "name": "Apollo Hospitals, Visakhapatnam",
+        "address": "Plot No:1, Arilova, Chinagadali, Visakhapatnam-530040, Andhra Pradesh, India",
+        "city": "Visakhapatnam",
+        "cityCode": "VKP",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "KOL/APH/01",
+        "code": "HC014",
+        "name": "Apollo Multispecialty Hospital, Kolkata",
+        "address": "58, Canal Circular Rd, Kadapara, Phool Bagan, Kankurgachi, Kolkata, West Bengal 700054",
+        "city": "Kolkata",
+        "cityCode": "KOL",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "LOK/AMS/02",
+        "code": "HC015",
+        "name": "Apollomedics Super Speciality Hospital, Lucknow",
+        "address": "LDA Colony, Sector-B, KBC-31, Kanpur Road, Lucknow, Uttar Pradesh, 226012",
+        "city": "Lucknow",
+        "cityCode": "LOK",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEL/ARR/04",
+        "code": "HC016",
+        "name": "Army R&R Hospital, Delhi",
+        "address": "R&R hospital, Signals Vatika Rd, Subroto Park, South Moti Bagh, New Delhi, Delhi 110021",
+        "city": "Delhi",
+        "cityCode": "DEL",
+        "type": "Government Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "GUR/ART/03",
+        "code": "HC017",
+        "name": "Artemis Hospital, Gurugram",
+        "address": "Sector 51, Gurugram, Haryana-122001",
+        "city": "Gurugram",
+        "cityCode": "GUR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "KOZ/AMI/01",
+        "code": "HC018",
+        "name": "Aster Malabar Institute of Medical Sciences",
+        "address": "Aster Malabar Institute of Medical Sciences, Mini Bypass Rd, Govindapuram, Kozhikode, Kerala 673016",
+        "city": "Kozhikode",
+        "cityCode": "KOZ",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HYD/BAS/01",
+        "code": "HC019",
+        "name": "Basavatarakam Indo American Hospital, Hyderabad",
+        "address": "Road No. 10, IAS Officers Quaters, Nandi Nagar, Banjara Hills, Hyderabad, Telangana 500034",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Charitable Trust Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "JAI/BMH/02",
+        "code": "HC020",
+        "name": "Bhagwan Mahaveer Cancer Hospital & Research Center",
+        "address": "Jawahar Lal Nehru Marg, Bajaj Nagar, Jaipur, Rajasthan 302017",
+        "city": "Jaipur",
+        "cityCode": "JAI",
+        "type": "Charitable Trust Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MYS/BHA/01",
+        "code": "HC021",
+        "name": "Bharath Hospital & Institute of Oncology, Mysuru",
+        "address": "No. 438, Outer Ring Road, beside Hotel Kalyani, Lakshmikanth Nagar, Hebbal Industrial Area, Mysuru - 570017, Karnataka",
+        "city": "Mysuru",
+        "cityCode": "MYS",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "CNN/ACI/01",
+        "code": "HC022",
+        "name": "Cancer Institute (WIA) Adyar, Chennai",
+        "address": "Sardar Patel Road, Adyar, Chennai, Tamil Nadu 600020",
+        "city": "Chennai",
+        "cityCode": "CNN",
+        "type": "Charitable Trust Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEH/CRI/01",
+        "code": "HC023",
+        "name": "Cancer research institute, HIMS Dehradun",
+        "address": "Swami Rama Himalayan University, Swami Ram Nagar, Joly Grant, Dehradun, Baksar Wala, Uttarakhand 248140",
+        "city": "Dehradun",
+        "cityCode": "DEH",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "VEL/CMC/01",
+        "code": "HC024",
+        "name": "Christian Medical College, Vellore, Ranipet campus",
+        "address": "Department of Haematology, Christian Medical College, Vellore, A Block, 501, Fifth floor, Kilminnal Village, Ranipet District, Ranipet - 632517, Tamil Nadu, India",
+        "city": "Vellore",
+        "cityCode": "VEL",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HYD/CON/03",
+        "code": "HC025",
+        "name": "Continental Hospitals, Hyderabad",
+        "address": "Plot No 3, Road No. 2, Financial District, Gachibowli, Nanakaramguda, Telangana 500032",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "BLR/CTC/02",
+        "code": "HC026",
+        "name": "Cytecare Hospital, Bengaluru",
+        "address": "Venkatala, near Bagalur Cross, Yelahanka, Bengaluru, Karnataka 560064",
+        "city": "Bengaluru",
+        "cityCode": "BLR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC027",
+        "name": "Dayanand Medical College and Hospital",
+        "address": "Civil Lines, Tagore Nagar, Ludhiana, Punjab 141001",
+        "city": "Ludhiana",
+        "cityCode": "LUD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "LUD/DMC/01",
+        "code": "HC028",
+        "name": "Dayanand Medical College and Hospital",
+        "address": "Civil Lines, Tagore Nagar, Ludhiana, Punjab 141001",
+        "city": "Ludhiana",
+        "cityCode": "LUD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "PUN/DMH/01",
+        "code": "HC029",
+        "name": "Deenanth Mangeshkar Hospital, Pune",
+        "address": "Deenanath Mangeshkar Hospital Road, near Mhatre Bridge, Vakil Nagar, Erandwane, Pune, Maharashtra 411004",
+        "city": "Pune",
+        "cityCode": "PUN",
+        "type": "Charitable Trust Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "ANK/AYA/01",
+        "code": "HC030",
+        "name": "Dr. Abdurrahman Yurtaslan Ankara Oncology Hospital",
+        "address": "Mehmet Akif Ersoy Mah. Vatan Cad. No: 91 Yenimahalle / Ankara/Turkiye",
+        "city": "Ankara",
+        "cityCode": "ANK",
+        "type": "Government Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/HIR/09",
+        "code": "HC031",
+        "name": "Dr. LH Hiranandani Hospital, Mumbai",
+        "address": "Hiranandani Gardens, Hillside Rd, Hiranandani Gardens, Ramabai Ambedkar Nagar, Powai, Mumbai, Maharashtra 400076",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Charitable Trust Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "NOI/FRN/03",
+        "code": "HC032",
+        "name": "Fortis Hospital, Noida",
+        "address": "Fortis Hospital, B-22, Sector -62, Noida 201 301, Uttar Pradesh (India)",
+        "city": "Noida",
+        "cityCode": "NOI",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEL/FSB/06",
+        "code": "HC033",
+        "name": "Fortis Hospital, Shalimar Bagh, Delhi",
+        "address": "AA-299, Shaheed Udham Singh Marg, AA Block, Poorbi Shalimar Bag, Shalimar Bagh, Delhi, 110088",
+        "city": "Delhi",
+        "cityCode": "DEL",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HAR/FMR/01",
+        "code": "HC034",
+        "name": "Fortis Memorial Research Institute",
+        "address": "Sector - 44, Opposite HUDA City Centre, Gurugram, Haryana 122002",
+        "city": "Gurugram",
+        "cityCode": "HAR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "GUR/FMR/01",
+        "code": "HC035",
+        "name": "Fortis Memorial Research Institute, Gurugram",
+        "address": "Sector - 44, Opposite HUDA City Centre, Gurugram, Haryana 122002",
+        "city": "Gurugram",
+        "cityCode": "GUR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC036",
+        "name": "HCG Bharat hospital and Institute of Oncology",
+        "address": "No 438, Outer ring road, beside Hotel Kalyani, Lakshmikanth nagar, Hebbal Industrial area, Mysuru - 570017, Karnataka",
+        "city": "Mysuru",
+        "cityCode": "MYS",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC037",
+        "name": "HCG Bharat hospital and Institute of Oncology, Mysuru",
+        "address": "No 438, Outer ring road, beside Hotel Kalyani, Lakshmikanth nagar, Hebbal Industrial area, Mysuru - 570017, Karnataka",
+        "city": "Mysuru",
+        "cityCode": "MYS",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "NAG/HCG/01",
+        "code": "HC038",
+        "name": "HCG Cancer Center, Nagpur",
+        "address": "No. 50,51, Mouja Wanjri, Bande Nawaz Nagar, Near Automotive Square, Kalamna Ring Road, Nagpur- 440026",
+        "city": "Nagpur",
+        "cityCode": "NAG",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC039",
+        "name": "HCG Cancer Centre",
+        "address": "K. R. Road, Bengaluru HCG Tower# 8, P. Kalinga Rao Road, Sampangi Ram Nagar, Bengaluru - 560027, Karnataka",
+        "city": "Bengaluru",
+        "cityCode": "BLR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "JAI/HCG/03",
+        "code": "HC040",
+        "name": "HCG Cancer Centre",
+        "address": "Jaipur Shipra path Mansarovar, Jaipur - 302020",
+        "city": "Jaipur",
+        "cityCode": "JAI",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "BLR/HCG/07",
+        "code": "HC041",
+        "name": "HCG Cancer Centre K. R. Road, Bengaluru",
+        "address": "HCG Tower# 8, P. Kalinga Rao Road, Sampangi Ram Nagar, Bengaluru - 560027, Karnataka",
+        "city": "Bengaluru",
+        "cityCode": "BLR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEL/IAH/05",
+        "code": "HC042",
+        "name": "Indraprastha Apollo Hospital, New Delhi",
+        "address": "Sarita Vihar,Delhi Mathura Road, New Delhi, Delhi-110076 (India)",
+        "city": "Delhi",
+        "cityCode": "DEL",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "BHU/IMS/01",
+        "code": "HC043",
+        "name": "Institute of Medical Sciences and Sum Hospital",
+        "address": "Sector- 8, Kalinga Nagar Bhubaneswar - 751003. Odisha, India",
+        "city": "Bhubaneswar",
+        "cityCode": "BHU",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "PUN/JEH/04",
+        "code": "HC044",
+        "name": "Jehangir Hospital, Pune",
+        "address": "32, Sasoon Rd, opposite Railway Station, Central Excise Colony, Sangamvadi, Pune, Maharashtra 411001",
+        "city": "Pune",
+        "cityCode": "PUN",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "PON/JIP/01",
+        "code": "HC045",
+        "name": "JIPMER, Pondicherry",
+        "address": "Regional Cancer Centre, Dhanvantari Nagar, Pondicherry - 605006",
+        "city": "Pondicherry",
+        "cityCode": "PON",
+        "type": "Government Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/JUP/08",
+        "code": "HC046",
+        "name": "Jupiter Hospital,Thane",
+        "address": "Service Rd, Eastern Express Hwy, next to Viviana Mall, Thane, Maharashtra 400601",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC047",
+        "name": "KIMS Cancer Centre",
+        "address": "1, Vinod Nagar road, Anayara, Thiruvananthapuram - 695029, Kerala",
+        "city": "Thiruvananthapuram",
+        "cityCode": "TRV",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HYD/KIM/02",
+        "code": "HC048",
+        "name": "KIMS Hospital, Secunderabad, Hyderabad",
+        "address": "Begumpet, 1-8-31/1, Minister Rd, Krishna Nagar, Ramgopalpet, Secunderabad, Hyderabad, Telangana 500003",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "SEC/KIM/02",
+        "code": "HC049",
+        "name": "KIMS Hospitals",
+        "address": "1-8-31/1, Minister Road, Krishna Nagar Colony, Ramgopalpet, Begumpet, Secunderabad - 500003, Telangana",
+        "city": "Secunderabad",
+        "cityCode": "SEC",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "TRV/KIM/01",
+        "code": "HC050",
+        "name": "KIMSHEALTH CANCER CENTRE",
+        "address": "1, Vinod Nagar road, Anayara, Thiruvananthapuram - 695029, Kerala",
+        "city": "Thiruvananthapuram",
+        "cityCode": "TRV",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "SRT/KIR/01",
+        "code": "HC051",
+        "name": "Kiran Hospital, Surat",
+        "address": "Kiran Hospital, near Sumul Dairy, Katargam, Surat-395004, Gujarat, India",
+        "city": "Surat",
+        "cityCode": "SRT",
+        "type": "Charitable Trust Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/KDA/04",
+        "code": "HC052",
+        "name": "Kokilaben Dhirubhai Ambani Hospital, Mumbai",
+        "address": "Rao Saheb, Rao Saheb Achutrao Patwardhan Marg, Four Bungalows, Andheri West, Mumbai, Maharashtra 400053",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "NAV/KDA/01",
+        "code": "HC053",
+        "name": "Kokilaben Dhirubhai Ambani Hospital, Navi Mumbai",
+        "address": "Thane - Belapur Rd, opp. Kopar Khairane Ghansoli Station Road, Next to Dhirubhai Ambani Knowledge City, MIDC Industrial Area, Kopar Khairane, Navi Mumbai, Maharashtra 400710",
+        "city": "Navi Mumbai",
+        "cityCode": "NAV",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "CMB/KMC/01",
+        "code": "HC054",
+        "name": "Kovai Medical Center and Hospital, Coimbatore",
+        "address": "99, Avinashi Rd, TNHB Colony, Indira Nagar, Civil Aerodrome Post, Nehru Nagar West, Coimbatore, Tamil Nadu 641014",
+        "city": "Coimbatore",
+        "cityCode": "CMB",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "COK/LIH/03",
+        "code": "HC055",
+        "name": "Lisie Hospital",
+        "address": "Lisie Hospital Rd, North Kaloor, Kaloor, Ernakulam, Kerala 682018",
+        "city": "Kochi",
+        "cityCode": "COK",
+        "type": "Charitable Trust Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "JAI/MGM/01",
+        "code": "HC056",
+        "name": "Mahatma Gandhi Medical College Hospital, Jaipur",
+        "address": "RIICO Institutional Area,Sitapura, Tonk Road, Jaipur - 302 022 (Rajasthan) INDIA",
+        "city": "Jaipur",
+        "cityCode": "JAI",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "TLY/MCC/01",
+        "code": "HC057",
+        "name": "Malabar Cancer Centre, Thalassery",
+        "address": "Malabar Cancer Centre, Moozhikkara (P.O), Thalassery, Kannur Distric, Kerela, India - 670103",
+        "city": "Thalassery",
+        "cityCode": "TLY",
+        "type": "Government Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "VIJ/MAN/01",
+        "code": "HC058",
+        "name": "Manipal Hospital, Vijaywada",
+        "address": "#12-570, near Kanakadurga Varadhi, Tadepalle, Vijaywada - 522501, Andhra Pradesh",
+        "city": "Vijaywada",
+        "cityCode": "VIJ",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC059",
+        "name": "Manipal Hospitals",
+        "address": "98, Rustam bagh, Old Airport road, Bengaluru - 560017, Karnataka",
+        "city": "Bengaluru",
+        "cityCode": "BLR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "BLR/MAN/06",
+        "code": "HC060",
+        "name": "Manipal Hospitals, Old Airport Road - Bengaluru",
+        "address": "98, Rustam bagh, Old Airport Road, Bengaluru - 560017, Karnataka",
+        "city": "Bengaluru",
+        "cityCode": "BLR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEL/MSS/03",
+        "code": "HC061",
+        "name": "Max Super Speciality Hospital, Delhi (Saket)",
+        "address": "1 2, Press Enclave Marg, Saket Institutional Area, Saket, New Delhi, Delhi 110017",
+        "city": "Delhi",
+        "cityCode": "DEL",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "NOI/MHN/01",
+        "code": "HC062",
+        "name": "Max Super Speciality Hospital, Noida",
+        "address": "Jaypee Hospital Rd, Goberdhanpur, Sector 128, Noida, Uttar Pradesh 201304",
+        "city": "Noida",
+        "cityCode": "NOI",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEL/MXP/10",
+        "code": "HC063",
+        "name": "Max Super Speciality Hospital, Patparganj",
+        "address": "108A, IP Extension, I.P. Extension, Patparganj, Delhi, 110092",
+        "city": "Delhi",
+        "cityCode": "DEL",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEL/MSV/02",
+        "code": "HC064",
+        "name": "Max Super Specialty Hospital, Delhi (Vaishali)",
+        "address": "W-3, Ashok Marg, near Radisson Blu Hotel, Sector-1, Vaishali, Ghaziabad, Uttar Pradesh 201012",
+        "city": "Delhi",
+        "cityCode": "DEL",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "BLR/MSM/03",
+        "code": "HC065",
+        "name": "Mazumdar Shaw Medical Centre,Bangalore",
+        "address": "Anekal, 258/A, Hosur Rd, Bommasandra Industrial Area, Bengaluru, Karnataka 560099",
+        "city": "Bengaluru",
+        "cityCode": "BLR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "GUR/MMH/02",
+        "code": "HC066",
+        "name": "Medanta Medicity Hospital, Gurugram",
+        "address": "Medanta- The Medicity, CH Baktawar Singh Rd, Medicity, Islampur Colony, Sector 38, Gurugram, Haryana 122001",
+        "city": "Gurugram",
+        "cityCode": "GUR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "LOK/MSH/01",
+        "code": "HC067",
+        "name": "Medanta Super Speciality Hospital, Lucknow",
+        "address": "Sector - A, Pocket - 1, Amar Shaheed Path, Golf City, Lucknow, Uttar Pradesh 226030",
+        "city": "Lucknow",
+        "cityCode": "LOK",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "COK/MTH/02",
+        "code": "HC068",
+        "name": "Medical Trust Hospital",
+        "address": "Mahatma Gandhi Rd, Pallimukku, Kochi, Ernakulam, Kerala 682016",
+        "city": "Kochi",
+        "cityCode": "COK",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC069",
+        "name": "MIOT International hospital",
+        "address": "4/112, Mount Poonamallee Road, Manapakkam, Chennai – 89, INDIA",
+        "city": "Chennai",
+        "cityCode": "CNN",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "CNN/MIO/03",
+        "code": "HC070",
+        "name": "MIOT International hospital",
+        "address": "4/112, Mount Poonamallee Road, Manapakkam, Chennai – 600089, INDIA",
+        "city": "Chennai",
+        "cityCode": "CNN",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC071",
+        "name": "MS Ramaiah Hospital",
+        "address": "MSRIT Post, M S Ramaiah Nagar, MSR Nagar, Bengaluru - 560054, Karnataka",
+        "city": "Bengaluru",
+        "cityCode": "BLR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "BLR/MSR/05",
+        "code": "HC072",
+        "name": "MS Ramaiah Hospital",
+        "address": "MS Ramaiah Memorial Hospital New BEL road, MSRIT Post, M S Ramaiah Nagar, MSR Nagar, Bengaluru - 560054, Karnataka",
+        "city": "Bengaluru",
+        "cityCode": "BLR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/NMH/05",
+        "code": "HC073",
+        "name": "Nanavati Max Super Speciality Hospital, Mumbai",
+        "address": "SV Road, Vile Parle West, Mumbai - 400056, Maharashtra, India",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/PDM/12",
+        "code": "HC074",
+        "name": "P. D. Hinduja Hospital, Mahim, Mumbai",
+        "address": "8-12, Swatantryaveer Savarkar Rd, Mahim West, Mahim, Mumbai, Maharashtra 400016",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/PDH/03",
+        "code": "HC075",
+        "name": "P.D. Hinduja Hospital, Mumbai",
+        "address": "Marvella Building, 724, 11th Rd, Khar, Khar West, Mumbai, Maharashtra 400052",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "CHG/PGI/01",
+        "code": "HC076",
+        "name": "Postgraduate Institute of Medical Education and Research, Chandigarh",
+        "address": "PGIMER,Sector-12, Chandigarh,Pin- 160 012, India",
+        "city": "Chandigarh",
+        "cityCode": "CHG",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "COK/RAJ/04",
+        "code": "HC077",
+        "name": "Rajagiri Hospital, Kochi",
+        "address": "Near GTN Junction, Munnar Rd, Chungamvely, Aluva, Kochi, Kerala 683112",
+        "city": "Kochi",
+        "cityCode": "COK",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEL/RGC/01",
+        "code": "HC078",
+        "name": "Rajiv Gandhi Cancer Institute, Delhi",
+        "address": "Sir Chotu Ram Marg, Sector – 5, Rohini Institutional Area, Rohini, New Delhi, Delhi – 110085",
+        "city": "Delhi",
+        "cityCode": "DEL",
+        "type": "Charitable Trust Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC079",
+        "name": "Renova Century Hospital",
+        "address": "CC4V+WV5, Road No.12, Bhola Nagar, Banjara Hills, Hyderabad - 500034, Telangana",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HYD/REN/10",
+        "code": "HC080",
+        "name": "Renova Century Hospital",
+        "address": "Road No.12, Bhola Nagar, Banjara Hills, Hyderabad - 500034, Telangana",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "PUN/RUB/03",
+        "code": "HC081",
+        "name": "Ruby Hall Clinic, Pune",
+        "address": "40, Sassoon Rd, Sangamvadi, Pune, Maharashtra 411001",
+        "city": "Pune",
+        "cityCode": "PUN",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "PUN/SSH/02",
+        "code": "HC082",
+        "name": "Sahyadri Super Speciality Hospital, Pune (Deccan)",
+        "address": "Plot No. 30-C, Erandvane, Karve Rd, Deccan Gymkhana, Pune, Maharashtra 411004",
+        "city": "Pune",
+        "cityCode": "PUN",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HYD/SIN/08",
+        "code": "HC083",
+        "name": "Sindhu Hospitals, Hyderabad",
+        "address": "Sindhu Hospitals, Hitec City, Hyderabad 500084, Telangana",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEL/SGH/09",
+        "code": "HC084",
+        "name": "Sir Ganga Ram Hospital",
+        "address": "Sir Ganga Ram Hospital Marg, Rajinder Nagar, New Delhi, Delhi - 110060",
+        "city": "Delhi",
+        "cityCode": "DEL",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC085",
+        "name": "Sir HN Reliance Foundation Hospital and Research Center",
+        "address": "Raja Rammohan Roy Road, Prarthana Samaj, Girgaon, Mumbai, Maharashtra 400004",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/SRH/11",
+        "code": "HC086",
+        "name": "Sir HN Reliance Foundation Hospital and Research Center",
+        "address": "Raja Rammohan Roy Road, Prarthana Samaj, Girgaon, Mumbai, Maharashtra 400004",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "NSK/SMB/01",
+        "code": "HC087",
+        "name": "SMBT Hospital, Nashik",
+        "address": "Ghoti - Shirdi Rd, Kawaddara, Ghoti Kh, Maharashtra 422403",
+        "city": "Nashik",
+        "cityCode": "NSK",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "BLR/STJ/01",
+        "code": "HC088",
+        "name": "St. Johns Hospital, Bengaluru",
+        "address": "St. Johns Hospital, Sarjapur Road, Bengaluru, Karnataka 560034",
+        "city": "Bengaluru",
+        "cityCode": "BLR",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HYD/SHH/06",
+        "code": "HC089",
+        "name": "Star Hospital, Hyderabad",
+        "address": "Survey No.74, Financial District, Nanakaramguda, Makthakousarali Hyderabad 500008 India",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "AMD/SCH/01",
+        "code": "HC090",
+        "name": "Sterling Cancer Hospital, Ahmedabad",
+        "address": "Sindhu Bhavan Road, Bodakdev, Ahmedabad - 380054",
+        "city": "Ahmedabad",
+        "cityCode": "AMD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/SUN/10",
+        "code": "HC091",
+        "name": "SunAct Cancer Institute",
+        "address": "4th floor, Tieten Medicity Hospital, Sunact Cancer Institute Pvt. Ltd, Ghodbunder Rd, Kasarvadavali, Thane West, Thane, Maharashtra 400615",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "IDR/MGM/01",
+        "code": "HC092",
+        "name": "Superspeciaility Mahatma Gandhi Memorial Medical Hospital,Indore",
+        "address": "CRP Line, Indore, Madhya Pradesh 452001",
+        "city": "Indore",
+        "cityCode": "IDR",
+        "type": "Government Hospital"
+    },
+    {
+        "status": "Rejected",
+        "id": null,
+        "code": "HC093",
+        "name": "Tata Medial Center",
+        "address": "14 MAR (E-W), New Town, Rajarhat, Kolkata - 700160, West Bengal",
+        "city": "Kolkata",
+        "cityCode": "KOL",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "KOL/TMC/02",
+        "code": "HC094",
+        "name": "Tata Medical Center, Kolkata",
+        "address": "Tata Medical Center 14 MAR (E-W), New Town, Rajarhat, Kolkata - 700160, West Bengal",
+        "city": "Kolkata",
+        "cityCode": "KOL",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "MUM/TMH/01",
+        "code": "HC095",
+        "name": "Tata Memorial Hospital, Mumbai",
+        "address": "Homi Babha Building, Dr Ernest Borges Rd, Parel East, Parel, Mumbai, Maharashtra 400012",
+        "city": "Mumbai",
+        "cityCode": "MUM",
+        "type": "Government Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "DEL/SHD/08",
+        "code": "HC096",
+        "name": "Vmmc and Safdarjung Hospital, Delhi",
+        "address": "Ansari Nagar East, Near to AIIMS Metro Station, New Delhi, Delhi 110029",
+        "city": "Delhi",
+        "cityCode": "DEL",
+        "type": "Government Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HYD/YAS/09",
+        "code": "HC097",
+        "name": "Yashoda hospital - Somajiguda",
+        "address": "6-3-905, Raj Bhavan road, Matha Nagar, Somajiguda, Hyderabad - 500082, Telangana",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "HYD/YHH/07",
+        "code": "HC098",
+        "name": "Yashoda Hospital, Hitec City, Hyderabad",
+        "address": "Survey No. 41/14, JNTU, to, Hitech City Main Rd, Khanamet Village, Sharilimgampally, Hyderabad, Kothaguda, Telangana 500084",
+        "city": "Hyderabad",
+        "cityCode": "HYD",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "SEC/YHS/01",
+        "code": "HC099",
+        "name": "Yashoda Hospital, Secunderabad",
+        "address": "Alexander Rd, Kummari Guda, Shivaji Nagar, Secunderabad, Telangana 500003",
+        "city": "Secunderabad",
+        "cityCode": "SEC",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "NOI/YAT/02",
+        "code": "HC100",
+        "name": "Yatharth Superspeciality Hospital",
+        "address": "H0-01, Sector-1, Greater Noida West, Gautam Buddha Nagar, Uttar Pradesh- 201306",
+        "city": "Noida",
+        "cityCode": "NOI",
+        "type": "Private Hospital"
+    },
+    {
+        "status": "Approved",
+        "id": "AMD/ZCH/02",
+        "code": "HC101",
+        "name": "Zydus Cancer Hospital",
+        "address": "Zydus Hospitals Road, Thaltej, S.G. Highway, Ahmedabad - 380054",
+        "city": "Ahmedabad",
+        "cityCode": "AMD",
+        "type": "Private Hospital"
+    }
+]

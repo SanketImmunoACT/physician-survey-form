@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,12 +10,11 @@ import { MultiSelect } from "@/components/ui/multi-select";
 import {
   Stethoscope,
   Hospital,
-  User,
+  Users,
+  CreditCard,
+  Activity,
   BarChart3,
   Trash2,
-  ShieldCheck,
-  PlusCircle,
-  Info,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,12 +24,6 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import doctors from "@/data/doctors.json";
-import hospitals from "@/data/hospitals.json";
-import { SingleSelect } from "@/components/ui/SingleSelect";
-import * as RadioGroup from "@radix-ui/react-radio-group";
-
-const doctorOptions = doctors;
 
 export default function HealthcareSurveyForm() {
   // Dynamic hospital codes - can be fetched from API
@@ -227,18 +221,6 @@ export default function HealthcareSurveyForm() {
 
   const [errors, setErrors] = useState({});
   const [warnings, setWarnings] = useState({});
-  const [showHospitalTooltip, setShowHospitalTooltip] = useState(false);
-
-  const handleSelectChange = (selectedOption) => {
-    setFormData((prev) => ({
-      ...prev,
-      physicianName: selectedOption ? selectedOption.value : "",
-    }));
-  };
-
-  const handleSpecialityChange = (value) => {
-    setFormData((prev) => ({ ...prev, speciality: value }));
-  };
 
   // Convert hospital codes to multi-select options
   const hospitalCodeOptions = [
@@ -709,7 +691,7 @@ export default function HealthcareSurveyForm() {
             </CardHeader>
             <CardContent className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* <div className="space-y-2">
+                <div className="space-y-2">
                   <Label
                     htmlFor="physicianName"
                     className="text-sm font-medium"
@@ -723,29 +705,35 @@ export default function HealthcareSurveyForm() {
                       handleInputChange("physicianName", e.target.value)
                     }
                     placeholder="Enter physician name"
-                    className={`transition-all duration-200 ${
-                      errors.physicianName
+                    className={`transition-all duration-200 ${errors.physicianName
                         ? "border-red-500"
                         : "border-gray-300"
-                    }`}
+                      }`}
                   />
                   {errors.physicianName && (
                     <p className="text-red-500 text-sm">
                       {errors.physicianName}
                     </p>
                   )}
-                </div> */}
-
-                {/* Selection of Name of the Physician */}
-                <SingleSelect
-                  options={doctors}
-                  value={formData.physicianName}
-                  onChange={(val) => handleInputChange("physicianName", val)}
-                  placeholder="Select or search Clinician name"
-                  error={errors.physicianName}
-                />
+                </div>
 
                 {/* <div className="space-y-2">
+                  <Label htmlFor="uniqueId" className="text-sm font-medium">
+                    Unique ID *
+                  </Label>
+                  <Input
+                    id="uniqueId"
+                    value={formData.uniqueId}
+                    onChange={(e) => handleInputChange('uniqueId', e.target.value)}
+                    placeholder="Enter unique ID"
+                    className={`transition-all duration-200 ${errors.uniqueId ? 'border-red-500' : 'border-gray-300'}`}
+                  />
+                  {errors.uniqueId && (
+                    <p className="text-red-500 text-sm">{errors.uniqueId}</p>
+                  )}
+                </div> */}
+
+                <div className="space-y-2">
                   <Label htmlFor="speciality" className="text-sm font-medium">
                     Speciality *
                   </Label>
@@ -756,91 +744,9 @@ export default function HealthcareSurveyForm() {
                       handleInputChange("speciality", e.target.value)
                     }
                     placeholder="Enter speciality"
-                    className={`transition-all duration-200 ${
-                      errors.speciality ? "border-red-500" : "border-gray-300"
-                    }`}
-                  />
-                  {errors.speciality && (
-                    <p className="text-red-500 text-sm">{errors.speciality}</p>
-                  )}
-                </div> */}
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium block">
-                    Speciality *
-                    <p className="text-xs text-gray-500">
-                      Select the most appropriate specialization
-                    </p>
-                  </label>
-
-                  <RadioGroup.Root
-                    className="flex flex-col gap-3"
-                    value={formData.speciality}
-                    onValueChange={handleSpecialityChange}
-                  >
-                    <RadioGroup.Item
-                      value="Hematologist"
-                      className="flex items-center gap-2 p-3 border rounded-md cursor-pointer hover:bg-gray-50 transition"
-                    >
-                      <RadioGroup.Indicator className="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center">
-                        <div className="w-2 h-2 bg-black rounded-full" />
-                      </RadioGroup.Indicator>
-                      <Stethoscope className="w-5 h-5 text-indigo-600" />
-                      <span>Hematologist</span>
-                    </RadioGroup.Item>
-
-                    <RadioGroup.Item
-                      value="Oncologist"
-                      className="flex items-center gap-2 p-3 border rounded-md cursor-pointer hover:bg-gray-50 transition"
-                    >
-                      <RadioGroup.Indicator className="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center">
-                        <div className="w-2 h-2 bg-black rounded-full" />
-                      </RadioGroup.Indicator>
-                      <ShieldCheck className="w-5 h-5 text-indigo-600" />
-                      <span>Oncologist</span>
-                    </RadioGroup.Item>
-
-                    <RadioGroup.Item
-                      value="Pediatric Onco"
-                      className="flex items-center gap-2 p-3 border rounded-md cursor-pointer hover:bg-gray-50 transition"
-                    >
-                      <RadioGroup.Indicator className="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center">
-                        <div className="w-2 h-2 bg-black rounded-full" />
-                      </RadioGroup.Indicator>
-                      <User className="w-5 h-5 text-indigo-600" />
-                      <span>Pediatric Onco</span>
-                    </RadioGroup.Item>
-
-                    <RadioGroup.Item
-                      value="Other"
-                      className="flex items-center gap-2 p-3 border rounded-md cursor-pointer hover:bg-gray-50 transition"
-                    >
-                      <RadioGroup.Indicator className="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center">
-                        <div className="w-2 h-2 bg-black rounded-full" />
-                      </RadioGroup.Indicator>
-                      <PlusCircle className="w-5 h-5 text-indigo-600" />
-                      <span>Other (please specify)</span>
-                    </RadioGroup.Item>
-                  </RadioGroup.Root>
-
-                  {/* Conditionally show text input if "Other" is selected */}
-                  {formData.speciality === "Other" && (
-                    <input
-                      type="text"
-                      placeholder="Enter speciality"
-                      className={`mt-2 w-full p-2 border rounded-md placeholder:text-gray-400 placeholder:text-sm ${
-                        errors.speciality ? "border-red-500" : "border-gray-300"
+                    className={`transition-all duration-200 ${errors.speciality ? "border-red-500" : "border-gray-300"
                       }`}
-                      value={formData.otherSpeciality || ""}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          otherSpeciality: e.target.value,
-                        }))
-                      }
-                    />
-                  )}
-
+                  />
                   {errors.speciality && (
                     <p className="text-red-500 text-sm">{errors.speciality}</p>
                   )}
@@ -866,7 +772,7 @@ export default function HealthcareSurveyForm() {
                   </p>
                 </div> */}
 
-                {/* <div className="space-y-2 md:col-span-2">
+                <div className="space-y-2 md:col-span-2">
                   <Label className="text-sm font-medium">
                     Select Hospitals *
                   </Label>
@@ -907,82 +813,6 @@ export default function HealthcareSurveyForm() {
                       </Button>
                     </div>
                   )}
-                  <p className="text-xs text-gray-500">
-                    Select the hospitals you want to collect data for. Only
-                    selected hospitals will appear in the form below.
-                  </p>
-                </div> */}
-
-                <div className="space-y-2 md:col-span-2">
-                  <div className="flex items-center gap-1">
-                    <Label className="text-sm font-medium">
-                      Select Hospitals *
-                    </Label>
-
-                    {/* Tooltip Trigger Icon */}
-                    <div className="relative group inline-block">
-                      <Info
-                        className="w-3 h-3 cursor-pointer"
-                        onClick={() =>
-                          setShowHospitalTooltip(!showHospitalTooltip)
-                        }
-                      />
-
-                      {/* Tooltip Box for Hover (lg screens) */}
-                      <div className="absolute z-10 hidden group-hover:block bg-black text-white text-xs rounded-md py-1 px-2 right-0 mt-1 w-64">
-                        Ask the doctor how many hospitals they regularly consult
-                        at.
-                      </div>
-
-                      {/* Tooltip for small/medium screens (click/tap based) */}
-                      {showHospitalTooltip && (
-                        <div className="absolute z-10 bg-black text-white text-xs rounded py-1 px-2 right-0 mt-1 w-64 md:hidden">
-                          Ask the doctor how many hospitals they regularly
-                          consult at.
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <MultiSelect
-                    options={hospitalCodeOptions}
-                    value={formData.selectedHospitalCodes}
-                    onChange={handleHospitalCodesChange}
-                    placeholder="Select hospitals to survey..."
-                    className="w-full"
-                  />
-
-                  {showAddHospitalInput && (
-                    <div className="flex items-center gap-2 mt-2">
-                      <Input
-                        type="text"
-                        value={newHospitalName}
-                        onChange={(e) => setNewHospitalName(e.target.value)}
-                        placeholder="Enter new hospital name"
-                        className="w-1/2"
-                        autoFocus
-                      />
-                      <Button
-                        type="button"
-                        onClick={handleAddCustomHospital}
-                        className="bg-green-600 hover:bg-green-700 text-white cursor-pointer"
-                      >
-                        Add
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="cursor-pointer"
-                        onClick={() => {
-                          setShowAddHospitalInput(false);
-                          setNewHospitalName("");
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  )}
-
                   <p className="text-xs text-gray-500">
                     Select the hospitals you want to collect data for. Only
                     selected hospitals will appear in the form below.
@@ -1096,21 +926,21 @@ export default function HealthcareSurveyForm() {
                             {customHospitals.some(
                               (h) => h.id === hospitalCode
                             ) && (
-                              <div className="flex justify-end mb-2">
-                                <Button
-                                  type="button"
-                                  size="icon"
-                                  variant="ghost"
-                                  onClick={() =>
-                                    handleDeleteCustomHospital(hospitalCode)
-                                  }
-                                  title="Delete this hospital"
-                                  className="text-red-600 hover:text-red-800"
-                                >
-                                  <Trash2 className="w-5 h-5 cursor-pointer" />
-                                </Button>
-                              </div>
-                            )}
+                                <div className="flex justify-end mb-2">
+                                  <Button
+                                    type="button"
+                                    size="icon"
+                                    variant="ghost"
+                                    onClick={() =>
+                                      handleDeleteCustomHospital(hospitalCode)
+                                    }
+                                    title="Delete this hospital"
+                                    className="text-red-600 hover:text-red-800"
+                                  >
+                                    <Trash2 className="w-5 h-5 cursor-pointer" />
+                                  </Button>
+                                </div>
+                              )}
                             <AccordionTrigger
                               className={`px-4 py-3 rounded-md ${colorScheme.accent} ${colorScheme.text}`}
                             >
@@ -1192,7 +1022,7 @@ export default function HealthcareSurveyForm() {
                                       <p className="text-red-600 text-sm font-medium">
                                         {
                                           warnings[
-                                            `${hospitalCode}_sourceFunds`
+                                          `${hospitalCode}_sourceFunds`
                                           ]
                                         }
                                       </p>
@@ -1396,6 +1226,7 @@ export default function HealthcareSurveyForm() {
                                   </div>
                                 </div>
 
+
                                 {/* {formData.selectedHospitalCodes.map((hospitalCode) => {
             const monthlyPatients = parseInt(formData.hospitalData[hospitalCode]?.monthlyPatients) || 0;
             const sourceTotal = calculateSourceTotal(hospitalCode);
@@ -1482,6 +1313,7 @@ export default function HealthcareSurveyForm() {
               </Card>
             );
           })} */}
+
 
                                 {/* {formData.selectedHospitalCodes.map((hospitalCode) => {
   const sourceFunds = formData.sourceFunds[hospitalCode] || {};
