@@ -49,16 +49,16 @@ export default function SalespersonDashboard() {
 
   const loadDashboardData = () => {
     const submissions = dataStore.getAllSubmissions();
-    
+
     // Filter submissions by current user (in real app)
     const userSubmissions = submissions; // For demo, showing all
 
     const uniquePhysicians = new Set();
     const uniqueHospitals = new Set();
 
-    userSubmissions.forEach(submission => {
+    userSubmissions.forEach((submission) => {
       uniquePhysicians.add(submission.physicianName);
-      submission.selectedHospitalCodes?.forEach(code => {
+      submission.selectedHospitalCodes?.forEach((code) => {
         uniqueHospitals.add(code);
       });
     });
@@ -73,9 +73,13 @@ export default function SalespersonDashboard() {
 
   const loadRequests = () => {
     // Load from localStorage or API
-    const hospitalReqs = JSON.parse(localStorage.getItem('hospitalRequests') || '[]');
-    const physicianReqs = JSON.parse(localStorage.getItem('physicianRequests') || '[]');
-    
+    const hospitalReqs = JSON.parse(
+      localStorage.getItem("hospitalRequests") || "[]"
+    );
+    const physicianReqs = JSON.parse(
+      localStorage.getItem("physicianRequests") || "[]"
+    );
+
     setRequests({
       hospitalRequests: hospitalReqs,
       physicianRequests: physicianReqs,
@@ -83,50 +87,61 @@ export default function SalespersonDashboard() {
   };
 
   const handleHospitalRequest = () => {
-    const hospitalName = prompt("Enter the name of the hospital you want to add:");
+    const hospitalName = prompt(
+      "Enter the name of the hospital you want to add:"
+    );
     if (hospitalName && hospitalName.trim()) {
       const newRequest = {
         id: Date.now().toString(),
-        type: 'hospital',
+        type: "hospital",
         name: hospitalName.trim(),
         requestedBy: currentUser.name,
         requestedAt: new Date().toISOString(),
-        status: 'pending',
+        status: "pending",
       };
 
       const updatedRequests = [...requests.hospitalRequests, newRequest];
-      setRequests(prev => ({
+      setRequests((prev) => ({
         ...prev,
         hospitalRequests: updatedRequests,
       }));
 
-      localStorage.setItem('hospitalRequests', JSON.stringify(updatedRequests));
-      
-      showNotificationMessage(`Hospital addition request for "${hospitalName}" has been sent to admin.`);
+      localStorage.setItem("hospitalRequests", JSON.stringify(updatedRequests));
+
+      showNotificationMessage(
+        `Hospital addition request for "${hospitalName}" has been sent to admin.`
+      );
     }
   };
 
   const handlePhysicianRequest = () => {
-    const physicianName = prompt("Enter the name of the physician you want to add:");
+    const physicianName = prompt(
+      "Enter the name of the physician you want to add:"
+    );
     if (physicianName && physicianName.trim()) {
       const newRequest = {
         id: Date.now().toString(),
-        type: 'physician',
+        type: "physician",
         name: physicianName.trim(),
         requestedBy: currentUser.name,
         requestedAt: new Date().toISOString(),
-        status: 'pending',
+        status: "pending",
       };
 
       const updatedRequests = [...requests.physicianRequests, newRequest];
-      setRequests(prev => ({
+      setRequests((prev) => ({
         ...prev,
         physicianRequests: updatedRequests,
       }));
 
-      localStorage.setItem('physicianRequests', JSON.stringify(updatedRequests));
-      
-      showNotificationMessage(`Physician addition request for "${physicianName}" has been sent to admin.`);
+      localStorage.setItem(
+        "physicianRequests",
+        JSON.stringify(updatedRequests)
+      );
+
+      showNotificationMessage(
+        `Physician addition request for "${physicianName}" has been sent to admin.`
+      );
     }
   };
 
@@ -139,7 +154,7 @@ export default function SalespersonDashboard() {
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-GB');
+    return new Date(dateString).toLocaleDateString("en-GB");
   };
 
   return (
@@ -179,14 +194,16 @@ export default function SalespersonDashboard() {
                   <Plus className="w-8 h-8" />
                   <div>
                     <h3 className="font-semibold text-lg">Add New Survey</h3>
-                    <p className="text-blue-100 text-sm">Create a new physician survey</p>
+                    <p className="text-blue-100 text-sm">
+                      Create a new physician survey
+                    </p>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </Link>
 
-          <Card 
+          <Card
             className="cursor-pointer hover:shadow-lg transition-shadow bg-gradient-to-r from-green-500 to-green-600 text-white"
             onClick={handleHospitalRequest}
           >
@@ -194,14 +211,18 @@ export default function SalespersonDashboard() {
               <div className="flex items-center gap-3">
                 <Building2 className="w-8 h-8" />
                 <div>
-                  <h3 className="font-semibold text-lg">Request New Hospital</h3>
-                  <p className="text-green-100 text-sm">Add hospital to database</p>
+                  <h3 className="font-semibold text-lg">
+                    Request New Hospital
+                  </h3>
+                  <p className="text-green-100 text-sm">
+                    Add hospital to database
+                  </p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card 
+          <Card
             className="cursor-pointer hover:shadow-lg transition-shadow bg-gradient-to-r from-purple-500 to-purple-600 text-white"
             onClick={handlePhysicianRequest}
           >
@@ -209,8 +230,12 @@ export default function SalespersonDashboard() {
               <div className="flex items-center gap-3">
                 <UserPlus className="w-8 h-8" />
                 <div>
-                  <h3 className="font-semibold text-lg">Request New Physician</h3>
-                  <p className="text-purple-100 text-sm">Add physician to database</p>
+                  <h3 className="font-semibold text-lg">
+                    Request New Physician
+                  </h3>
+                  <p className="text-purple-100 text-sm">
+                    Add physician to database
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -223,7 +248,9 @@ export default function SalespersonDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Surveys</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Total Surveys
+                  </p>
                   <p className="text-3xl font-bold text-gray-900">
                     {dashboardData.totalSurveys}
                   </p>
@@ -239,7 +266,9 @@ export default function SalespersonDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Physicians Surveyed</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Physicians Surveyed
+                  </p>
                   <p className="text-3xl font-bold text-gray-900">
                     {dashboardData.totalPhysicians}
                   </p>
@@ -255,7 +284,9 @@ export default function SalespersonDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Hospitals Surveyed</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Hospitals Surveyed
+                  </p>
                   <p className="text-3xl font-bold text-gray-900">
                     {dashboardData.totalHospitals}
                   </p>
@@ -280,16 +311,16 @@ export default function SalespersonDashboard() {
               <table className="min-w-full text-sm">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
+                    <th className="text-center py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
                       Physician
                     </th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
+                    <th className="text-center py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
                       Hospital(s)
                     </th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
+                    <th className="text-center py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
                       Date
                     </th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
+                    <th className="text-center py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
                       Created At
                     </th>
                   </tr>
@@ -297,7 +328,10 @@ export default function SalespersonDashboard() {
                 <tbody className="divide-y divide-gray-200">
                   {dashboardData.submittedSurveys.length > 0 ? (
                     dashboardData.submittedSurveys.map((survey) => (
-                      <tr key={survey.id} className="hover:bg-gray-50 transition-colors">
+                      <tr
+                        key={survey.id}
+                        className="hover:bg-gray-50 transition-colors"
+                      >
                         <td className="py-4 px-4">
                           <div className="flex flex-col">
                             <span className="font-medium text-gray-900">
@@ -310,11 +344,17 @@ export default function SalespersonDashboard() {
                         </td>
                         <td className="py-4 px-4">
                           <div className="flex flex-wrap gap-1">
-                            {survey.selectedHospitalCodes?.slice(0, 2).map((code, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
-                                {code}
-                              </Badge>
-                            ))}
+                            {survey.selectedHospitalCodes
+                              ?.slice(0, 2)
+                              .map((code, index) => (
+                                <Badge
+                                  key={index}
+                                  variant="outline"
+                                  className="text-xs"
+                                >
+                                  {code}
+                                </Badge>
+                              ))}
                             {survey.selectedHospitalCodes?.length > 2 && (
                               <Badge variant="outline" className="text-xs">
                                 +{survey.selectedHospitalCodes.length - 2} more
@@ -331,24 +371,34 @@ export default function SalespersonDashboard() {
                         <td className="py-4 px-4">
                           <div className="flex items-center text-sm text-gray-900">
                             <Calendar className="w-4 h-4 mr-2 text-gray-400" />
-                            {new Date(survey.timestamp).toLocaleString('en-GB', {
-                              day: '2-digit',
-                              month: '2-digit', 
-                              year: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit'
-                            })}
+                            {new Date(survey.timestamp).toLocaleString(
+                              "en-GB",
+                              {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              }
+                            )}
                           </div>
                         </td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={4} className="py-12 text-center text-gray-500">
+                      <td
+                        colSpan={4}
+                        className="py-12 text-center text-gray-500"
+                      >
                         <div className="flex flex-col items-center">
                           <FileText className="w-12 h-12 text-gray-300 mb-4" />
-                          <p className="text-lg font-medium">No surveys submitted yet</p>
-                          <p className="text-sm">Click "Add New Survey" to get started</p>
+                          <p className="text-lg font-medium">
+                            No surveys submitted yet
+                          </p>
+                          <p className="text-sm">
+                            Click "Add New Survey" to get started
+                          </p>
                         </div>
                       </td>
                     </tr>
@@ -360,7 +410,8 @@ export default function SalespersonDashboard() {
         </Card>
 
         {/* Pending Requests */}
-        {(requests.hospitalRequests.length > 0 || requests.physicianRequests.length > 0) && (
+        {(requests.hospitalRequests.length > 0 ||
+          requests.physicianRequests.length > 0) && (
           <Card className="bg-white shadow-sm border-0">
             <CardHeader>
               <CardTitle className="text-lg sm:text-xl font-semibold text-gray-900">
@@ -370,11 +421,16 @@ export default function SalespersonDashboard() {
             <CardContent>
               <div className="space-y-4">
                 {requests.hospitalRequests.map((request) => (
-                  <div key={request.id} className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                  <div
+                    key={request.id}
+                    className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg"
+                  >
                     <div className="flex items-center gap-3">
                       <Building2 className="w-5 h-5 text-yellow-600" />
                       <div>
-                        <p className="font-medium text-gray-900">Hospital: {request.name}</p>
+                        <p className="font-medium text-gray-900">
+                          Hospital: {request.name}
+                        </p>
                         <p className="text-sm text-gray-500">
                           Requested on {formatDate(request.requestedAt)}
                         </p>
@@ -386,13 +442,18 @@ export default function SalespersonDashboard() {
                     </Badge>
                   </div>
                 ))}
-                
+
                 {requests.physicianRequests.map((request) => (
-                  <div key={request.id} className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                  <div
+                    key={request.id}
+                    className="flex items-center justify-between p-3 bg-blue-50 rounded-lg"
+                  >
                     <div className="flex items-center gap-3">
                       <UserPlus className="w-5 h-5 text-blue-600" />
                       <div>
-                        <p className="font-medium text-gray-900">Physician: {request.name}</p>
+                        <p className="font-medium text-gray-900">
+                          Physician: {request.name}
+                        </p>
                         <p className="text-sm text-gray-500">
                           Requested on {formatDate(request.requestedAt)}
                         </p>
