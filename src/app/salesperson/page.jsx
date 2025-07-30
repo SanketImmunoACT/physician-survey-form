@@ -289,8 +289,8 @@ export default function SalespersonDashboard() {
                     <th className="text-left py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
                       Date
                     </th>
-                    <th className="text-center py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
-                      Status
+                    <th className="text-left py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
+                      Created At
                     </th>
                   </tr>
                 </thead>
@@ -328,10 +328,17 @@ export default function SalespersonDashboard() {
                             {survey.date}
                           </div>
                         </td>
-                        <td className="py-4 px-4 text-center">
-                          <Badge className="bg-green-100 text-green-800 border-green-200">
-                            Completed
-                          </Badge>
+                        <td className="py-4 px-4">
+                          <div className="flex items-center text-sm text-gray-900">
+                            <Calendar className="w-4 h-4 mr-2 text-gray-400" />
+                            {new Date(survey.timestamp).toLocaleString('en-GB', {
+                              day: '2-digit',
+                              month: '2-digit', 
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </div>
                         </td>
                       </tr>
                     ))
