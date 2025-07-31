@@ -1,7 +1,7 @@
 // "use client";
 import "@/app/styles/globals.css";
 import { Mukta } from "next/font/google";
-import { Toaster } from "sonner";
+import { Toaster } from "react-hot-toast";
 
 const mukta = Mukta({
   subsets: ["latin"],
@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="scroll-smooth hydrated">
       <body className={`${mukta.className} bg-background text-foreground`}>
         {children}
-        <Toaster position="top-center" richColors />
+        <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>
   );

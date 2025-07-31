@@ -48,7 +48,7 @@ const Button = React.forwardRef(
 
 Button.displayName = "Button";
 
-// ✅ SignInButton component using default styles
+// ✅ Enhanced SignInButton component with improved UI effects
 const SignInButton = React.forwardRef(
   ({ className, children = "Sign In", ...props }, ref) => {
     return (
@@ -56,15 +56,25 @@ const SignInButton = React.forwardRef(
         ref={ref}
         variant="default"
         size="default"
-        // className={className}
-        // {...props}
         className={cn(
-          // Gradient background
-          "bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-500 text-white",
-          // Hover darkening
-          "hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600",
-          // Click effect
-          "active:scale-95 transition-all",
+          // Base styling
+          "w-full font-medium py-3 px-6 rounded-lg border-0 shadow-md",
+          // Gradient background with project colors (pink theme)
+          "bg-gradient-to-r from-pink-600 to-pink-700 text-white",
+          // Enhanced hover effects
+          "hover:from-pink-700 hover:to-pink-800 hover:shadow-lg hover:shadow-xl",
+          // Click/Active effects
+          "active:from-pink-800 active:to-pink-900 active:scale-95",
+          // Smooth transitions
+          "transition-all duration-300 ease-in-out transform",
+          // Focus effects for accessibility
+          "focus:ring-2 focus:ring-pink-500 focus:ring-offset-2",
+          // Disabled state
+          "disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:hover:scale-100 disabled:hover:shadow-md",
+          // Hover scale effect
+          "hover:scale-105",
+          // Cursor pointer
+          "cursor-pointer",
           className
         )}
         {...props}
