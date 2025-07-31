@@ -2018,6 +2018,7 @@ export default function HealthcareSurveyForm() {
                                   >
                                     Patient Distribution Category:
                                   </h4>
+
                                   <div className="overflow-x-auto border rounded-lg">
                                     <table className="w-full table-auto text-sm text-left">
                                       <thead className="bg-gray-100">
@@ -2161,6 +2162,456 @@ export default function HealthcareSurveyForm() {
                                         })}
                                       </tbody>
                                     </table>
+                                  </div>
+
+                                  {/* Age Distribution UI */}
+                                  <div className="mt-8">
+                                    <h4
+                                      className={`text-lg font-semibold ${colorScheme.text.replace(
+                                        "800",
+                                        "700"
+                                      )} `}
+                                    >
+                                      Age Distribution of Patients
+                                    </h4>
+                                    <p className="text-sm text-gray-600 mb-2">
+                                      For both ALL and NHL patients, ask what %
+                                      of cases are 15 years and below vs above
+                                      15 years. Ensure the total adds up to 100%
+                                      for each diagnosis category.
+                                    </p>
+                                    <div className="overflow-x-auto border rounded-lg">
+                                      <table className="w-full table-auto text-sm text-left">
+                                        <thead className="bg-gray-100">
+                                          <tr>
+                                            <th className="p-2 font-medium text-gray-700"></th>
+                                            <th className="p-2 font-medium text-gray-700 text-center">
+                                              Below 15 Years
+                                            </th>
+                                            <th className="p-2 font-medium text-gray-700 text-center">
+                                              Above 15 Years
+                                            </th>
+                                            <th className="p-2 font-medium text-gray-700 text-center">
+                                              Total %
+                                            </th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {["allPatients", "nhlPatients"].map(
+                                            (patientType) => {
+                                              // Initialize age distribution if it doesn't exist
+                                              if (
+                                                !formData
+                                                  .patientDistributionMatrix?.[
+                                                  hospitalCode
+                                                ]?.[patientType]
+                                                  ?.ageDistribution
+                                              ) {
+                                                // Create age distribution structure if it doesn't exist
+                                                if (
+                                                  !formData.patientDistributionMatrix
+                                                ) {
+                                                  setFormData((prev) => ({
+                                                    ...prev,
+                                                    patientDistributionMatrix:
+                                                      {},
+                                                  }));
+                                                }
+
+                                                if (
+                                                  !formData
+                                                    .patientDistributionMatrix[
+                                                    hospitalCode
+                                                  ]
+                                                ) {
+                                                  setFormData((prev) => ({
+                                                    ...prev,
+                                                    patientDistributionMatrix: {
+                                                      ...prev.patientDistributionMatrix,
+                                                      [hospitalCode]: {},
+                                                    },
+                                                  }));
+                                                }
+
+                                                if (
+                                                  !formData
+                                                    .patientDistributionMatrix[
+                                                    hospitalCode
+                                                  ][patientType]
+                                                ) {
+                                                  setFormData((prev) => ({
+                                                    ...prev,
+                                                    patientDistributionMatrix: {
+                                                      ...prev.patientDistributionMatrix,
+                                                      [hospitalCode]: {
+                                                        ...prev
+                                                          .patientDistributionMatrix[
+                                                          hospitalCode
+                                                        ],
+                                                        [patientType]: {},
+                                                      },
+                                                    },
+                                                  }));
+                                                }
+
+                                                setFormData((prev) => ({
+                                                  ...prev,
+                                                  patientDistributionMatrix: {
+                                                    ...prev.patientDistributionMatrix,
+                                                    [hospitalCode]: {
+                                                      ...prev
+                                                        .patientDistributionMatrix[
+                                                        hospitalCode
+                                                      ],
+                                                      [patientType]: {
+                                                        ...prev
+                                                          .patientDistributionMatrix[
+                                                          hospitalCode
+                                                        ][patientType],
+                                                        ageDistribution: {
+                                                          below15: "",
+                                                          above15: "",
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                }));
+                                              }
+
+                                              // Calculate total percentage
+                                              const below15 = parseFloat(
+                                                formData
+                                                  .patientDistributionMatrix?.[
+                                                  hospitalCode
+                                                ]?.[patientType]
+                                                  ?.ageDistribution?.below15 ||
+                                                  0
+                                              );
+                                              const above15 = parseFloat(
+                                                formData
+                                                  .patientDistributionMatrix?.[
+                                                  hospitalCode
+                                                ]?.[patientType]
+                                                  ?.ageDistribution?.above15 ||
+                                                  0
+                                              );
+                                              const totalPercentage =
+                                                (isNaN(below15) ? 0 : below15) +
+                                                (isNaN(above15) ? 0 : above15);
+
+                                              // Determine status color
+                                              const statusColor =
+                                                totalPercentage === 0
+                                                  ? "text-gray-400"
+                                                  : totalPercentage === 100
+                                                  ? "text-green-600"
+                                                  : totalPercentage > 100
+                                                  ? "text-red-600"
+                                                  : "text-orange-500";
+
+                                              const patientLabel =
+                                                patientType === "allPatients"
+                                                  ? "ALL Patients"
+                                                  : "NHL Patients";
+
+                                              return (
+                                                <tr
+                                                  key={patientType}
+                                                  className="even:bg-gray-50"
+                                                >
+                                                  <td className="p-2 font-medium text-gray-800">
+                                                    {patientLabel}
+                                                  </td>
+                                                  <td className="p-2 text-center">
+                                                    <Input
+                                                      type="number"
+                                                      step="0.1"
+                                                      placeholder="0"
+                                                      className="w-full text-center"
+                                                      value={
+                                                        formData
+                                                          .patientDistributionMatrix?.[
+                                                          hospitalCode
+                                                        ]?.[patientType]
+                                                          ?.ageDistribution
+                                                          ?.below15 || ""
+                                                      }
+                                                      onChange={(e) => {
+                                                        const value =
+                                                          e.target.value;
+                                                        setFormData((prev) => {
+                                                          // Get current values
+                                                          const currentBelow15 =
+                                                            value === ""
+                                                              ? ""
+                                                              : parseFloat(
+                                                                  value
+                                                                );
+                                                          const currentAbove15 =
+                                                            prev
+                                                              .patientDistributionMatrix?.[
+                                                              hospitalCode
+                                                            ]?.[patientType]
+                                                              ?.ageDistribution
+                                                              ?.above15 || "";
+                                                          const parsedAbove15 =
+                                                            currentAbove15 ===
+                                                            ""
+                                                              ? ""
+                                                              : parseFloat(
+                                                                  currentAbove15
+                                                                );
+
+                                                          // Auto-calculate above15 if below15 is valid and not being cleared
+                                                          let newAbove15 =
+                                                            currentAbove15;
+                                                          if (
+                                                            value !== "" &&
+                                                            !isNaN(
+                                                              currentBelow15
+                                                            )
+                                                          ) {
+                                                            // Only auto-calculate if above15 is empty AND the below15 value is <= 100
+                                                            if (
+                                                              currentAbove15 ===
+                                                                "" &&
+                                                              currentBelow15 <=
+                                                                100
+                                                            ) {
+                                                              newAbove15 =
+                                                                Math.max(
+                                                                  0,
+                                                                  100 -
+                                                                    currentBelow15
+                                                                );
+                                                            }
+                                                          }
+
+                                                          return {
+                                                            ...prev,
+                                                            patientDistributionMatrix:
+                                                              {
+                                                                ...prev.patientDistributionMatrix,
+                                                                [hospitalCode]:
+                                                                  {
+                                                                    ...prev
+                                                                      .patientDistributionMatrix[
+                                                                      hospitalCode
+                                                                    ],
+                                                                    [patientType]:
+                                                                      {
+                                                                        ...prev
+                                                                          .patientDistributionMatrix[
+                                                                          hospitalCode
+                                                                        ][
+                                                                          patientType
+                                                                        ],
+                                                                        ageDistribution:
+                                                                          {
+                                                                            ...prev
+                                                                              .patientDistributionMatrix[
+                                                                              hospitalCode
+                                                                            ][
+                                                                              patientType
+                                                                            ]
+                                                                              .ageDistribution,
+                                                                            below15:
+                                                                              value,
+                                                                            above15:
+                                                                              newAbove15,
+                                                                          },
+                                                                      },
+                                                                  },
+                                                              },
+                                                          };
+                                                        });
+                                                      }}
+                                                    />
+                                                  </td>
+                                                  <td className="p-2 text-center">
+                                                    <Input
+                                                      type="number"
+                                                      step="0.1"
+                                                      placeholder="0"
+                                                      className="w-full text-center"
+                                                      value={
+                                                        formData
+                                                          .patientDistributionMatrix?.[
+                                                          hospitalCode
+                                                        ]?.[patientType]
+                                                          ?.ageDistribution
+                                                          ?.above15 || ""
+                                                      }
+                                                      onChange={(e) => {
+                                                        const value =
+                                                          e.target.value;
+                                                        setFormData((prev) => {
+                                                          // Get current values
+                                                          const currentAbove15 =
+                                                            value === ""
+                                                              ? ""
+                                                              : parseFloat(
+                                                                  value
+                                                                );
+                                                          const currentBelow15 =
+                                                            prev
+                                                              .patientDistributionMatrix?.[
+                                                              hospitalCode
+                                                            ]?.[patientType]
+                                                              ?.ageDistribution
+                                                              ?.below15 || "";
+                                                          const parsedBelow15 =
+                                                            currentBelow15 ===
+                                                            ""
+                                                              ? ""
+                                                              : parseFloat(
+                                                                  currentBelow15
+                                                                );
+
+                                                          // Auto-calculate below15 if above15 is valid and not being cleared
+                                                          let newBelow15 =
+                                                            currentBelow15;
+                                                          if (
+                                                            value !== "" &&
+                                                            !isNaN(
+                                                              currentAbove15
+                                                            )
+                                                          ) {
+                                                            // Only auto-calculate if below15 is empty AND the above15 value is <= 100
+                                                            if (
+                                                              currentBelow15 ===
+                                                                "" &&
+                                                              currentAbove15 <=
+                                                                100
+                                                            ) {
+                                                              newBelow15 =
+                                                                Math.max(
+                                                                  0,
+                                                                  100 -
+                                                                    currentAbove15
+                                                                );
+                                                            }
+                                                          }
+
+                                                          return {
+                                                            ...prev,
+                                                            patientDistributionMatrix:
+                                                              {
+                                                                ...prev.patientDistributionMatrix,
+                                                                [hospitalCode]:
+                                                                  {
+                                                                    ...prev
+                                                                      .patientDistributionMatrix[
+                                                                      hospitalCode
+                                                                    ],
+                                                                    [patientType]:
+                                                                      {
+                                                                        ...prev
+                                                                          .patientDistributionMatrix[
+                                                                          hospitalCode
+                                                                        ][
+                                                                          patientType
+                                                                        ],
+                                                                        ageDistribution:
+                                                                          {
+                                                                            ...prev
+                                                                              .patientDistributionMatrix[
+                                                                              hospitalCode
+                                                                            ][
+                                                                              patientType
+                                                                            ]
+                                                                              .ageDistribution,
+                                                                            above15:
+                                                                              value,
+                                                                            below15:
+                                                                              newBelow15,
+                                                                          },
+                                                                      },
+                                                                  },
+                                                              },
+                                                          };
+                                                        });
+                                                      }}
+                                                    />
+                                                  </td>
+                                                  <td
+                                                    className={`p-2 text-center font-medium ${statusColor}`}
+                                                  >
+                                                    {totalPercentage}%
+                                                    {totalPercentage > 100 && (
+                                                      <div className="text-xs text-red-600 font-medium mt-1">
+                                                        Warning: Total exceeds
+                                                        100%
+                                                      </div>
+                                                    )}
+                                                    {/* {totalPercentage !== 100 && totalPercentage > 0 && (
+                                                    <button
+                                                      type="button"
+                                                      className="ml-2 text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded cursor-pointer"
+                                                      onClick={() => {
+                                                        setFormData(prev => {
+                                                          // Get current values as strings first
+                                                          const below15Str = prev.patientDistributionMatrix?.[hospitalCode]?.[patientType]?.ageDistribution?.below15 || "";
+                                                          const above15Str = prev.patientDistributionMatrix?.[hospitalCode]?.[patientType]?.ageDistribution?.above15 || "";
+                                                          
+                                                          // Parse to numbers if they exist
+                                                          const currentBelow15 = below15Str === "" ? 0 : parseFloat(below15Str);
+                                                          const currentAbove15 = above15Str === "" ? 0 : parseFloat(above15Str);
+                                                          
+                                                          let newBelow15 = "";
+                                                          let newAbove15 = "";
+                                                          
+                                                          // If both have values but don't add to 100%, proportionally adjust
+                                                          if (currentBelow15 > 0 && currentAbove15 > 0) {
+                                                            const total = currentBelow15 + currentAbove15;
+                                                            newBelow15 = ((currentBelow15 / total) * 100).toFixed(1);
+                                                            newAbove15 = ((currentAbove15 / total) * 100).toFixed(1);
+                                                          } 
+                                                          // If only one has a value, set the other to make total 100%
+                                                          else if (currentBelow15 > 0) {
+                                                            newBelow15 = below15Str; // Keep original value
+                                                            newAbove15 = (100 - currentBelow15).toFixed(1);
+                                                          } 
+                                                          else if (currentAbove15 > 0) {
+                                                            newAbove15 = above15Str; // Keep original value
+                                                            newBelow15 = (100 - currentAbove15).toFixed(1);
+                                                          }
+                                                          // If neither has a value, set 50/50
+                                                          else {
+                                                            newBelow15 = "50.0";
+                                                            newAbove15 = "50.0";
+                                                          }
+                                                          
+                                                          return {
+                                                            ...prev,
+                                                            patientDistributionMatrix: {
+                                                              ...prev.patientDistributionMatrix,
+                                                              [hospitalCode]: {
+                                                                ...prev.patientDistributionMatrix[hospitalCode],
+                                                                [patientType]: {
+                                                                  ...prev.patientDistributionMatrix[hospitalCode][patientType],
+                                                                  ageDistribution: {
+                                                                    below15: newBelow15,
+                                                                    above15: newAbove15
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          };
+                                                        });
+                                                      }}
+                                                    >
+                                                      Balance
+                                                    </button>
+                                                  )} */}
+                                                  </td>
+                                                </tr>
+                                              );
+                                            }
+                                          )}
+                                        </tbody>
+                                      </table>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -2393,12 +2844,6 @@ export default function HealthcareSurveyForm() {
                 <span className="text-2xl font-bold text-indigo-600">
                   {patientDistributionTotal}%
                 </span>
-              </div>
-
-              <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-600 italic">
-                  * Age distribution if required
-                </p>
               </div>
             </CardContent>
           </Card>
