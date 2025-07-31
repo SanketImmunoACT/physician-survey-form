@@ -57,9 +57,126 @@ export default function HealthcareSurveyForm() {
     visitingHospitals: "",
     selectedHospitalCodes: [],
     hospitalData: {
-      hospital1: { bmtPatients: "", monthlyPatients: "" },
-      hospital2: { bmtPatients: "", monthlyPatients: "" },
-      hospital3: { bmtPatients: "", monthlyPatients: "" },
+      hospital1: {
+        bmtPatients: "",
+        monthlyPatients: "",
+        patientDistribution: {
+          allPatients: "",
+          nhlPatients: "",
+          mmPatients: "",
+          otherHematMalignancies: "",
+          glioblastomas: "",
+          otherSolidTumours: ""
+        }
+      },
+      hospital2: {
+        bmtPatients: "",
+        monthlyPatients: "",
+        patientDistribution: {
+          allPatients: "",
+          nhlPatients: "",
+          mmPatients: "",
+          otherHematMalignancies: "",
+          glioblastomas: "",
+          otherSolidTumours: ""
+        }
+      },
+      hospital3: {
+        bmtPatients: "",
+        monthlyPatients: "",
+        patientDistribution: {
+          allPatients: "",
+          nhlPatients: "",
+          mmPatients: "",
+          otherHematMalignancies: "",
+          glioblastomas: "",
+          otherSolidTumours: ""
+        }
+      },
+      hospital4: {
+        bmtPatients: "",
+        monthlyPatients: "",
+        patientDistribution: {
+          allPatients: "",
+          nhlPatients: "",
+          mmPatients: "",
+          otherHematMalignancies: "",
+          glioblastomas: "",
+          otherSolidTumours: ""
+        }
+      },
+      hospital5: {
+        bmtPatients: "",
+        monthlyPatients: "",
+        patientDistribution: {
+          allPatients: "",
+          nhlPatients: "",
+          mmPatients: "",
+          otherHematMalignancies: "",
+          glioblastomas: "",
+          otherSolidTumours: ""
+        }
+      },
+      hospital6: {
+        bmtPatients: "",
+        monthlyPatients: "",
+        patientDistribution: {
+          allPatients: "",
+          nhlPatients: "",
+          mmPatients: "",
+          otherHematMalignancies: "",
+          glioblastomas: "",
+          otherSolidTumours: ""
+        }
+      },
+      hospital7: {
+        bmtPatients: "",
+        monthlyPatients: "",
+        patientDistribution: {
+          allPatients: "",
+          nhlPatients: "",
+          mmPatients: "",
+          otherHematMalignancies: "",
+          glioblastomas: "",
+          otherSolidTumours: ""
+        }
+      },
+      hospital8: {
+        bmtPatients: "",
+        monthlyPatients: "",
+        patientDistribution: {
+          allPatients: "",
+          nhlPatients: "",
+          mmPatients: "",
+          otherHematMalignancies: "",
+          glioblastomas: "",
+          otherSolidTumours: ""
+        }
+      },
+      hospital9: {
+        bmtPatients: "",
+        monthlyPatients: "",
+        patientDistribution: {
+          allPatients: "",
+          nhlPatients: "",
+          mmPatients: "",
+          otherHematMalignancies: "",
+          glioblastomas: "",
+          otherSolidTumours: ""
+        }
+      },
+      hospital10: {
+        bmtPatients: "",
+        monthlyPatients: "",
+        patientDistribution: {
+          allPatients: "",
+          nhlPatients: "",
+          mmPatients: "",
+          otherHematMalignancies: "",
+          glioblastomas: "",
+          otherSolidTumours: ""
+        }
+      },
     },
     sourceFunds: {
       hospital1: {
@@ -638,14 +755,39 @@ export default function HealthcareSurveyForm() {
     }));
   };
 
-  const handlePatientDistributionChange = (field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      patientDistribution: {
-        ...prev.patientDistribution,
-        [field]: value,
-      },
-    }));
+  const handlePatientDistributionChange = (hospitalCode, field, value) => {
+    // Only allow whole numbers (natural numbers)
+    const numericValue = value.replace(/[^0-9]/g, '');
+
+    setFormData((prev) => {
+      const updatedPatientDistribution = {
+        ...prev.hospitalData[hospitalCode].patientDistribution,
+        [field]: numericValue,
+      };
+      return {
+        ...prev,
+        hospitalData: {
+          ...prev.hospitalData,
+          [hospitalCode]: {
+            ...prev.hospitalData[hospitalCode],
+            patientDistribution: updatedPatientDistribution,
+          },
+        },
+      };
+    });
+  };
+
+  const calculatePatientDistributionTotal = (hospitalCode) => {
+    const pd = formData.hospitalData[hospitalCode]?.patientDistribution || {};
+    return Object.values(pd).reduce((sum, val) => sum + (parseFloat(val) || 0), 0);
+  };
+
+  const getPatientDistributionWarning = (hospitalCode) => {
+    const total = calculatePatientDistributionTotal(hospitalCode);
+    if (total > 100) {
+      return `Total patient distribution (${total}%) exceeds 100%. Please adjust the values.`;
+    }
+    return null;
   };
 
   const calculateTotals = () => {
@@ -662,14 +804,6 @@ export default function HealthcareSurveyForm() {
 
     return { totalBMT, totalMonthly };
   };
-
-  // const calculateSourceTotal = (hospital) => {
-  //   const sourceFunds = formData.sourceFunds[hospital] || {};
-  //   return Object.values(sourceFunds).reduce(
-  //     (sum, value) => sum + (parseFloat(value) || 0),
-  //     0
-  //   );
-  // };
 
   // Improved calculate source total with percentage calculation
   const calculateSourceTotal = (hospital) => {
@@ -717,14 +851,6 @@ export default function HealthcareSurveyForm() {
     };
   };
 
-  const calculatePatientDistributionTotal = () => {
-    const { patientDistribution } = formData;
-    return Object.values(patientDistribution).reduce(
-      (sum, value) => sum + (parseFloat(value) || 0),
-      0
-    );
-  };
-
   const validateForm = () => {
     const newErrors = {};
 
@@ -762,7 +888,6 @@ export default function HealthcareSurveyForm() {
 
   // Patient Case Distribution By Hospital:
 
-  // const patientDistributionMatrix = formData.patientDistributionMatrix || {};
   // Mapping row and column labels
   const patientTypes = [
     { key: "allPatients", label: "ALL Patients" },
@@ -2650,7 +2775,7 @@ export default function HealthcareSurveyForm() {
                     <Input
                       id="allPatients"
                       type="number"
-                      step="0.1"
+                      min="0"
                       value={formData.patientDistribution.allPatients}
                       onChange={(e) =>
                         handlePatientDistributionChange(
@@ -2659,6 +2784,13 @@ export default function HealthcareSurveyForm() {
                         )
                       }
                       placeholder="0"
+                      className={
+                        patientDistributionTotal > 100 
+                          ? "border-red-500 focus:border-red-500" 
+                          : patientDistributionTotal === 100 
+                          ? "border-green-500 focus:border-green-500" 
+                          : ""
+                      }
                     />
                   </div>
 
@@ -2672,7 +2804,7 @@ export default function HealthcareSurveyForm() {
                     <Input
                       id="nhlPatients"
                       type="number"
-                      step="0.1"
+                      min="0"
                       value={formData.patientDistribution.nhlPatients}
                       onChange={(e) =>
                         handlePatientDistributionChange(
@@ -2681,6 +2813,13 @@ export default function HealthcareSurveyForm() {
                         )
                       }
                       placeholder="0"
+                      className={
+                        patientDistributionTotal > 100 
+                          ? "border-red-500 focus:border-red-500" 
+                          : patientDistributionTotal === 100 
+                          ? "border-green-500 focus:border-green-500" 
+                          : ""
+                      }
                     />
                   </div>
 
@@ -2691,7 +2830,7 @@ export default function HealthcareSurveyForm() {
                     <Input
                       id="mmPatients"
                       type="number"
-                      step="0.1"
+                      min="0"
                       value={formData.patientDistribution.mmPatients}
                       onChange={(e) =>
                         handlePatientDistributionChange(
@@ -2700,6 +2839,13 @@ export default function HealthcareSurveyForm() {
                         )
                       }
                       placeholder="0"
+                      className={
+                        patientDistributionTotal > 100 
+                          ? "border-red-500 focus:border-red-500" 
+                          : patientDistributionTotal === 100 
+                          ? "border-green-500 focus:border-green-500" 
+                          : ""
+                      }
                     />
                   </div>
                 </div>
@@ -2715,7 +2861,7 @@ export default function HealthcareSurveyForm() {
                     <Input
                       id="otherHematMalignancies"
                       type="number"
-                      step="0.1"
+                      min="0"
                       value={
                         formData.patientDistribution.otherHematMalignancies
                       }
@@ -2726,6 +2872,13 @@ export default function HealthcareSurveyForm() {
                         )
                       }
                       placeholder="0"
+                      className={
+                        patientDistributionTotal > 100 
+                          ? "border-red-500 focus:border-red-500" 
+                          : patientDistributionTotal === 100 
+                          ? "border-green-500 focus:border-green-500" 
+                          : ""
+                      }
                     />
                   </div>
 
@@ -2739,7 +2892,7 @@ export default function HealthcareSurveyForm() {
                     <Input
                       id="glioblastomas"
                       type="number"
-                      step="0.1"
+                      min="0"
                       value={formData.patientDistribution.glioblastomas}
                       onChange={(e) =>
                         handlePatientDistributionChange(
@@ -2748,6 +2901,13 @@ export default function HealthcareSurveyForm() {
                         )
                       }
                       placeholder="0"
+                      className={
+                        patientDistributionTotal > 100 
+                          ? "border-red-500 focus:border-red-500" 
+                          : patientDistributionTotal === 100 
+                          ? "border-green-500 focus:border-green-500" 
+                          : ""
+                      }
                     />
                   </div>
 
@@ -2761,7 +2921,7 @@ export default function HealthcareSurveyForm() {
                     <Input
                       id="otherSolidTumours"
                       type="number"
-                      step="0.1"
+                      min="0"
                       value={formData.patientDistribution.otherSolidTumours}
                       onChange={(e) =>
                         handlePatientDistributionChange(
@@ -2770,6 +2930,13 @@ export default function HealthcareSurveyForm() {
                         )
                       }
                       placeholder="0"
+                      className={
+                        patientDistributionTotal > 100 
+                          ? "border-red-500 focus:border-red-500" 
+                          : patientDistributionTotal === 100 
+                          ? "border-green-500 focus:border-green-500" 
+                          : ""
+                      }
                     />
                   </div>
                 </div>
@@ -2781,10 +2948,38 @@ export default function HealthcareSurveyForm() {
                 <span className="text-lg font-medium">
                   Total Patient Distribution:
                 </span>
-                <span className="text-2xl font-bold text-indigo-600">
+                <span className={`text-2xl font-bold ${
+                  patientDistributionTotal > 100 
+                    ? 'text-red-600' 
+                    : patientDistributionTotal === 100 
+                    ? 'text-green-600' 
+                    : 'text-indigo-600'
+                }`}>
                   {patientDistributionTotal}%
                 </span>
               </div>
+              
+              {warnings.patientDistribution && (
+                <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Info className="w-5 h-5 text-red-600" />
+                    <span className="text-red-800 font-medium">
+                      {warnings.patientDistribution}
+                    </span>
+                  </div>
+                </div>
+              )}
+              
+              {patientDistributionTotal === 100 && !warnings.patientDistribution && (
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-green-600" />
+                    <span className="text-green-800 font-medium">
+                      Perfect! Patient distribution totals exactly 100%
+                    </span>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
 
