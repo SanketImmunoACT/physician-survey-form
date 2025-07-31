@@ -2544,66 +2544,6 @@ export default function HealthcareSurveyForm() {
                                                         100%
                                                       </div>
                                                     )}
-                                                    {/* {totalPercentage !== 100 && totalPercentage > 0 && (
-                                                    <button
-                                                      type="button"
-                                                      className="ml-2 text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded cursor-pointer"
-                                                      onClick={() => {
-                                                        setFormData(prev => {
-                                                          // Get current values as strings first
-                                                          const below15Str = prev.patientDistributionMatrix?.[hospitalCode]?.[patientType]?.ageDistribution?.below15 || "";
-                                                          const above15Str = prev.patientDistributionMatrix?.[hospitalCode]?.[patientType]?.ageDistribution?.above15 || "";
-                                                          
-                                                          // Parse to numbers if they exist
-                                                          const currentBelow15 = below15Str === "" ? 0 : parseFloat(below15Str);
-                                                          const currentAbove15 = above15Str === "" ? 0 : parseFloat(above15Str);
-                                                          
-                                                          let newBelow15 = "";
-                                                          let newAbove15 = "";
-                                                          
-                                                          // If both have values but don't add to 100%, proportionally adjust
-                                                          if (currentBelow15 > 0 && currentAbove15 > 0) {
-                                                            const total = currentBelow15 + currentAbove15;
-                                                            newBelow15 = ((currentBelow15 / total) * 100).toFixed(1);
-                                                            newAbove15 = ((currentAbove15 / total) * 100).toFixed(1);
-                                                          } 
-                                                          // If only one has a value, set the other to make total 100%
-                                                          else if (currentBelow15 > 0) {
-                                                            newBelow15 = below15Str; // Keep original value
-                                                            newAbove15 = (100 - currentBelow15).toFixed(1);
-                                                          } 
-                                                          else if (currentAbove15 > 0) {
-                                                            newAbove15 = above15Str; // Keep original value
-                                                            newBelow15 = (100 - currentAbove15).toFixed(1);
-                                                          }
-                                                          // If neither has a value, set 50/50
-                                                          else {
-                                                            newBelow15 = "50.0";
-                                                            newAbove15 = "50.0";
-                                                          }
-                                                          
-                                                          return {
-                                                            ...prev,
-                                                            patientDistributionMatrix: {
-                                                              ...prev.patientDistributionMatrix,
-                                                              [hospitalCode]: {
-                                                                ...prev.patientDistributionMatrix[hospitalCode],
-                                                                [patientType]: {
-                                                                  ...prev.patientDistributionMatrix[hospitalCode][patientType],
-                                                                  ageDistribution: {
-                                                                    below15: newBelow15,
-                                                                    above15: newAbove15
-                                                                  }
-                                                                }
-                                                              }
-                                                            }
-                                                          };
-                                                        });
-                                                      }}
-                                                    >
-                                                      Balance
-                                                    </button>
-                                                  )} */}
                                                   </td>
                                                 </tr>
                                               );
