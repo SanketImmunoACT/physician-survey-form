@@ -1470,18 +1470,18 @@ export default function HealthcareSurveyForm() {
                                         "700"
                                       )}`}
                                     >
-                                      Number of BMT Patients
+                                      Number of Patients in a Month
                                     </Label>
                                     <Input
                                       type="number"
                                       value={
                                         formData.hospitalData[hospitalCode]
-                                          ?.bmtPatients || ""
+                                          ?.monthlyPatients || ""
                                       }
                                       onChange={(e) =>
                                         handleHospitalDataChange(
                                           hospitalCode,
-                                          "bmtPatients",
+                                          "monthlyPatients",
                                           e.target.value
                                         )
                                       }
@@ -1496,18 +1496,18 @@ export default function HealthcareSurveyForm() {
                                         "700"
                                       )}`}
                                     >
-                                      Number of Patients in a Month
+                                      Number of BMT Patients
                                     </Label>
                                     <Input
                                       type="number"
                                       value={
                                         formData.hospitalData[hospitalCode]
-                                          ?.monthlyPatients || ""
+                                          ?.bmtPatients || ""
                                       }
                                       onChange={(e) =>
                                         handleHospitalDataChange(
                                           hospitalCode,
-                                          "monthlyPatients",
+                                          "bmtPatients",
                                           e.target.value
                                         )
                                       }
@@ -2118,17 +2118,15 @@ export default function HealthcareSurveyForm() {
                                               <td
                                                 className={`p-2 text-center font-medium ${statusColor}`}
                                               >
-                                                {totalPercentage.toFixed(1)}%
+                                                {totalPercentage}%
                                               </td>
                                               <td className="p-2 text-center">
                                                 {totalPercentage === 0
                                                   ? "-"
                                                   : totalPercentage >= 100
-                                                  ? "0.0%"
-                                                  : `${remainingPercentage.toFixed(
-                                                      1
-                                                    )}%`}
-                                                {totalPercentage > 0 &&
+                                                  ? "0%"
+                                                  : `${remainingPercentage}%`}
+                                                {/* {totalPercentage > 0 &&
                                                   totalPercentage < 100 && (
                                                     <button
                                                       type="button"
@@ -2156,7 +2154,7 @@ export default function HealthcareSurveyForm() {
                                                   >
                                                     Normalize
                                                   </button>
-                                                )}
+                                                )} */}
                                               </td>
                                             </tr>
                                           );
