@@ -784,20 +784,21 @@ export default function HealthcareSurveyForm() {
   const handleAutoBalance = (hospitalCode, patientKey) => {
     setFormData((prev) => {
       // Get current patient distribution for this hospital and patient type
-      const currentDistribution = prev.patientDistributionMatrix?.[hospitalCode]?.[patientKey] || {};
-      
+      const currentDistribution =
+        prev.patientDistributionMatrix?.[hospitalCode]?.[patientKey] || {};
+
       // Create a copy of the distribution to work with
       const updatedDistribution = { ...currentDistribution };
-      
+
       // Calculate total of filled fields
       let filledTotal = 0;
       let filledCount = 0;
       let emptyFields = [];
-      
+
       // Count filled fields and identify empty ones
-      caseTypes.forEach(caseType => {
+      caseTypes.forEach((caseType) => {
         const fieldValue = updatedDistribution[caseType.key];
-          
+
         if (fieldValue !== "" && fieldValue !== undefined) {
           filledTotal += parseFloat(fieldValue) || 0;
           filledCount++;
@@ -805,18 +806,20 @@ export default function HealthcareSurveyForm() {
           emptyFields.push(caseType.key);
         }
       });
-      
+
       // Auto-balance if there are empty fields and filled fields don't exceed 100%
       if (emptyFields.length > 0 && filledTotal < 100) {
         const remaining = 100 - filledTotal;
         const valuePerEmptyField = remaining / emptyFields.length;
-        
+
         // Distribute remaining percentage equally among empty fields
-        emptyFields.forEach(emptyKey => {
-          updatedDistribution[emptyKey] = parseFloat(valuePerEmptyField.toFixed(1));
+        emptyFields.forEach((emptyKey) => {
+          updatedDistribution[emptyKey] = parseFloat(
+            valuePerEmptyField.toFixed(1)
+          );
         });
       }
-      
+
       return {
         ...prev,
         patientDistributionMatrix: {
@@ -833,19 +836,20 @@ export default function HealthcareSurveyForm() {
   const handleNormalizeToHundred = (hospitalCode, patientKey) => {
     setFormData((prev) => {
       // Get current patient distribution for this hospital and patient type
-      const currentDistribution = prev.patientDistributionMatrix?.[hospitalCode]?.[patientKey] || {};
-      
+      const currentDistribution =
+        prev.patientDistributionMatrix?.[hospitalCode]?.[patientKey] || {};
+
       // Create a copy of the distribution to work with
       const updatedDistribution = { ...currentDistribution };
-      
+
       // Calculate total of filled fields and collect filled fields
       let filledTotal = 0;
       const filledFields = [];
-      
+
       // Count filled fields and calculate total
-      caseTypes.forEach(caseType => {
+      caseTypes.forEach((caseType) => {
         const fieldValue = updatedDistribution[caseType.key];
-          
+
         if (fieldValue !== "" && fieldValue !== undefined) {
           const numValue = parseFloat(fieldValue) || 0;
           if (numValue > 0) {
@@ -854,39 +858,50 @@ export default function HealthcareSurveyForm() {
           }
         }
       });
-      
+
       // Normalize values if total exceeds 100%
       if (filledTotal > 100 && filledFields.length > 0) {
         // Calculate scaling factor
         const scalingFactor = 100 / filledTotal;
-        
+
         // Scale each value proportionally
-        filledFields.forEach(fieldKey => {
+        filledFields.forEach((fieldKey) => {
           const originalValue = parseFloat(updatedDistribution[fieldKey]) || 0;
           // Scale and round to 1 decimal place
-          updatedDistribution[fieldKey] = parseFloat((originalValue * scalingFactor).toFixed(1));
+          updatedDistribution[fieldKey] = parseFloat(
+            (originalValue * scalingFactor).toFixed(1)
+          );
         });
-        
+
         // Handle potential rounding errors to ensure exact 100% total
-        let newTotal = filledFields.reduce((sum, key) => sum + parseFloat(updatedDistribution[key]), 0);
-        
+        let newTotal = filledFields.reduce(
+          (sum, key) => sum + parseFloat(updatedDistribution[key]),
+          0
+        );
+
         // If there's still a small difference due to rounding, adjust the largest value
         if (Math.abs(newTotal - 100) > 0.01) {
           // Find the largest value
           let largestKey = filledFields[0];
-          filledFields.forEach(key => {
-            if (parseFloat(updatedDistribution[key]) > parseFloat(updatedDistribution[largestKey])) {
+          filledFields.forEach((key) => {
+            if (
+              parseFloat(updatedDistribution[key]) >
+              parseFloat(updatedDistribution[largestKey])
+            ) {
               largestKey = key;
             }
           });
-          
+
           // Adjust the largest value to make the total exactly 100%
-          updatedDistribution[largestKey] = parseFloat(updatedDistribution[largestKey]) + (100 - newTotal);
+          updatedDistribution[largestKey] =
+            parseFloat(updatedDistribution[largestKey]) + (100 - newTotal);
           // Round to 1 decimal place
-          updatedDistribution[largestKey] = parseFloat(updatedDistribution[largestKey].toFixed(1));
+          updatedDistribution[largestKey] = parseFloat(
+            updatedDistribution[largestKey].toFixed(1)
+          );
         }
       }
-      
+
       return {
         ...prev,
         patientDistributionMatrix: {
@@ -900,35 +915,43 @@ export default function HealthcareSurveyForm() {
     });
   };
 
-  const handleCaseDistributionChange = (hospitalCode, patientKey, caseKey, value, isManualEdit = false) => {
+  const handleCaseDistributionChange = (
+    hospitalCode,
+    patientKey,
+    caseKey,
+    value,
+    isManualEdit = false
+  ) => {
     // Convert value to number or empty string
     const numValue = value === "" ? "" : parseFloat(value);
-    
+
     setFormData((prev) => {
       // Get current patient distribution for this hospital and patient type
-      const currentDistribution = prev.patientDistributionMatrix?.[hospitalCode]?.[patientKey] || {};
-      
+      const currentDistribution =
+        prev.patientDistributionMatrix?.[hospitalCode]?.[patientKey] || {};
+
       // Create updated distribution with the new value
       const updatedDistribution = {
         ...currentDistribution,
         [caseKey]: numValue,
       };
-      
+
       // We no longer clear other fields when a user makes a manual edit
       // This preserves all manually entered values
       // The auto-balancing will still work for empty fields if needed
-      
+
       // Calculate total of filled fields
       let filledTotal = 0;
       let filledCount = 0;
       let emptyFields = [];
-      
+
       // Count filled fields and identify empty ones
-      caseTypes.forEach(caseType => {
-        const fieldValue = caseType.key === caseKey ? 
-          numValue : 
-          updatedDistribution[caseType.key];
-          
+      caseTypes.forEach((caseType) => {
+        const fieldValue =
+          caseType.key === caseKey
+            ? numValue
+            : updatedDistribution[caseType.key];
+
         if (fieldValue !== "" && fieldValue !== undefined) {
           filledTotal += parseFloat(fieldValue) || 0;
           filledCount++;
@@ -936,19 +959,26 @@ export default function HealthcareSurveyForm() {
           emptyFields.push(caseType.key);
         }
       });
-      
+
       // Auto-balance if there are empty fields and filled fields don't exceed 100%
       // Only auto-balance if this is not a manual edit AND we're not clearing a field
-      if (emptyFields.length > 0 && filledTotal < 100 && !isManualEdit && value !== "") {
+      if (
+        emptyFields.length > 0 &&
+        filledTotal < 100 &&
+        !isManualEdit &&
+        value !== ""
+      ) {
         const remaining = 100 - filledTotal;
         const valuePerEmptyField = remaining / emptyFields.length;
-        
+
         // Distribute remaining percentage equally among empty fields
-        emptyFields.forEach(emptyKey => {
-          updatedDistribution[emptyKey] = parseFloat(valuePerEmptyField.toFixed(1));
+        emptyFields.forEach((emptyKey) => {
+          updatedDistribution[emptyKey] = parseFloat(
+            valuePerEmptyField.toFixed(1)
+          );
         });
       }
-      
+
       return {
         ...prev,
         patientDistributionMatrix: {
@@ -1979,115 +2009,161 @@ export default function HealthcareSurveyForm() {
                                     </span>
                                   </div>
                                 </div> */}
-
-                                <div className="overflow-x-auto border rounded-lg">
-                                  <table className="w-full table-auto text-sm text-left">
-                                    <thead className="bg-gray-100">
-                                      <tr>
-                                        <th className="p-2 font-medium text-gray-700">
-                                          Patient Type
-                                        </th>
-                                        {caseTypes.map((caseType) => (
-                                          <th
-                                            key={caseType.key}
-                                            className="p-2 font-medium text-gray-700 text-center"
-                                          >
-                                            {caseType.label}
+                                <div className="">
+                                  <h4
+                                    className={`text-lg font-semibold ${colorScheme.text.replace(
+                                      "800",
+                                      "700"
+                                    )} mb-4`}
+                                  >
+                                    Patient Distribution Category:
+                                  </h4>
+                                  <div className="overflow-x-auto border rounded-lg">
+                                    <table className="w-full table-auto text-sm text-left">
+                                      <thead className="bg-gray-100">
+                                        <tr>
+                                          <th className="p-2 font-medium text-gray-700">
+                                            Patient Type
                                           </th>
-                                        ))}
-                                        <th className="p-2 font-medium text-gray-700 text-center">
-                                          Total %
-                                        </th>
-                                        <th className="p-2 font-medium text-gray-700 text-center">
-                                          Remaining %
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {patientTypes.map((patient) => {
-                                        // Calculate total percentage for this patient type
-                                        const totalPercentage = caseTypes.reduce((sum, caseType) => {
-                                          const value = parseFloat(
-                                            formData.patientDistributionMatrix?.[hospitalCode]?.[patient.key]?.[caseType.key] || 0
-                                          );
-                                          return sum + (isNaN(value) ? 0 : value);
-                                        }, 0);
-                                        
-                                        // Calculate remaining percentage
-                                        const remainingPercentage = 100 - totalPercentage;
-                                        
-                                        // Determine status color
-                                        const statusColor = 
-                                          totalPercentage === 0 ? "text-gray-400" :
-                                          totalPercentage === 100 ? "text-green-600" :
-                                          totalPercentage > 100 ? "text-red-600" :
-                                          "text-orange-500";
-                                        
-                                        return (
-                                          <tr
-                                            key={patient.key}
-                                            className="even:bg-gray-50"
-                                          >
-                                            <td className="p-2 font-medium text-gray-800">
-                                              {patient.label}
-                                            </td>
-                                            {caseTypes.map((caseType) => (
-                                              <td
-                                                key={caseType.key}
-                                                className="p-2 text-center"
-                                              >
-                                                <Input
-                                                  type="number"
-                                                  step="0.1"
-                                                  placeholder="0"
-                                                  className="w-full text-center"
-                                                  value={
-                                                    formData
-                                                      .patientDistributionMatrix?.[hospitalCode]?.[patient.key]?.[caseType.key] || ""
-                                                  }
-                                                  onChange={(e) =>
-                                                    handleCaseDistributionChange(
-                                                      hospitalCode,
-                                                      patient.key,
-                                                      caseType.key,
-                                                      e.target.value,
-                                                      true // This is a manual edit
-                                                    )
-                                                  }
-                                                />
+                                          {caseTypes.map((caseType) => (
+                                            <th
+                                              key={caseType.key}
+                                              className="p-2 font-medium text-gray-700 text-center"
+                                            >
+                                              {caseType.label}
+                                            </th>
+                                          ))}
+                                          <th className="p-2 font-medium text-gray-700 text-center">
+                                            Total %
+                                          </th>
+                                          <th className="p-2 font-medium text-gray-700 text-center">
+                                            Remaining %
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {patientTypes.map((patient) => {
+                                          // Calculate total percentage for this patient type
+                                          const totalPercentage =
+                                            caseTypes.reduce(
+                                              (sum, caseType) => {
+                                                const value = parseFloat(
+                                                  formData
+                                                    .patientDistributionMatrix?.[
+                                                    hospitalCode
+                                                  ]?.[patient.key]?.[
+                                                    caseType.key
+                                                  ] || 0
+                                                );
+                                                return (
+                                                  sum +
+                                                  (isNaN(value) ? 0 : value)
+                                                );
+                                              },
+                                              0
+                                            );
+
+                                          // Calculate remaining percentage
+                                          const remainingPercentage =
+                                            100 - totalPercentage;
+
+                                          // Determine status color
+                                          const statusColor =
+                                            totalPercentage === 0
+                                              ? "text-gray-400"
+                                              : totalPercentage === 100
+                                              ? "text-green-600"
+                                              : totalPercentage > 100
+                                              ? "text-red-600"
+                                              : "text-orange-500";
+
+                                          return (
+                                            <tr
+                                              key={patient.key}
+                                              className="even:bg-gray-50"
+                                            >
+                                              <td className="p-2 font-medium text-gray-800">
+                                                {patient.label}
                                               </td>
-                                            ))}
-                                            <td className={`p-2 text-center font-medium ${statusColor}`}>
-                                              {totalPercentage.toFixed(1)}%
-                                            </td>
-                                            <td className="p-2 text-center">
-                                              {totalPercentage === 0 ? "-" : 
-                                               totalPercentage >= 100 ? "0.0%" :
-                                               `${remainingPercentage.toFixed(1)}%`}
-                                              {totalPercentage > 0 && totalPercentage < 100 && (
-                                                <button 
-                                                  type="button"
-                                                  className="ml-2 text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded cursor-pointer"
-                                                  onClick={() => handleAutoBalance(hospitalCode, patient.key)}
+                                              {caseTypes.map((caseType) => (
+                                                <td
+                                                  key={caseType.key}
+                                                  className="p-2 text-center"
                                                 >
-                                                  Balance
-                                                </button>
-                                              )}
-                                              {totalPercentage > 100 && (
-                                                <button 
-                                                  type="button"
-                                                  className="ml-2 text-xs bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
-                                                  onClick={() => handleNormalizeToHundred(hospitalCode, patient.key)}
-                                                >
-                                                  Normalize
-                                                </button>
-                                              )}
-                                            </td>
-                                          </tr>
-                                        );
-                                      })}
-                                    </tbody>
-                                  </table>
+                                                  <Input
+                                                    type="number"
+                                                    step="0.1"
+                                                    placeholder="0"
+                                                    className="w-full text-center"
+                                                    value={
+                                                      formData
+                                                        .patientDistributionMatrix?.[
+                                                        hospitalCode
+                                                      ]?.[patient.key]?.[
+                                                        caseType.key
+                                                      ] || ""
+                                                    }
+                                                    onChange={(e) =>
+                                                      handleCaseDistributionChange(
+                                                        hospitalCode,
+                                                        patient.key,
+                                                        caseType.key,
+                                                        e.target.value,
+                                                        true // This is a manual edit
+                                                      )
+                                                    }
+                                                  />
+                                                </td>
+                                              ))}
+                                              <td
+                                                className={`p-2 text-center font-medium ${statusColor}`}
+                                              >
+                                                {totalPercentage.toFixed(1)}%
+                                              </td>
+                                              <td className="p-2 text-center">
+                                                {totalPercentage === 0
+                                                  ? "-"
+                                                  : totalPercentage >= 100
+                                                  ? "0.0%"
+                                                  : `${remainingPercentage.toFixed(
+                                                      1
+                                                    )}%`}
+                                                {totalPercentage > 0 &&
+                                                  totalPercentage < 100 && (
+                                                    <button
+                                                      type="button"
+                                                      className="ml-2 text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded cursor-pointer"
+                                                      onClick={() =>
+                                                        handleAutoBalance(
+                                                          hospitalCode,
+                                                          patient.key
+                                                        )
+                                                      }
+                                                    >
+                                                      Balance
+                                                    </button>
+                                                  )}
+                                                {totalPercentage > 100 && (
+                                                  <button
+                                                    type="button"
+                                                    className="ml-2 text-xs bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
+                                                    onClick={() =>
+                                                      handleNormalizeToHundred(
+                                                        hospitalCode,
+                                                        patient.key
+                                                      )
+                                                    }
+                                                  >
+                                                    Normalize
+                                                  </button>
+                                                )}
+                                              </td>
+                                            </tr>
+                                          );
+                                        })}
+                                      </tbody>
+                                    </table>
+                                  </div>
                                 </div>
                               </div>
                             </AccordionContent>
