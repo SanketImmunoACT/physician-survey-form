@@ -1,4 +1,7 @@
 "use client";
+
+export const dynamic = "force-dynamic";
+
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -28,7 +31,7 @@ export default function ResetPasswordPage() {
       if (!res.ok) throw new Error(data?.error || "Failed to reset password");
 
       toast.success("Password updated successfully!");
-      window.location.href = "/"; // Redirect to login
+      window.location.href = "/";
     } catch (err) {
       toast.error(err.message);
     } finally {
