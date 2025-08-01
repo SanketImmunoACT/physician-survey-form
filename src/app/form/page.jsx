@@ -28,6 +28,7 @@ import doctors from "@/data/doctors.json";
 import hospitals from "@/data/hospitals.json";
 import { SingleSelect } from "@/components/ui/SingleSelect";
 import * as RadioGroup from "@radix-ui/react-radio-group";
+import toast from "react-hot-toast";
 
 const doctorOptions = doctors;
 
@@ -422,6 +423,7 @@ export default function HealthcareSurveyForm() {
         otherSolidTumours: {},
       },
     },
+    additionalInsights: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -1653,7 +1655,8 @@ export default function HealthcareSurveyForm() {
                                       "700"
                                     )} mb-4`}
                                   >
-                                    Source of Funds: (Out of {monthlyPatients} patients)
+                                    Source of Funds: (Out of {monthlyPatients}{" "}
+                                    patients)
                                   </h4>
                                   {warnings[`${hospitalCode}_sourceFunds`] && (
                                     <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
@@ -1688,7 +1691,6 @@ export default function HealthcareSurveyForm() {
                                         placeholder="0"
                                         className="bg-white"
                                       />
-                                    
                                     </div>
                                     <div className="space-y-2">
                                       <Label className="text-sm font-medium">
@@ -2767,237 +2769,81 @@ export default function HealthcareSurveyForm() {
             </Card>
           )}
 
-          {/* Patient Distribution (Table 7) */}
-          {/* <Card className="shadow-lg border-0">
+          {/* Global Query Box - Additional Insights */}
+          <Card className="shadow-lg border-0">
             <CardHeader className="bg-gradient-to-r from-gray-600 to-gray-700 text-white">
               <CardTitle className="flex items-center gap-2">
-                <BarChart3 className="w-5 h-5" />
-                Patient Distribution
+                <Info className="w-5 h-5" />
+                Additional Insights
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="allPatients"
-                      className="text-sm font-medium"
-                    >
-                      % ALL patients
-                    </Label>
-                    <Input
-                      id="allPatients"
-                      type="number"
-                      min="0"
-                      value={formData.patientDistribution.allPatients}
-                      onChange={(e) =>
-                        handlePatientDistributionChange(
-                          "allPatients",
-                          e.target.value
-                        )
-                      }
-                      placeholder="0"
-                      className={
-                        patientDistributionTotal > 100
-                          ? "border-red-500 focus:border-red-500"
-                          : patientDistributionTotal === 100
-                          ? "border-green-500 focus:border-green-500"
-                          : ""
-                      }
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="nhlPatients"
-                      className="text-sm font-medium"
-                    >
-                      % NHL Patients
-                    </Label>
-                    <Input
-                      id="nhlPatients"
-                      type="number"
-                      min="0"
-                      value={formData.patientDistribution.nhlPatients}
-                      onChange={(e) =>
-                        handlePatientDistributionChange(
-                          "nhlPatients",
-                          e.target.value
-                        )
-                      }
-                      placeholder="0"
-                      className={
-                        patientDistributionTotal > 100
-                          ? "border-red-500 focus:border-red-500"
-                          : patientDistributionTotal === 100
-                          ? "border-green-500 focus:border-green-500"
-                          : ""
-                      }
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="mmPatients" className="text-sm font-medium">
-                      % MM Patients
-                    </Label>
-                    <Input
-                      id="mmPatients"
-                      type="number"
-                      min="0"
-                      value={formData.patientDistribution.mmPatients}
-                      onChange={(e) =>
-                        handlePatientDistributionChange(
-                          "mmPatients",
-                          e.target.value
-                        )
-                      }
-                      placeholder="0"
-                      className={
-                        patientDistributionTotal > 100
-                          ? "border-red-500 focus:border-red-500"
-                          : patientDistributionTotal === 100
-                          ? "border-green-500 focus:border-green-500"
-                          : ""
-                      }
-                    />
-                  </div>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-lg font-semibold text-gray-800">
+                    Any other insights from discussion
+                  </Label>
+                  <p className="text-sm text-gray-600 italic">
+                    Please share any additional insights, observations, or
+                    important information gathered during the discussion that
+                    may not have been captured in the previous sections.
+                  </p>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="otherHematMalignancies"
-                      className="text-sm font-medium"
-                    >
-                      % Other Hemat malignancies
-                    </Label>
-                    <Input
-                      id="otherHematMalignancies"
-                      type="number"
-                      min="0"
-                      value={
-                        formData.patientDistribution.otherHematMalignancies
-                      }
-                      onChange={(e) =>
-                        handlePatientDistributionChange(
-                          "otherHematMalignancies",
-                          e.target.value
-                        )
-                      }
-                      placeholder="0"
-                      className={
-                        patientDistributionTotal > 100
-                          ? "border-red-500 focus:border-red-500"
-                          : patientDistributionTotal === 100
-                          ? "border-green-500 focus:border-green-500"
-                          : ""
-                      }
-                    />
-                  </div>
+                <div className="relative">
+                  <textarea
+                    className="w-full min-h-[200px] p-4 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-white"
+                    placeholder="Enter any additional insights, observations, or important information from your discussion with the physician..."
+                    value={formData.additionalInsights || ""}
+                    onChange={(e) =>
+                      handleInputChange("additionalInsights", e.target.value)
+                    }
+                    style={{
+                      minHeight: "200px",
+                      maxHeight: "400px",
+                    }}
+                  />
 
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="glioblastomas"
-                      className="text-sm font-medium"
-                    >
-                      % Glioblastomas
-                    </Label>
-                    <Input
-                      id="glioblastomas"
-                      type="number"
-                      min="0"
-                      value={formData.patientDistribution.glioblastomas}
-                      onChange={(e) =>
-                        handlePatientDistributionChange(
-                          "glioblastomas",
-                          e.target.value
-                        )
-                      }
-                      placeholder="0"
-                      className={
-                        patientDistributionTotal > 100
-                          ? "border-red-500 focus:border-red-500"
-                          : patientDistributionTotal === 100
-                          ? "border-green-500 focus:border-green-500"
-                          : ""
-                      }
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="otherSolidTumours"
-                      className="text-sm font-medium"
-                    >
-                      % Other solid tumours
-                    </Label>
-                    <Input
-                      id="otherSolidTumours"
-                      type="number"
-                      min="0"
-                      value={formData.patientDistribution.otherSolidTumours}
-                      onChange={(e) =>
-                        handlePatientDistributionChange(
-                          "otherSolidTumours",
-                          e.target.value
-                        )
-                      }
-                      placeholder="0"
-                      className={
-                        patientDistributionTotal > 100
-                          ? "border-red-500 focus:border-red-500"
-                          : patientDistributionTotal === 100
-                          ? "border-green-500 focus:border-green-500"
-                          : ""
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <Separator className="my-6" />
-
-              <div className="flex justify-between items-center bg-indigo-50 p-4 rounded-lg">
-                <span className="text-lg font-medium">
-                  Total Patient Distribution:
-                </span>
-                <span
-                  className={`text-2xl font-bold ${
-                    patientDistributionTotal > 100
-                      ? "text-red-600"
-                      : patientDistributionTotal === 100
-                      ? "text-green-600"
-                      : "text-indigo-600"
-                  }`}
-                >
-                  {patientDistributionTotal}%
-                </span>
-              </div>
-
-              {warnings.patientDistribution && (
-                <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <Info className="w-5 h-5 text-red-600" />
-                    <span className="text-red-800 font-medium">
-                      {warnings.patientDistribution}
+                  {/* Character counter */}
+                  <div className="flex justify-end mt-2 text-xs text-gray-500">
+                    <span>
+                      {formData.additionalInsights?.length || 0} characters
                     </span>
                   </div>
-                </div>
-              )}
 
-              {patientDistributionTotal === 100 &&
-                !warnings.patientDistribution && (
-                  <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <div className="flex items-center gap-2">
-                      <ShieldCheck className="w-5 h-5 text-green-600" />
-                      <span className="text-green-800 font-medium">
-                        Perfect! Patient distribution totals exactly 100%
-                      </span>
-                    </div>
+                  {/* Interactive features */}
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const insights = formData.additionalInsights || "";
+                        if (insights.length > 0) {
+                          navigator.clipboard.writeText(insights);
+                          toast.success("Additional insights copied to clipboard!");
+                        }
+                      }}
+                      className="text-xs cursor-pointer"
+                    >
+                      Copy to Clipboard
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() =>
+                        handleInputChange("additionalInsights", "")
+                      }
+                      className="text-xs text-red-600 hover:text-red-700 cursor-pointer"
+                    >
+                      Clear Text
+                    </Button>
                   </div>
-                )}
+                </div>
+              </div>
             </CardContent>
-          </Card> */}
+          </Card>
 
           {/* Submit Button */}
           <div className="flex justify-center pt-6">
