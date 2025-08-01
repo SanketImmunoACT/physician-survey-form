@@ -66,8 +66,8 @@ export default function HealthcareSurveyForm() {
           mmPatients: "",
           otherHematMalignancies: "",
           glioblastomas: "",
-          otherSolidTumours: ""
-        }
+          otherSolidTumours: "",
+        },
       },
       hospital2: {
         bmtPatients: "",
@@ -78,8 +78,8 @@ export default function HealthcareSurveyForm() {
           mmPatients: "",
           otherHematMalignancies: "",
           glioblastomas: "",
-          otherSolidTumours: ""
-        }
+          otherSolidTumours: "",
+        },
       },
       hospital3: {
         bmtPatients: "",
@@ -90,8 +90,8 @@ export default function HealthcareSurveyForm() {
           mmPatients: "",
           otherHematMalignancies: "",
           glioblastomas: "",
-          otherSolidTumours: ""
-        }
+          otherSolidTumours: "",
+        },
       },
       hospital4: {
         bmtPatients: "",
@@ -102,8 +102,8 @@ export default function HealthcareSurveyForm() {
           mmPatients: "",
           otherHematMalignancies: "",
           glioblastomas: "",
-          otherSolidTumours: ""
-        }
+          otherSolidTumours: "",
+        },
       },
       hospital5: {
         bmtPatients: "",
@@ -114,8 +114,8 @@ export default function HealthcareSurveyForm() {
           mmPatients: "",
           otherHematMalignancies: "",
           glioblastomas: "",
-          otherSolidTumours: ""
-        }
+          otherSolidTumours: "",
+        },
       },
       hospital6: {
         bmtPatients: "",
@@ -126,8 +126,8 @@ export default function HealthcareSurveyForm() {
           mmPatients: "",
           otherHematMalignancies: "",
           glioblastomas: "",
-          otherSolidTumours: ""
-        }
+          otherSolidTumours: "",
+        },
       },
       hospital7: {
         bmtPatients: "",
@@ -138,8 +138,8 @@ export default function HealthcareSurveyForm() {
           mmPatients: "",
           otherHematMalignancies: "",
           glioblastomas: "",
-          otherSolidTumours: ""
-        }
+          otherSolidTumours: "",
+        },
       },
       hospital8: {
         bmtPatients: "",
@@ -150,8 +150,8 @@ export default function HealthcareSurveyForm() {
           mmPatients: "",
           otherHematMalignancies: "",
           glioblastomas: "",
-          otherSolidTumours: ""
-        }
+          otherSolidTumours: "",
+        },
       },
       hospital9: {
         bmtPatients: "",
@@ -162,8 +162,8 @@ export default function HealthcareSurveyForm() {
           mmPatients: "",
           otherHematMalignancies: "",
           glioblastomas: "",
-          otherSolidTumours: ""
-        }
+          otherSolidTumours: "",
+        },
       },
       hospital10: {
         bmtPatients: "",
@@ -174,8 +174,8 @@ export default function HealthcareSurveyForm() {
           mmPatients: "",
           otherHematMalignancies: "",
           glioblastomas: "",
-          otherSolidTumours: ""
-        }
+          otherSolidTumours: "",
+        },
       },
     },
     sourceFunds: {
@@ -757,7 +757,7 @@ export default function HealthcareSurveyForm() {
 
   const handlePatientDistributionChange = (hospitalCode, field, value) => {
     // Only allow whole numbers (natural numbers)
-    const numericValue = value.replace(/[^0-9]/g, '');
+    const numericValue = value.replace(/[^0-9]/g, "");
 
     setFormData((prev) => {
       const updatedPatientDistribution = {
@@ -779,7 +779,10 @@ export default function HealthcareSurveyForm() {
 
   const calculatePatientDistributionTotal = (hospitalCode) => {
     const pd = formData.hospitalData[hospitalCode]?.patientDistribution || {};
-    return Object.values(pd).reduce((sum, val) => sum + (parseFloat(val) || 0), 0);
+    return Object.values(pd).reduce(
+      (sum, val) => sum + (parseFloat(val) || 0),
+      0
+    );
   };
 
   const getPatientDistributionWarning = (hospitalCode) => {
@@ -1861,279 +1864,161 @@ export default function HealthcareSurveyForm() {
                                   </div>
                                 </div>
 
-                                {/* {formData.selectedHospitalCodes.map((hospitalCode) => {
-            const monthlyPatients = parseInt(formData.hospitalData[hospitalCode]?.monthlyPatients) || 0;
-            const sourceTotal = calculateSourceTotal(hospitalCode);
-            const sourcePercentages = calculateSourcePercentages(hospitalCode);
-            const sourcePercentage = monthlyPatients > 0 ? ((sourceTotal / monthlyPatients) * 100).toFixed(1) : "0.0";
-            const colorScheme = {
-              text: "text-gray-800",
-              accent: "bg-purple-50",
-            };
+                                {/* Patient Distribution Table */}
+                                <h4 className="text-lg font-semibold text-blue-700">
+                                  Patient Distribution:
+                                </h4>
+                                <p className="text-sm text-gray-600 mb-2">
+                                  Fill percentage of patients per diagnosis
+                                  category
+                                </p>
 
-            return (
-              <Card key={hospitalCode} className="shadow-lg border-0">
-                <CardHeader className="bg-gradient-to-r from-purple-600 to-purple-700 text-white">
-                  <CardTitle className="flex items-center gap-2">
-                    <CreditCard className="w-5 h-5" />
-                    Source of Funds - {getHospitalName(hospitalCode)}
-                  </CardTitle>
-                </CardHeader>
-
-                <CardContent className="p-6">
-             
-                  {warnings[`${hospitalCode}_sourceFunds`] && (
-                    <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-red-600 text-sm font-medium">
-                        {warnings[`${hospitalCode}_sourceFunds`]}
-                      </p>
-                    </div>
-                  )}
-
-              
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {Object.keys(formData.sourceFunds[hospitalCode] || {}).map((key) => {
-                      const value = formData.sourceFunds[hospitalCode]?.[key] || "";
-                      const percentage = sourcePercentages[key];
-
-                      return (
-                        <div key={key} className="space-y-2">
-                          <Label htmlFor={`${hospitalCode}_${key}`} className="text-sm font-medium">
-                            {formatKey(key)}
-                          </Label>
-                          <Input
-                            id={`${hospitalCode}_${key}`}
-                            type="number"
-                            step="0.1"
-                            value={value}
-                            onChange={(e) =>
-                              handleSourceFundsChange(hospitalCode, key, e.target.value)
-                            }
-                            placeholder="0"
-                            className="bg-white"
-                          />
-                          <p className="text-xs text-gray-500">
-                            {percentage}% of total funds
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  <Separator className="my-6" />
-
-                 
-                  <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                    <span className="text-lg font-medium">
-                      Total Source of Funds: {sourceTotal} patients ({sourcePercentage}%)
-                    </span>
-                    <div className="text-right">
-                      <span className="text-2xl font-bold text-purple-600">
-                        {sourceTotal > 0 ? "100%" : "0%"}
-                      </span>
-                      {parseFloat(sourcePercentage) > 100 && (
-                        <div className="text-red-600 text-sm font-medium mt-1">
-                          ⚠ Exceeds monthly patients
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  
-                  <div className="mt-2 text-sm text-gray-600">
-                    Out of {monthlyPatients} monthly patients
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })} */}
-
-                                {/* {formData.selectedHospitalCodes.map((hospitalCode) => {
-  const sourceFunds = formData.sourceFunds[hospitalCode] || {};
-  const monthlyPatients = parseFloat(formData.hospitalData[hospitalCode]?.monthlyPatients) || 0;
-
-  const totalRaw = Object.values(sourceFunds).reduce(
-    (sum, val) => sum + (parseFloat(val) || 0),
-    0
-  );
-
-  const sourcePercentage = monthlyPatients > 0 ? ((totalRaw / monthlyPatients) * 100).toFixed(1) : "0.0";
-
-  const formatKey = (key) =>
-    key
-      .replace(/([A-Z])/g, " $1")
-      .replace(/^./, (str) => str.toUpperCase());
-
-  return (
-    <Card key={hospitalCode} className="shadow-lg border-0 mb-8">
-      <CardHeader className="bg-gradient-to-r from-purple-600 to-purple-700 text-white">
-        <CardTitle className="flex justify-between items-center">
-          <span className="flex items-center gap-2">
-            <CreditCard className="w-5 h-5" />
-            {getHospitalName(hospitalCode)} - Source of Funds
-          </span>
-          <span className="text-sm font-normal">Monthly Patients: {monthlyPatients}</span>
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Object.keys(sourceFunds).map((key) => {
-            const rawValue = parseFloat(sourceFunds[key]) || 0;
-            const percentage =
-              totalRaw > 0 ? ((rawValue / totalRaw) * 100).toFixed(1) : "0.0";
-
-            return (
-              <div key={key} className="space-y-2">
-                <Label htmlFor={`${hospitalCode}_${key}`} className="text-sm font-medium">
-                  {formatKey(key)}
-                </Label>
-                <Input
-                  id={`${hospitalCode}_${key}`}
-                  type="number"
-                  step="0.1"
-                  value={formData.sourceFunds[hospitalCode]?.[key] || ""}
-                  onChange={(e) =>
-                    handleSourceFundsChange(hospitalCode, key, e.target.value)
-                  }
-                  placeholder="Enter amount"
-                  className="bg-white"
-                />
-                <p className="text-sm text-gray-600">{percentage}% of total</p>
-              </div>
-            );
-          })}
-        </div>
-
-        <Separator className="my-6" />
-
-        <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-          <span className="text-lg font-medium">Total Source of Funds:</span>
-          <span
-            className={`text-2xl font-bold ${
-              sourcePercentage > 100 ? "text-red-600" : "text-blue-600"
-            }`}
-          >
-            {sourcePercentage}%
-          </span>
-        </div>
-        {sourcePercentage > 100 && (
-          <p className="text-red-600 mt-2 text-sm">
-            ⚠ Total exceeds 100% of monthly patients!
-          </p>
-        )}
-      </CardContent>
-    </Card>
-  );
-})} */}
-
-                                {/* Patient Case Distribution */}
-                                {/* <div>
-                                  <h4
-                                    className={`text-lg font-semibold ${colorScheme.text.replace(
-                                      "800",
-                                      "700"
-                                    )} mb-4`}
-                                  >
-                                    Patient Case Distribution By Hospital:
-                                  </h4>
-                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div className="space-y-2">
-                                      <Label className="text-sm font-medium">
-                                        Newly Diagnosed %
-                                      </Label>
-                                      <Input
-                                        type="number"
-                                        step="0.1"
-                                        value={
-                                          formData.hospitalCodeBreakdown[
-                                            hospitalCode
-                                          ]?.newlyDiagnosed || ""
-                                        }
-                                        onChange={(e) =>
-                                          handleHospitalCodeBreakdownChange(
-                                            hospitalCode,
-                                            "newlyDiagnosed",
-                                            e.target.value
-                                          )
-                                        }
-                                        placeholder="0"
-                                        className="bg-white"
-                                      />
-                                    </div>
-                                    <div className="space-y-2">
-                                      <Label className="text-sm font-medium">
-                                        Relapsed/Refractory %
-                                      </Label>
-                                      <Input
-                                        type="number"
-                                        step="0.1"
-                                        value={
-                                          formData.hospitalCodeBreakdown[
-                                            hospitalCode
-                                          ]?.relapsedRefractory || ""
-                                        }
-                                        onChange={(e) =>
-                                          handleHospitalCodeBreakdownChange(
-                                            hospitalCode,
-                                            "relapsedRefractory",
-                                            e.target.value
-                                          )
-                                        }
-                                        placeholder="0"
-                                        className="bg-white"
-                                      />
-                                    </div>
-                                    <div className="space-y-2">
-                                      <Label className="text-sm font-medium">
-                                        2nd Opinion %
-                                      </Label>
-                                      <Input
-                                        type="number"
-                                        step="0.1"
-                                        value={
-                                          formData.hospitalCodeBreakdown[
-                                            hospitalCode
-                                          ]?.secondOpinion || ""
-                                        }
-                                        onChange={(e) =>
-                                          handleHospitalCodeBreakdownChange(
-                                            hospitalCode,
-                                            "secondOpinion",
-                                            e.target.value
-                                          )
-                                        }
-                                        placeholder="0"
-                                        className="bg-white"
-                                      />
-                                    </div>
+                                <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    {[
+                                      {
+                                        label: "% ALL patients",
+                                        key: "allPatients",
+                                      },
+                                      {
+                                        label: "% Other Hemat malignancies",
+                                        key: "otherHematMalignancies",
+                                      },
+                                      {
+                                        label: "% NHL Patients",
+                                        key: "nhlPatients",
+                                      },
+                                      {
+                                        label: "% Glioblastomas",
+                                        key: "glioblastomas",
+                                      },
+                                      {
+                                        label: "% MM Patients",
+                                        key: "mmPatients",
+                                      },
+                                      {
+                                        label: "% Other solid tumours",
+                                        key: "otherSolidTumours",
+                                      },
+                                    ].map(({ label, key }) => (
+                                      <div key={key}>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                          {label}
+                                        </label>
+                                        <input
+                                          type="number"
+                                          inputMode="numeric"
+                                          pattern="[0-9]*"
+                                          min="0"
+                                          max="100"
+                                          placeholder="0"
+                                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                          value={
+                                            formData.hospitalData[hospitalCode]
+                                              ?.patientDistribution?.[key] || ""
+                                          }
+                                          onKeyDown={(e) => {
+                                            if (
+                                              [
+                                                "e",
+                                                "E",
+                                                "+",
+                                                "-",
+                                                ".",
+                                              ].includes(e.key)
+                                            ) {
+                                              e.preventDefault(); // Block scientific notation, decimals, negatives
+                                            }
+                                          }}
+                                          onChange={(e) => {
+                                            const value = e.target.value;
+                                            if (/^\d{0,3}$/.test(value)) {
+                                              setFormData((prev) => ({
+                                                ...prev,
+                                                hospitalData: {
+                                                  ...prev.hospitalData,
+                                                  [hospitalCode]: {
+                                                    ...prev.hospitalData[
+                                                      hospitalCode
+                                                    ],
+                                                    patientDistribution: {
+                                                      ...prev.hospitalData[
+                                                        hospitalCode
+                                                      ]?.patientDistribution,
+                                                      [key]: value,
+                                                    },
+                                                  },
+                                                },
+                                              }));
+                                            }
+                                          }}
+                                        />
+                                      </div>
+                                    ))}
                                   </div>
-                                  <div
-                                    className={`mt-4 p-3 ${colorScheme.accent} rounded-lg`}
-                                  >
-                                    <span
-                                      className={`text-sm font-medium ${colorScheme.text}`}
-                                    >
-                                      Total Patient Cases:{" "}
-                                      {(parseFloat(
-                                        formData.hospitalCodeBreakdown[
-                                          hospitalCode
-                                        ]?.newlyDiagnosed
-                                      ) || 0) +
-                                        (parseFloat(
-                                          formData.hospitalCodeBreakdown[
-                                            hospitalCode
-                                          ]?.relapsedRefractory
-                                        ) || 0) +
-                                        (parseFloat(
-                                          formData.hospitalCodeBreakdown[
-                                            hospitalCode
-                                          ]?.secondOpinion
-                                        ) || 0)}
-                                      %
-                                    </span>
+
+                                  {/* Total Patient Distribution Display */}
+                                  <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                                    {(() => {
+                                      const pd =
+                                        formData.hospitalData[hospitalCode]
+                                          ?.patientDistribution || {};
+
+                                      const total =
+                                        parseFloat(pd.allPatients || 0) +
+                                        parseFloat(pd.nhlPatients || 0) +
+                                        parseFloat(pd.mmPatients || 0) +
+                                        parseFloat(
+                                          pd.otherHematMalignancies || 0
+                                        ) +
+                                        parseFloat(pd.glioblastomas || 0) +
+                                        parseFloat(pd.otherSolidTumours || 0);
+
+                                      const hasValues = Object.values(pd).some(
+                                        (val) => val && parseFloat(val) > 0
+                                      );
+
+                                      return (
+                                        <>
+                                          <div className="flex items-center justify-between">
+                                            <span className="text-sm font-medium text-gray-700">
+                                              Total Patient Distribution:
+                                            </span>
+                                            <span
+                                              className={`text-lg font-bold ${
+                                                total === 100
+                                                  ? "text-green-600"
+                                                  : total > 100
+                                                  ? "text-red-600"
+                                                  : "text-blue-600"
+                                              }`}
+                                            >
+                                              {Number.isInteger(total)
+                                                ? `${total}%`
+                                                : `${total.toFixed(1)}%`}
+                                            </span>
+                                          </div>
+
+                                          {hasValues && total > 100 && (
+                                            <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+                                              ⚠️ Warning: Total percentage
+                                              exceeds 100%. Please adjust the
+                                              values.
+                                            </div>
+                                          )}
+                                          {hasValues && total === 100 && (
+                                            <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded text-green-700 text-sm">
+                                              ✅ Perfect! Total percentage
+                                              equals 100%.
+                                            </div>
+                                          )}
+                                        </>
+                                      );
+                                    })()}
                                   </div>
-                                </div> */}
+                                </div>
+
+                                {/* Patient Distribution Category Table */}
                                 <div className="">
                                   <h4
                                     className={`text-lg font-semibold ${colorScheme.text.replace(
@@ -2755,7 +2640,7 @@ export default function HealthcareSurveyForm() {
           )}
 
           {/* Patient Distribution (Table 7) */}
-          <Card className="shadow-lg border-0">
+          {/* <Card className="shadow-lg border-0">
             <CardHeader className="bg-gradient-to-r from-gray-600 to-gray-700 text-white">
               <CardTitle className="flex items-center gap-2">
                 <BarChart3 className="w-5 h-5" />
@@ -2785,10 +2670,10 @@ export default function HealthcareSurveyForm() {
                       }
                       placeholder="0"
                       className={
-                        patientDistributionTotal > 100 
-                          ? "border-red-500 focus:border-red-500" 
-                          : patientDistributionTotal === 100 
-                          ? "border-green-500 focus:border-green-500" 
+                        patientDistributionTotal > 100
+                          ? "border-red-500 focus:border-red-500"
+                          : patientDistributionTotal === 100
+                          ? "border-green-500 focus:border-green-500"
                           : ""
                       }
                     />
@@ -2814,10 +2699,10 @@ export default function HealthcareSurveyForm() {
                       }
                       placeholder="0"
                       className={
-                        patientDistributionTotal > 100 
-                          ? "border-red-500 focus:border-red-500" 
-                          : patientDistributionTotal === 100 
-                          ? "border-green-500 focus:border-green-500" 
+                        patientDistributionTotal > 100
+                          ? "border-red-500 focus:border-red-500"
+                          : patientDistributionTotal === 100
+                          ? "border-green-500 focus:border-green-500"
                           : ""
                       }
                     />
@@ -2840,10 +2725,10 @@ export default function HealthcareSurveyForm() {
                       }
                       placeholder="0"
                       className={
-                        patientDistributionTotal > 100 
-                          ? "border-red-500 focus:border-red-500" 
-                          : patientDistributionTotal === 100 
-                          ? "border-green-500 focus:border-green-500" 
+                        patientDistributionTotal > 100
+                          ? "border-red-500 focus:border-red-500"
+                          : patientDistributionTotal === 100
+                          ? "border-green-500 focus:border-green-500"
                           : ""
                       }
                     />
@@ -2873,10 +2758,10 @@ export default function HealthcareSurveyForm() {
                       }
                       placeholder="0"
                       className={
-                        patientDistributionTotal > 100 
-                          ? "border-red-500 focus:border-red-500" 
-                          : patientDistributionTotal === 100 
-                          ? "border-green-500 focus:border-green-500" 
+                        patientDistributionTotal > 100
+                          ? "border-red-500 focus:border-red-500"
+                          : patientDistributionTotal === 100
+                          ? "border-green-500 focus:border-green-500"
                           : ""
                       }
                     />
@@ -2902,10 +2787,10 @@ export default function HealthcareSurveyForm() {
                       }
                       placeholder="0"
                       className={
-                        patientDistributionTotal > 100 
-                          ? "border-red-500 focus:border-red-500" 
-                          : patientDistributionTotal === 100 
-                          ? "border-green-500 focus:border-green-500" 
+                        patientDistributionTotal > 100
+                          ? "border-red-500 focus:border-red-500"
+                          : patientDistributionTotal === 100
+                          ? "border-green-500 focus:border-green-500"
                           : ""
                       }
                     />
@@ -2931,10 +2816,10 @@ export default function HealthcareSurveyForm() {
                       }
                       placeholder="0"
                       className={
-                        patientDistributionTotal > 100 
-                          ? "border-red-500 focus:border-red-500" 
-                          : patientDistributionTotal === 100 
-                          ? "border-green-500 focus:border-green-500" 
+                        patientDistributionTotal > 100
+                          ? "border-red-500 focus:border-red-500"
+                          : patientDistributionTotal === 100
+                          ? "border-green-500 focus:border-green-500"
                           : ""
                       }
                     />
@@ -2948,17 +2833,19 @@ export default function HealthcareSurveyForm() {
                 <span className="text-lg font-medium">
                   Total Patient Distribution:
                 </span>
-                <span className={`text-2xl font-bold ${
-                  patientDistributionTotal > 100 
-                    ? 'text-red-600' 
-                    : patientDistributionTotal === 100 
-                    ? 'text-green-600' 
-                    : 'text-indigo-600'
-                }`}>
+                <span
+                  className={`text-2xl font-bold ${
+                    patientDistributionTotal > 100
+                      ? "text-red-600"
+                      : patientDistributionTotal === 100
+                      ? "text-green-600"
+                      : "text-indigo-600"
+                  }`}
+                >
                   {patientDistributionTotal}%
                 </span>
               </div>
-              
+
               {warnings.patientDistribution && (
                 <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
                   <div className="flex items-center gap-2">
@@ -2969,19 +2856,20 @@ export default function HealthcareSurveyForm() {
                   </div>
                 </div>
               )}
-              
-              {patientDistributionTotal === 100 && !warnings.patientDistribution && (
-                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-5 h-5 text-green-600" />
-                    <span className="text-green-800 font-medium">
-                      Perfect! Patient distribution totals exactly 100%
-                    </span>
+
+              {patientDistributionTotal === 100 &&
+                !warnings.patientDistribution && (
+                  <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck className="w-5 h-5 text-green-600" />
+                      <span className="text-green-800 font-medium">
+                        Perfect! Patient distribution totals exactly 100%
+                      </span>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </CardContent>
-          </Card>
+          </Card> */}
 
           {/* Submit Button */}
           <div className="flex justify-center pt-6">
