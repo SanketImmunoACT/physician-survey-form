@@ -199,6 +199,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       },
       hospital2: {
         oopWithoutInsurance: "",
@@ -209,6 +210,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       },
       hospital3: {
         oopWithoutInsurance: "",
@@ -219,6 +221,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       },
       hospital4: {
         oopWithoutInsurance: "",
@@ -229,6 +232,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       },
       hospital5: {
         oopWithoutInsurance: "",
@@ -239,6 +243,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       },
       hospital6: {
         oopWithoutInsurance: "",
@@ -249,6 +254,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       },
       hospital7: {
         oopWithoutInsurance: "",
@@ -259,6 +265,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       },
       hospital8: {
         oopWithoutInsurance: "",
@@ -269,6 +276,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       },
       hospital9: {
         oopWithoutInsurance: "",
@@ -279,6 +287,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       },
       hospital10: {
         oopWithoutInsurance: "",
@@ -289,6 +298,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       },
     },
     hospitalCodeBreakdown: {
@@ -499,6 +509,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       };
       hospitalCodeBreakdown[hospital.id] = {
         newlyDiagnosed: "",
@@ -555,6 +566,7 @@ export default function HealthcareSurveyForm() {
         echs: "",
         psus: "",
         stateGovt: "",
+        defence: "",
       };
       hospitalCodeBreakdown[custom.id] = {
         newlyDiagnosed: "",
@@ -1866,6 +1878,28 @@ export default function HealthcareSurveyForm() {
                                           handleSourceFundsChange(
                                             hospitalCode,
                                             "stateGovt",
+                                            e.target.value
+                                          )
+                                        }
+                                        placeholder="0"
+                                        className="bg-white"
+                                      />
+                                    </div>
+                                    <div className="space-y-2">
+                                      <Label className="text-sm font-medium">
+                                        Defence
+                                      </Label>
+                                      <Input
+                                        type="number"
+                                        step="0.1"
+                                        value={
+                                          formData.sourceFunds[hospitalCode]
+                                            ?.defence || ""
+                                        }
+                                        onChange={(e) =>
+                                          handleSourceFundsChange(
+                                            hospitalCode,
+                                            "defence",
                                             e.target.value
                                           )
                                         }
