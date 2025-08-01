@@ -884,7 +884,9 @@ export default function HealthcareSurveyForm() {
 
     if (validateForm()) {
       console.log("Form submitted:", formData);
-      alert("Survey submitted successfully!");
+      toast.success("Survey submitted successfully!");
+    } else {
+      toast.error("Please fill the form completely before submitting.");
     }
   };
 
@@ -2821,7 +2823,9 @@ export default function HealthcareSurveyForm() {
                         const insights = formData.additionalInsights || "";
                         if (insights.length > 0) {
                           navigator.clipboard.writeText(insights);
-                          toast.success("Additional insights copied to clipboard!");
+                          toast.success(
+                            "Additional insights copied to clipboard!"
+                          );
                         }
                       }}
                       className="text-xs cursor-pointer"
@@ -2849,7 +2853,8 @@ export default function HealthcareSurveyForm() {
           <div className="flex justify-center pt-6">
             <Button
               type="submit"
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 text-lg font-medium rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105"
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 text-lg font-medium rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105 cursor-pointer"
+              disabled={!formData.selectedHospitalCodes.length}
             >
               Submit Complete Survey
             </Button>
