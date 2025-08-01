@@ -1653,7 +1653,7 @@ export default function HealthcareSurveyForm() {
                                       "700"
                                     )} mb-4`}
                                   >
-                                    Source of Funds:
+                                    Source of Funds: (Out of {monthlyPatients} patients)
                                   </h4>
                                   {warnings[`${hospitalCode}_sourceFunds`] && (
                                     <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
@@ -1688,9 +1688,7 @@ export default function HealthcareSurveyForm() {
                                         placeholder="0"
                                         className="bg-white"
                                       />
-                                      <p className="text-xs text-gray-500">
-                                        out of {monthlyPatients} patients
-                                      </p>
+                                    
                                     </div>
                                     <div className="space-y-2">
                                       <Label className="text-sm font-medium">
@@ -1864,8 +1862,55 @@ export default function HealthcareSurveyForm() {
                                   </div>
                                 </div>
 
+                                {/* OOP Affordability Section */}
+                                <div className="mb-6">
+                                  <h4
+                                    className={`text-lg font-semibold ${colorScheme.text.replace(
+                                      "800",
+                                      "700"
+                                    )} mb-4`}
+                                  >
+                                    % of OOP Patients with affordability of &gt;
+                                    25 lakhs
+                                  </h4>
+                                  <p className="text-sm text-gray-600 mb-4 italic">
+                                    Ask doctor to estimate how many OOP patients
+                                    could afford treatment &gt; ₹25 lakhs of
+                                    overall patients
+                                  </p>
+                                  <div className="max-w-md">
+                                    <Input
+                                      type="number"
+                                      step="0.1"
+                                      min="0"
+                                      max="100"
+                                      placeholder="0"
+                                      className="w-full bg-white"
+                                      value={
+                                        formData.hospitalData[hospitalCode]
+                                          ?.oopAffordability || ""
+                                      }
+                                      onChange={(e) =>
+                                        handleHospitalDataChange(
+                                          hospitalCode,
+                                          "oopAffordability",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                    <p className="text-xs text-gray-500 mt-1">
+                                      Enter percentage (0-100%)
+                                    </p>
+                                  </div>
+                                </div>
+
                                 {/* Patient Distribution Table */}
-                                <h4 className="text-lg font-semibold text-blue-700">
+                                <h4
+                                  className={`text-lg font-semibold ${colorScheme.text.replace(
+                                    "800",
+                                    "700"
+                                  )} mb-4`}
+                                >
                                   Patient Distribution:
                                 </h4>
                                 <p className="text-sm text-gray-600 mb-2">
@@ -2028,6 +2073,89 @@ export default function HealthcareSurveyForm() {
                                   >
                                     Patient Distribution Category:
                                   </h4>
+
+                                  {/* Interactive Notes Section */}
+                                  <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                    <div className="flex items-start gap-3">
+                                      <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                                      <div className="flex-1">
+                                        <h5 className="font-medium text-blue-800 mb-2">
+                                          Patient Distribution Category
+                                          Definitions:
+                                        </h5>
+                                        <ul className="space-y-2 text-sm text-blue-700">
+                                          <li className="flex items-start gap-2">
+                                            <span className="font-medium">
+                                              •
+                                            </span>
+                                            <span>
+                                              <strong>
+                                                Newly Diagnosed %:
+                                              </strong>{" "}
+                                              Patients recently confirmed with
+                                              the disease for the first time,
+                                              initiating their first line of
+                                              treatment.
+                                            </span>
+                                          </li>
+                                          <li className="flex items-start gap-2">
+                                            <span className="font-medium">
+                                              •
+                                            </span>
+                                            <span>
+                                              <strong>Relapsed %:</strong>{" "}
+                                              Patients whose disease has
+                                              returned after an initial response
+                                              to treatment.
+                                            </span>
+                                          </li>
+                                          <li className="flex items-start gap-2">
+                                            <span className="font-medium">
+                                              •
+                                            </span>
+                                            <span>
+                                              <strong>Refractory %:</strong>{" "}
+                                              Patients whose disease does not
+                                              respond to standard treatments or
+                                              progresses despite therapy.
+                                            </span>
+                                          </li>
+                                          <li className="flex items-start gap-2">
+                                            <span className="font-medium">
+                                              •
+                                            </span>
+                                            <span>
+                                              <strong>2nd Opinion %:</strong>{" "}
+                                              Patients seeking a re-evaluation
+                                              or confirmation of
+                                              diagnosis/treatment from another
+                                              specialist or center.
+                                            </span>
+                                          </li>
+                                          <li className="flex items-start gap-2">
+                                            <span className="font-medium">
+                                              •
+                                            </span>
+                                            <span>
+                                              <strong>Maintenance %:</strong>{" "}
+                                              Patients undergoing ongoing,
+                                              lower-intensity therapy to
+                                              maintain remission or prevent
+                                              relapse or those who had response
+                                              to therapy.
+                                            </span>
+                                          </li>
+                                        </ul>
+                                        <div className="mt-3 p-2 bg-blue-100 rounded text-xs text-blue-800">
+                                          <strong>Note:</strong> Ensure the
+                                          total percentage for each patient type
+                                          adds up to 100%. The table below
+                                          allows you to input these percentages
+                                          for each category.
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
 
                                   <div className="overflow-x-auto border rounded-lg">
                                     <table className="w-full table-auto text-sm text-left">
