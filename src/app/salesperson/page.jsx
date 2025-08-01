@@ -38,8 +38,8 @@ export default function SalespersonDashboard() {
   // Mock current user - in real app, this would come from auth context
   const currentUser = {
     id: "salesperson_001",
-    name: "John Doe",
-    email: "john.doe@immunoact.com",
+    name: "ImmunoACT User",
+    email: "user@immunoact.com",
   };
 
   useEffect(() => {

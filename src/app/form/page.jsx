@@ -29,10 +29,20 @@ import hospitals from "@/data/hospitals.json";
 import { SingleSelect } from "@/components/ui/SingleSelect";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import toast from "react-hot-toast";
+import GuidelinesPopup from "@/components/GuidelinesPopup";
+import { useGuidelines } from "@/hooks/useGuidelines";
 
 const doctorOptions = doctors;
 
 export default function HealthcareSurveyForm() {
+  // Guidelines popup management
+  const {
+    showGuidelines,
+    handleCloseGuidelines,
+    handleAcceptGuidelines,
+    resetGuidelines,
+  } = useGuidelines();
+
   // Dynamic hospital codes - can be fetched from API
   const [hospitalCodes, setHospitalCodes] = useState([
     { id: "hospital1", code: "HC001", name: "Hospital Code 1" },
@@ -1168,6 +1178,21 @@ export default function HealthcareSurveyForm() {
           <p className="text-base md:text-lg text-gray-600">
             Physician Data Collection for Sales Representatives
           </p>
+        </div>
+
+        {/* Guidelines Button Section */}
+        <div className="flex justify-center mb-6">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={resetGuidelines}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer text-gray-700 bg-white border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200 shadow-sm"
+            title="Show Guidelines Again"
+          >
+            <Info className="w-4 h-4" />
+            View Guidelines
+          </Button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -2860,6 +2885,13 @@ export default function HealthcareSurveyForm() {
             </Button>
           </div>
         </form>
+
+        {/* Guidelines Popup */}
+        <GuidelinesPopup
+          isOpen={showGuidelines}
+          onClose={handleCloseGuidelines}
+          onAccept={handleAcceptGuidelines}
+        />
       </div>
     </div>
   );
