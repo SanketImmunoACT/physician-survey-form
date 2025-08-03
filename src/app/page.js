@@ -25,10 +25,13 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-
+  
   useEffect(() => {
     // Redirect to auth page when app starts
-    router.push("/auth");
+    const takeMeToAuth = () => {
+    router.push("/auth")}
+
+    setTimeout(takeMeToAuth,2000) 
   }, [router]);
 
   return (
