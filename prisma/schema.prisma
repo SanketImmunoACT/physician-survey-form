@@ -1,0 +1,247 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String
+  role          UserRole @default(SALESPERSON)
+  firstName     String?
+  lastName      String?
+  phone         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  isActive      Boolean  @default(true)
+  lastLogin     DateTime?
+  
+  // Relations
+  surveySubmissions SurveySubmission[]
+  auditLogs         AuditLog[]
+
+  @@map("users")
+}
+
+model Physician {
+  id         String   @id @default(cuid())
+  name       String
+  uniqueId   String   @unique
+  speciality String?
+  email      String?
+  phone      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  isActive   Boolean  @default(true)
+  
+  // Relations
+  surveySubmissions SurveySubmission[]
+
+  @@map("physicians")
+}
+
+model Hospital {
+  id           String        @id @default(cuid())
+  hospitalCode String        @unique
+  name         String
+  address      String?
+  city         String?
+  cityCode     String?
+  state        String?
+  country      String        @default("India")
+  type         HospitalType
+  status       HospitalStatus @default(APPROVED)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  isActive     Boolean       @default(true)
+  
+  // Relations
+  hospitalSurveyData HospitalSurveyData[]
+
+  @@map("hospitals")
+}
+
+model SurveySubmission {
+  id                    String   @id @default(cuid())
+  physicianId           String
+  submittedById         String
+  submissionDate        DateTime
+  submissionTimestamp   DateTime @default(now())
+  status                SubmissionStatus @default(DRAFT)
+  totalHospitals        Int      @default(0)
+  totalMonthlyPatients  Int      @default(0)
+  totalBmtPatients      Int      @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  // Relations
+  physician         Physician           @relation(fields: [physicianId], references: [id])
+  submittedBy       User                @relation(fields: [submittedById], references: [id])
+  hospitalSurveyData HospitalSurveyData[]
+
+  @@map("survey_submissions")
+}
+
+model HospitalSurveyData {
+  id                    String   @id @default(cuid())
+  surveySubmissionId    String
+  hospitalId            String
+  bmtPatients           Int      @default(0)
+  monthlyPatients       Int      @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  // Relations
+  surveySubmission      SurveySubmission      @relation(fields: [surveySubmissionId], references: [id], onDelete: Cascade)
+  hospital              Hospital              @relation(fields: [hospitalId], references: [id])
+  patientDistributions  PatientDistribution[]
+  sourceOfFunds         SourceOfFunds[]
+  hospitalCodeBreakdowns HospitalCodeBreakdown[]
+  caseDistributionMatrix CaseDistributionMatrix[]
+  
+  @@unique([surveySubmissionId, hospitalId])
+  @@map("hospital_survey_data")
+}
+
+model PatientDistribution {
+  id                    String      @id @default(cuid())
+  hospitalSurveyDataId  String
+  patientType           PatientType
+  count                 Int         @default(0)
+  percentage            Decimal     @default(0) @db.Decimal(5, 2)
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  
+  // Relations
+  hospitalSurveyData    HospitalSurveyData @relation(fields: [hospitalSurveyDataId], references: [id], onDelete: Cascade)
+  
+  @@unique([hospitalSurveyDataId, patientType])
+  @@map("patient_distribution")
+}
+
+model SourceOfFunds {
+  id                    String      @id @default(cuid())
+  hospitalSurveyDataId  String
+  sourceType            SourceType
+  amount                Decimal     @default(0) @db.Decimal(12, 2)
+  percentage            Decimal     @default(0) @db.Decimal(5, 2)
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  
+  // Relations
+  hospitalSurveyData    HospitalSurveyData @relation(fields: [hospitalSurveyDataId], references: [id], onDelete: Cascade)
+  
+  @@unique([hospitalSurveyDataId, sourceType])
+  @@map("source_of_funds")
+}
+
+model HospitalCodeBreakdown {
+  id                    String          @id @default(cuid())
+  hospitalSurveyDataId  String
+  breakdownType         BreakdownType
+  count                 Int             @default(0)
+  percentage            Decimal         @default(0) @db.Decimal(5, 2)
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  
+  // Relations
+  hospitalSurveyData    HospitalSurveyData @relation(fields: [hospitalSurveyDataId], references: [id], onDelete: Cascade)
+  
+  @@unique([hospitalSurveyDataId, breakdownType])
+  @@map("hospital_code_breakdown")
+}
+
+model CaseDistributionMatrix {
+  id                    String      @id @default(cuid())
+  hospitalSurveyDataId  String
+  patientType           PatientType
+  caseType              BreakdownType
+  count                 Int         @default(0)
+  percentage            Decimal     @default(0) @db.Decimal(5, 2)
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  
+  // Relations
+  hospitalSurveyData    HospitalSurveyData @relation(fields: [hospitalSurveyDataId], references: [id], onDelete: Cascade)
+  
+  @@unique([hospitalSurveyDataId, patientType, caseType])
+  @@map("case_distribution_matrix")
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String?
+  action      String
+  tableName   String?
+  recordId    String?
+  oldValues   Json?
+  newValues   Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  user        User?    @relation(fields: [userId], references: [id])
+
+  @@map("audit_log")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  SALESPERSON
+  PHYSICIAN
+}
+
+enum HospitalType {
+  GOVERNMENT_HOSPITAL
+  PRIVATE_HOSPITAL
+  CHARITABLE_TRUST_HOSPITAL
+}
+
+enum HospitalStatus {
+  APPROVED
+  PENDING
+  REJECTED
+}
+
+enum SubmissionStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum PatientType {
+  ALL_PATIENTS
+  NHL_PATIENTS
+  MM_PATIENTS
+  OTHER_HEMAT_MALIGNANCIES
+  GLIOBLASTOMAS
+  OTHER_SOLID_TUMOURS
+}
+
+enum SourceType {
+  OOP_WITHOUT_INSURANCE
+  OOP_WITH_INSURANCE
+  CGHS
+  ESI
+  RAILWAYS
+  ECHS
+  PSUS
+  STATE_GOVT
+  DEFENCE
+}
+
+enum BreakdownType {
+  NEWLY_DIAGNOSED
+  RELAPSED_REFRACTORY
+  SECOND_OPINION
+} 
