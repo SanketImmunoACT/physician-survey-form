@@ -439,12 +439,12 @@ export default function HealthcareSurveyForm() {
   const [warnings, setWarnings] = useState({});
   const [showHospitalTooltip, setShowHospitalTooltip] = useState(false);
 
-  const handleSelectChange = (selectedOption) => {
-    setFormData((prev) => ({
-      ...prev,
-      physicianName: selectedOption ? selectedOption.value : "",
-    }));
-  };
+  // const handleSelectChange = (selectedOption) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     physicianName: selectedOption ? selectedOption.value : "",
+  //   }));
+  // };
 
   const handleSpecialityChange = (value) => {
     setFormData((prev) => ({ ...prev, speciality: value }));
@@ -755,40 +755,40 @@ export default function HealthcareSurveyForm() {
     }));
   };
 
-  const handleHospitalCodeBreakdownChange = (hospital, field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      hospitalCodeBreakdown: {
-        ...prev.hospitalCodeBreakdown,
-        [hospital]: {
-          ...prev.hospitalCodeBreakdown[hospital],
-          [field]: value,
-        },
-      },
-    }));
-  };
+  // const handleHospitalCodeBreakdownChange = (hospital, field, value) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     hospitalCodeBreakdown: {
+  //       ...prev.hospitalCodeBreakdown,
+  //       [hospital]: {
+  //         ...prev.hospitalCodeBreakdown[hospital],
+  //         [field]: value,
+  //       },
+  //     },
+  //   }));
+  // };
 
-  const handlePatientDistributionChange = (hospitalCode, field, value) => {
-    // Only allow whole numbers (natural numbers)
-    const numericValue = value.replace(/[^0-9]/g, "");
+  // const handlePatientDistributionChange = (hospitalCode, field, value) => {
+  //   // Only allow whole numbers (natural numbers)
+  //   const numericValue = value.replace(/[^0-9]/g, "");
 
-    setFormData((prev) => {
-      const updatedPatientDistribution = {
-        ...prev.hospitalData[hospitalCode].patientDistribution,
-        [field]: numericValue,
-      };
-      return {
-        ...prev,
-        hospitalData: {
-          ...prev.hospitalData,
-          [hospitalCode]: {
-            ...prev.hospitalData[hospitalCode],
-            patientDistribution: updatedPatientDistribution,
-          },
-        },
-      };
-    });
-  };
+  //   setFormData((prev) => {
+  //     const updatedPatientDistribution = {
+  //       ...prev.hospitalData[hospitalCode].patientDistribution,
+  //       [field]: numericValue,
+  //     };
+  //     return {
+  //       ...prev,
+  //       hospitalData: {
+  //         ...prev.hospitalData,
+  //         [hospitalCode]: {
+  //           ...prev.hospitalData[hospitalCode],
+  //           patientDistribution: updatedPatientDistribution,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
   const calculatePatientDistributionTotal = (hospitalCode) => {
     const pd = formData.hospitalData[hospitalCode]?.patientDistribution || {};
@@ -798,13 +798,13 @@ export default function HealthcareSurveyForm() {
     );
   };
 
-  const getPatientDistributionWarning = (hospitalCode) => {
-    const total = calculatePatientDistributionTotal(hospitalCode);
-    if (total > 100) {
-      return `Total patient distribution (${total}%) exceeds 100%. Please adjust the values.`;
-    }
-    return null;
-  };
+  // const getPatientDistributionWarning = (hospitalCode) => {
+  //   const total = calculatePatientDistributionTotal(hospitalCode);
+  //   if (total > 100) {
+  //     return `Total patient distribution (${total}%) exceeds 100%. Please adjust the values.`;
+  //   }
+  //   return null;
+  // };
 
   const calculateTotals = () => {
     const totalBMT = formData.selectedHospitalCodes.reduce(
@@ -831,41 +831,41 @@ export default function HealthcareSurveyForm() {
     return totalRaw;
   };
 
-  // Calculate individual source percentages for a hospital
-  const calculateSourcePercentages = (hospital) => {
-    const sourceFunds = formData.sourceFunds[hospital] || {};
-    const totalRaw = calculateSourceTotal(hospital);
-    const percentages = {};
+  // // Calculate individual source percentages for a hospital
+  // const calculateSourcePercentages = (hospital) => {
+  //   const sourceFunds = formData.sourceFunds[hospital] || {};
+  //   const totalRaw = calculateSourceTotal(hospital);
+  //   const percentages = {};
 
-    Object.keys(sourceFunds).forEach((key) => {
-      const value = parseFloat(sourceFunds[key]) || 0;
-      percentages[key] =
-        totalRaw > 0 ? ((value / totalRaw) * 100).toFixed(1) : "0.0";
-    });
+  //   Object.keys(sourceFunds).forEach((key) => {
+  //     const value = parseFloat(sourceFunds[key]) || 0;
+  //     percentages[key] =
+  //       totalRaw > 0 ? ((value / totalRaw) * 100).toFixed(1) : "0.0";
+  //   });
 
-    return percentages;
-  };
+  //   return percentages;
+  // };
 
-  // Format key names nicely (from CODE 2)
-  const formatKey = (key) =>
-    key
-      .replace(/([A-Z])/g, " $1")
-      .replace(/^./, (str) => str.toUpperCase())
-      .replace(/oop/i, "OOP")
-      .replace(/cghs/i, "CGHS")
-      .replace(/esi/i, "ESI")
-      .replace(/echs/i, "ECHS")
-      .replace(/psus/i, "PSUs")
-      .replace(/govt/i, "Government");
+  // // Format key names nicely (from CODE 2)
+  // const formatKey = (key) =>
+  //   key
+  //     .replace(/([A-Z])/g, " $1")
+  //     .replace(/^./, (str) => str.toUpperCase())
+  //     .replace(/oop/i, "OOP")
+  //     .replace(/cghs/i, "CGHS")
+  //     .replace(/esi/i, "ESI")
+  //     .replace(/echs/i, "ECHS")
+  //     .replace(/psus/i, "PSUs")
+  //     .replace(/govt/i, "Government");
 
-  const calculateHospitalCodeTotals = (hospital) => {
-    const data = formData.hospitalCodeBreakdown[hospital] || {};
-    return {
-      newlyDiagnosed: parseFloat(data.newlyDiagnosed) || 0,
-      relapsedRefractory: parseFloat(data.relapsedRefractory) || 0,
-      secondOpinion: parseFloat(data.secondOpinion) || 0,
-    };
-  };
+  // const calculateHospitalCodeTotals = (hospital) => {
+  //   const data = formData.hospitalCodeBreakdown[hospital] || {};
+  //   return {
+  //     newlyDiagnosed: parseFloat(data.newlyDiagnosed) || 0,
+  //     relapsedRefractory: parseFloat(data.relapsedRefractory) || 0,
+  //     secondOpinion: parseFloat(data.secondOpinion) || 0,
+  //   };
+  // };
 
   const validateForm = () => {
     const newErrors = {};
@@ -901,10 +901,9 @@ export default function HealthcareSurveyForm() {
     }
   };
 
-  const { totalBMT, totalMonthly } = calculateTotals();
-  const patientDistributionTotal = calculatePatientDistributionTotal();
+  // const { totalBMT, totalMonthly } = calculateTotals();
+  // const patientDistributionTotal = calculatePatientDistributionTotal();
 
-  // Patient Case Distribution By Hospital:
 
   // Mapping row and column labels
   const patientTypes = [
@@ -924,139 +923,139 @@ export default function HealthcareSurveyForm() {
     { key: "maintenance", label: "Maintenance %" },
   ];
 
-  const handleAutoBalance = (hospitalCode, patientKey) => {
-    setFormData((prev) => {
-      // Get current patient distribution for this hospital and patient type
-      const currentDistribution =
-        prev.patientDistributionMatrix?.[hospitalCode]?.[patientKey] || {};
+  // const handleAutoBalance = (hospitalCode, patientKey) => {
+  //   setFormData((prev) => {
+  //     // Get current patient distribution for this hospital and patient type
+  //     const currentDistribution =
+  //       prev.patientDistributionMatrix?.[hospitalCode]?.[patientKey] || {};
 
-      // Create a copy of the distribution to work with
-      const updatedDistribution = { ...currentDistribution };
+  //     // Create a copy of the distribution to work with
+  //     const updatedDistribution = { ...currentDistribution };
 
-      // Calculate total of filled fields
-      let filledTotal = 0;
-      let filledCount = 0;
-      let emptyFields = [];
+  //     // Calculate total of filled fields
+  //     let filledTotal = 0;
+  //     let filledCount = 0;
+  //     let emptyFields = [];
 
-      // Count filled fields and identify empty ones
-      caseTypes.forEach((caseType) => {
-        const fieldValue = updatedDistribution[caseType.key];
+  //     // Count filled fields and identify empty ones
+  //     caseTypes.forEach((caseType) => {
+  //       const fieldValue = updatedDistribution[caseType.key];
 
-        if (fieldValue !== "" && fieldValue !== undefined) {
-          filledTotal += parseFloat(fieldValue) || 0;
-          filledCount++;
-        } else {
-          emptyFields.push(caseType.key);
-        }
-      });
+  //       if (fieldValue !== "" && fieldValue !== undefined) {
+  //         filledTotal += parseFloat(fieldValue) || 0;
+  //         filledCount++;
+  //       } else {
+  //         emptyFields.push(caseType.key);
+  //       }
+  //     });
 
-      // Auto-balance if there are empty fields and filled fields don't exceed 100%
-      if (emptyFields.length > 0 && filledTotal < 100) {
-        const remaining = 100 - filledTotal;
-        const valuePerEmptyField = remaining / emptyFields.length;
+  //     // Auto-balance if there are empty fields and filled fields don't exceed 100%
+  //     if (emptyFields.length > 0 && filledTotal < 100) {
+  //       const remaining = 100 - filledTotal;
+  //       const valuePerEmptyField = remaining / emptyFields.length;
 
-        // Distribute remaining percentage equally among empty fields
-        emptyFields.forEach((emptyKey) => {
-          updatedDistribution[emptyKey] = parseFloat(
-            valuePerEmptyField.toFixed(1)
-          );
-        });
-      }
+  //       // Distribute remaining percentage equally among empty fields
+  //       emptyFields.forEach((emptyKey) => {
+  //         updatedDistribution[emptyKey] = parseFloat(
+  //           valuePerEmptyField.toFixed(1)
+  //         );
+  //       });
+  //     }
 
-      return {
-        ...prev,
-        patientDistributionMatrix: {
-          ...prev.patientDistributionMatrix,
-          [hospitalCode]: {
-            ...prev.patientDistributionMatrix?.[hospitalCode],
-            [patientKey]: updatedDistribution,
-          },
-        },
-      };
-    });
-  };
+  //     return {
+  //       ...prev,
+  //       patientDistributionMatrix: {
+  //         ...prev.patientDistributionMatrix,
+  //         [hospitalCode]: {
+  //           ...prev.patientDistributionMatrix?.[hospitalCode],
+  //           [patientKey]: updatedDistribution,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
-  const handleNormalizeToHundred = (hospitalCode, patientKey) => {
-    setFormData((prev) => {
-      // Get current patient distribution for this hospital and patient type
-      const currentDistribution =
-        prev.patientDistributionMatrix?.[hospitalCode]?.[patientKey] || {};
+  // const handleNormalizeToHundred = (hospitalCode, patientKey) => {
+  //   setFormData((prev) => {
+  //     // Get current patient distribution for this hospital and patient type
+  //     const currentDistribution =
+  //       prev.patientDistributionMatrix?.[hospitalCode]?.[patientKey] || {};
 
-      // Create a copy of the distribution to work with
-      const updatedDistribution = { ...currentDistribution };
+  //     // Create a copy of the distribution to work with
+  //     const updatedDistribution = { ...currentDistribution };
 
-      // Calculate total of filled fields and collect filled fields
-      let filledTotal = 0;
-      const filledFields = [];
+  //     // Calculate total of filled fields and collect filled fields
+  //     let filledTotal = 0;
+  //     const filledFields = [];
 
-      // Count filled fields and calculate total
-      caseTypes.forEach((caseType) => {
-        const fieldValue = updatedDistribution[caseType.key];
+  //     // Count filled fields and calculate total
+  //     caseTypes.forEach((caseType) => {
+  //       const fieldValue = updatedDistribution[caseType.key];
 
-        if (fieldValue !== "" && fieldValue !== undefined) {
-          const numValue = parseFloat(fieldValue) || 0;
-          if (numValue > 0) {
-            filledTotal += numValue;
-            filledFields.push(caseType.key);
-          }
-        }
-      });
+  //       if (fieldValue !== "" && fieldValue !== undefined) {
+  //         const numValue = parseFloat(fieldValue) || 0;
+  //         if (numValue > 0) {
+  //           filledTotal += numValue;
+  //           filledFields.push(caseType.key);
+  //         }
+  //       }
+  //     });
 
-      // Normalize values if total exceeds 100%
-      if (filledTotal > 100 && filledFields.length > 0) {
-        // Calculate scaling factor
-        const scalingFactor = 100 / filledTotal;
+  //     // Normalize values if total exceeds 100%
+  //     if (filledTotal > 100 && filledFields.length > 0) {
+  //       // Calculate scaling factor
+  //       const scalingFactor = 100 / filledTotal;
 
-        // Scale each value proportionally
-        filledFields.forEach((fieldKey) => {
-          const originalValue = parseFloat(updatedDistribution[fieldKey]) || 0;
-          // Scale and round to 1 decimal place
-          updatedDistribution[fieldKey] = parseFloat(
-            (originalValue * scalingFactor).toFixed(1)
-          );
-        });
+  //       // Scale each value proportionally
+  //       filledFields.forEach((fieldKey) => {
+  //         const originalValue = parseFloat(updatedDistribution[fieldKey]) || 0;
+  //         // Scale and round to 1 decimal place
+  //         updatedDistribution[fieldKey] = parseFloat(
+  //           (originalValue * scalingFactor).toFixed(1)
+  //         );
+  //       });
 
-        // Handle potential rounding errors to ensure exact 100% total
-        let newTotal = filledFields.reduce(
-          (sum, key) => sum + parseFloat(updatedDistribution[key]),
-          0
-        );
+  //       // Handle potential rounding errors to ensure exact 100% total
+  //       let newTotal = filledFields.reduce(
+  //         (sum, key) => sum + parseFloat(updatedDistribution[key]),
+  //         0
+  //       );
 
-        // If there's still a small difference due to rounding, adjust the largest value
-        if (Math.abs(newTotal - 100) > 0.01) {
-          // Find the largest value
-          let largestKey = filledFields[0];
-          filledFields.forEach((key) => {
-            if (
-              parseFloat(updatedDistribution[key]) >
-              parseFloat(updatedDistribution[largestKey])
-            ) {
-              largestKey = key;
-            }
-          });
+  //       // If there's still a small difference due to rounding, adjust the largest value
+  //       if (Math.abs(newTotal - 100) > 0.01) {
+  //         // Find the largest value
+  //         let largestKey = filledFields[0];
+  //         filledFields.forEach((key) => {
+  //           if (
+  //             parseFloat(updatedDistribution[key]) >
+  //             parseFloat(updatedDistribution[largestKey])
+  //           ) {
+  //             largestKey = key;
+  //           }
+  //         });
 
-          // Adjust the largest value to make the total exactly 100%
-          updatedDistribution[largestKey] =
-            parseFloat(updatedDistribution[largestKey]) + (100 - newTotal);
-          // Round to 1 decimal place
-          updatedDistribution[largestKey] = parseFloat(
-            updatedDistribution[largestKey].toFixed(1)
-          );
-        }
-      }
+  //         // Adjust the largest value to make the total exactly 100%
+  //         updatedDistribution[largestKey] =
+  //           parseFloat(updatedDistribution[largestKey]) + (100 - newTotal);
+  //         // Round to 1 decimal place
+  //         updatedDistribution[largestKey] = parseFloat(
+  //           updatedDistribution[largestKey].toFixed(1)
+  //         );
+  //       }
+  //     }
 
-      return {
-        ...prev,
-        patientDistributionMatrix: {
-          ...prev.patientDistributionMatrix,
-          [hospitalCode]: {
-            ...prev.patientDistributionMatrix?.[hospitalCode],
-            [patientKey]: updatedDistribution,
-          },
-        },
-      };
-    });
-  };
+  //     return {
+  //       ...prev,
+  //       patientDistributionMatrix: {
+  //         ...prev.patientDistributionMatrix,
+  //         [hospitalCode]: {
+  //           ...prev.patientDistributionMatrix?.[hospitalCode],
+  //           [patientKey]: updatedDistribution,
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
 
   const handleCaseDistributionChange = (
     hospitalCode,
