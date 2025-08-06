@@ -439,13 +439,6 @@ export default function HealthcareSurveyForm() {
   const [warnings, setWarnings] = useState({});
   const [showHospitalTooltip, setShowHospitalTooltip] = useState(false);
 
-  // const handleSelectChange = (selectedOption) => {
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     physicianName: selectedOption ? selectedOption.value : "",
-  //   }));
-  // };
-
   const handleSpecialityChange = (value) => {
     setFormData((prev) => ({ ...prev, speciality: value }));
   };
@@ -755,48 +748,13 @@ export default function HealthcareSurveyForm() {
     }));
   };
 
-  // const handleHospitalCodeBreakdownChange = (hospital, field, value) => {
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     hospitalCodeBreakdown: {
-  //       ...prev.hospitalCodeBreakdown,
-  //       [hospital]: {
-  //         ...prev.hospitalCodeBreakdown[hospital],
-  //         [field]: value,
-  //       },
-  //     },
-  //   }));
+  // const calculatePatientDistributionTotal = (hospitalCode) => {
+  //   const pd = formData.hospitalData[hospitalCode]?.patientDistribution || {};
+  //   return Object.values(pd).reduce(
+  //     (sum, val) => sum + (parseFloat(val) || 0),
+  //     0
+  //   );
   // };
-
-  // const handlePatientDistributionChange = (hospitalCode, field, value) => {
-  //   // Only allow whole numbers (natural numbers)
-  //   const numericValue = value.replace(/[^0-9]/g, "");
-
-  //   setFormData((prev) => {
-  //     const updatedPatientDistribution = {
-  //       ...prev.hospitalData[hospitalCode].patientDistribution,
-  //       [field]: numericValue,
-  //     };
-  //     return {
-  //       ...prev,
-  //       hospitalData: {
-  //         ...prev.hospitalData,
-  //         [hospitalCode]: {
-  //           ...prev.hospitalData[hospitalCode],
-  //           patientDistribution: updatedPatientDistribution,
-  //         },
-  //       },
-  //     };
-  //   });
-  // };
-
-  const calculatePatientDistributionTotal = (hospitalCode) => {
-    const pd = formData.hospitalData[hospitalCode]?.patientDistribution || {};
-    return Object.values(pd).reduce(
-      (sum, val) => sum + (parseFloat(val) || 0),
-      0
-    );
-  };
 
   // const getPatientDistributionWarning = (hospitalCode) => {
   //   const total = calculatePatientDistributionTotal(hospitalCode);
