@@ -764,20 +764,20 @@ export default function HealthcareSurveyForm() {
   //   return null;
   // };
 
-  const calculateTotals = () => {
-    const totalBMT = formData.selectedHospitalCodes.reduce(
-      (sum, code) =>
-        sum + (parseInt(formData.hospitalData[code]?.bmtPatients) || 0),
-      0
-    );
-    const totalMonthly = formData.selectedHospitalCodes.reduce(
-      (sum, code) =>
-        sum + (parseInt(formData.hospitalData[code]?.monthlyPatients) || 0),
-      0
-    );
+  // const calculateTotals = () => {
+  //   const totalBMT = formData.selectedHospitalCodes.reduce(
+  //     (sum, code) =>
+  //       sum + (parseInt(formData.hospitalData[code]?.bmtPatients) || 0),
+  //     0
+  //   );
+  //   const totalMonthly = formData.selectedHospitalCodes.reduce(
+  //     (sum, code) =>
+  //       sum + (parseInt(formData.hospitalData[code]?.monthlyPatients) || 0),
+  //     0
+  //   );
 
-    return { totalBMT, totalMonthly };
-  };
+  //   return { totalBMT, totalMonthly };
+  // };
 
   // Improved calculate source total with percentage calculation
   const calculateSourceTotal = (hospital) => {
