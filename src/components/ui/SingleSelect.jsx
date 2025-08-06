@@ -79,7 +79,7 @@ export function SingleSelect({
               className="hover:bg-gray-100 p-1 rounded-full"
               title="Clear selection"
             >
-              <X className="w-4 h-4 text-gray-500" />
+              <X className="w-4 h-4 text-gray-500 cursor-pointer" />
             </button>
           )}
           <ChevronDown

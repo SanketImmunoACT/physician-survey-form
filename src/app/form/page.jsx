@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { MultiSelect } from "@/components/ui/multi-select";
 import {
   Stethoscope,
@@ -17,7 +16,6 @@ import {
   Info,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   Accordion,
   AccordionItem,
@@ -25,23 +23,14 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import doctors from "@/data/doctors.json";
-import hospitals from "@/data/hospitals.json";
+// import hospitals from "@/data/hospitals.json";
 import { SingleSelect } from "@/components/ui/SingleSelect";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import toast from "react-hot-toast";
-// import GuidelinesPopup from "@/components/GuidelinesPopup";
-// import { useGuidelines } from "@/hooks/useGuidelines";
 
 const doctorOptions = doctors;
 
 export default function HealthcareSurveyForm() {
-  // Guidelines popup management
-  // const {
-  //   showGuidelines,
-  //   handleCloseGuidelines,
-  //   handleAcceptGuidelines,
-  //   resetGuidelines,
-  // } = useGuidelines();
 
   // Dynamic hospital codes - can be fetched from API
   const [hospitalCodes, setHospitalCodes] = useState([
@@ -1163,25 +1152,6 @@ export default function HealthcareSurveyForm() {
               priority
             />
           </div>
-          {/* <div className="flex gap-3">
-              <Link href="/">
-              </Link>
-
-              <Link href="/analytics">
-                <Button className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white cursor-pointer">
-                  <Activity className="w-4 h-4" />
-                  Analytics
-                </Button>
-              </Link>
-
-              <Link href="/dashboard">
-                <Button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer">
-                  <BarChart3 className="w-4 h-4" />
-                  Dashboard
-                </Button>
-              </Link>
-            </div> */}
-          {/* </div> */}
           <div className="flex items-center justify-center gap-3 mb-4">
             <h2 className="text-3xl font-bold text-gray-800">
               Healthcare Survey Form
@@ -1191,21 +1161,6 @@ export default function HealthcareSurveyForm() {
             Physician Data Collection for Sales Representatives
           </p>
         </div>
-
-        {/* Guidelines Button Section */}
-        {/* <div className="flex justify-center mb-6">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={resetGuidelines}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer text-gray-700 bg-white border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200 shadow-sm"
-            title="Show Guidelines Again"
-          >
-            <Info className="w-4 h-4" />
-            View Guidelines
-          </Button>
-        </div> */}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Physician Information */}
@@ -1218,33 +1173,6 @@ export default function HealthcareSurveyForm() {
             </CardHeader>
             <CardContent className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* <div className="space-y-2">
-                  <Label
-                    htmlFor="physicianName"
-                    className="text-sm font-medium"
-                  >
-                    Name of the Physician *
-                  </Label>
-                  <Input
-                    id="physicianName"
-                    value={formData.physicianName}
-                    onChange={(e) =>
-                      handleInputChange("physicianName", e.target.value)
-                    }
-                    placeholder="Enter physician name"
-                    className={`transition-all duration-200 ${
-                      errors.physicianName
-                        ? "border-red-500"
-                        : "border-gray-300"
-                    }`}
-                  />
-                  {errors.physicianName && (
-                    <p className="text-red-500 text-sm">
-                      {errors.physicianName}
-                    </p>
-                  )}
-                </div> */}
-
                 {/* Selection of Name of the Physician */}
                 <SingleSelect
                   options={doctors}
@@ -1253,26 +1181,6 @@ export default function HealthcareSurveyForm() {
                   placeholder="Select or search Clinician name"
                   error={errors.physicianName}
                 />
-
-                {/* <div className="space-y-2">
-                  <Label htmlFor="speciality" className="text-sm font-medium">
-                    Speciality *
-                  </Label>
-                  <Input
-                    id="speciality"
-                    value={formData.speciality}
-                    onChange={(e) =>
-                      handleInputChange("speciality", e.target.value)
-                    }
-                    placeholder="Enter speciality"
-                    className={`transition-all duration-200 ${
-                      errors.speciality ? "border-red-500" : "border-gray-300"
-                    }`}
-                  />
-                  {errors.speciality && (
-                    <p className="text-red-500 text-sm">{errors.speciality}</p>
-                  )}
-                </div> */}
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium block">
@@ -1354,73 +1262,6 @@ export default function HealthcareSurveyForm() {
                     <p className="text-red-500 text-sm">{errors.speciality}</p>
                   )}
                 </div>
-
-                {/* <div className="space-y-2">
-                  <Label htmlFor="visitingHospitals" className="text-sm font-medium">
-                    Number of Visiting Hospitals *
-                  </Label>
-                  <Input
-                    id="visitingHospitals"
-                    type="number"
-                    value={formData.visitingHospitals}
-                    onChange={(e) => handleInputChange('visitingHospitals', e.target.value)}
-                    placeholder="Enter number"
-                    className={`transition-all duration-200 ${errors.visitingHospitals ? 'border-red-500' : 'border-gray-300'}`}
-                  />
-                  {errors.visitingHospitals && (
-                    <p className="text-red-500 text-sm">{errors.visitingHospitals}</p>
-                  )}
-                  <p className="text-xs text-gray-500">
-                    Ask the doctor how many hospitals they regularly consult at.
-                  </p>
-                </div> */}
-
-                {/* <div className="space-y-2 md:col-span-2">
-                  <Label className="text-sm font-medium">
-                    Select Hospitals *
-                  </Label>
-                  <MultiSelect
-                    options={hospitalCodeOptions}
-                    value={formData.selectedHospitalCodes}
-                    onChange={handleHospitalCodesChange}
-                    placeholder="Select hospitals to survey..."
-                    className="w-full"
-                  />
-                  {showAddHospitalInput && (
-                    <div className="flex items-center gap-2 mt-2">
-                      <Input
-                        type="text"
-                        value={newHospitalName}
-                        onChange={(e) => setNewHospitalName(e.target.value)}
-                        placeholder="Enter new hospital name"
-                        className="w-1/2"
-                        autoFocus
-                      />
-                      <Button
-                        type="button"
-                        onClick={handleAddCustomHospital}
-                        className="bg-green-600 hover:bg-green-700 text-white cursor-pointer"
-                      >
-                        Add
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="cursor-pointer"
-                        onClick={() => {
-                          setShowAddHospitalInput(false);
-                          setNewHospitalName("");
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  )}
-                  <p className="text-xs text-gray-500">
-                    Select the hospitals you want to collect data for. Only
-                    selected hospitals will appear in the form below.
-                  </p>
-                </div> */}
 
                 <div className="space-y-2 md:col-span-2">
                   <div className="flex items-center gap-1">
@@ -2328,35 +2169,6 @@ export default function HealthcareSurveyForm() {
                                                   : totalPercentage >= 100
                                                   ? "0%"
                                                   : `${remainingPercentage}%`}
-                                                {/* {totalPercentage > 0 &&
-                                                  totalPercentage < 100 && (
-                                                    <button
-                                                      type="button"
-                                                      className="ml-2 text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded cursor-pointer"
-                                                      onClick={() =>
-                                                        handleAutoBalance(
-                                                          hospitalCode,
-                                                          patient.key
-                                                        )
-                                                      }
-                                                    >
-                                                      Balance
-                                                    </button>
-                                                  )}
-                                                {totalPercentage > 100 && (
-                                                  <button
-                                                    type="button"
-                                                    className="ml-2 text-xs bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
-                                                    onClick={() =>
-                                                      handleNormalizeToHundred(
-                                                        hospitalCode,
-                                                        patient.key
-                                                      )
-                                                    }
-                                                  >
-                                                    Normalize
-                                                  </button>
-                                                )} */}
                                               </td>
                                             </tr>
                                           );
@@ -2919,13 +2731,6 @@ export default function HealthcareSurveyForm() {
             </Button>
           </div>
         </form>
-
-        {/* Guidelines Popup */}
-        {/* <GuidelinesPopup
-          isOpen={showGuidelines}
-          onClose={handleCloseGuidelines}
-          onAccept={handleAcceptGuidelines}
-        /> */}
       </div>
     </div>
   );
