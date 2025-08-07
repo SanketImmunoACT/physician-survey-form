@@ -7,6 +7,11 @@ export async function middleware(req) {
   const token = req.cookies.get('token')?.value;
   const { pathname } = req.nextUrl;
 
+  // Allow requests to the auth page to pass through
+  if (pathname.startsWith('/auth')) {
+    return NextResponse.next();
+  }
+
   if (!token) {
     return NextResponse.redirect(new URL('/auth', req.url));
   }
