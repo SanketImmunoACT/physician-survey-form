@@ -1,31 +1,38 @@
-// app/api/auth/register/route.js
-import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-
-// Example: Replace this with your DB logic
-let mockDB = [];
+import prisma from '@/lib/prisma';
+import { NextResponse } from 'next/server';
+import bcrypt from 'bcryptjs';
+import { Prisma } from '@prisma/client';
 
 export async function POST(request) {
-  const { email, password } = await request.json();
+  try {
+    const { name, email, password } = await request.json();
 
-  if (!email || !password) {
-    return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    if (!name || !email) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    // Generate a temporary password for pending users if not provided
+    const tempPassword = password || Math.random().toString(36).slice(-8);
+    const hashedPassword = await bcrypt.hash(tempPassword, 10);
+
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        role: 'SALESPERSON',
+        status: 'PENDING',
+      },
+    });
+
+    return NextResponse.json({ message: 'Request submitted successfully. Please wait for admin approval.' }, { status: 201 });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        return NextResponse.json({ error: 'Email already exists' }, { status: 409 });
+      }
+    }
+    console.error('Registration error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-
-  // Check if user already exists
-  const userExists = mockDB.find((user) => user.email === email);
-  if (userExists) {
-    return NextResponse.json({ error: "User already exists" }, { status: 400 });
-  }
-
-  // Hash password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Save user (mock)
-  mockDB.push({ email, password: hashedPassword });
-
-  return NextResponse.json(
-    { message: "User registered successfully" },
-    { status: 200 }
-  );
 }
