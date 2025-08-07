@@ -1,5 +1,5 @@
  //"use client";
-import "@/app/styles/globals.css";
+import "./styles/globals.css";
 import { Mukta } from "next/font/google";
 import { Toaster } from "react-hot-toast";
  

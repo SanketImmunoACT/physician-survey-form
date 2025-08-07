@@ -102,14 +102,7 @@ export default function Dashboard() {
       setRecentSubmissions(submissions);
       setFilteredSubmissions(submissions);
 
-      //     console.log("Dashboard data loaded:", {
-      //       stats,
-      //       submissions: submissions.length,
-      //     });
-      //   } catch (error) {
-      //     console.error("Error fetching dashboard data:", error);
-      //   }
-      // };
+      
       console.log("Dashboard data loaded:", {
         stats,
         submissions: submissions.length,
@@ -241,18 +234,7 @@ export default function Dashboard() {
               <Download className="w-4 h-4 mr-2" />
               Export to Excel
             </Button>
-            {/* <Button
-              onClick={handleExportToExcel}
-              disabled={isLoading || filteredSubmissions.length === 0}
-              className="bg-green-600 hover:bg-green-700 text-white disabled:opacity-50"
-            >
-              {isLoading ? (
-                <LoadingSpinner size="sm" className="mr-2" />
-              ) : (
-                <Download className="w-4 h-4 mr-2" />
-              )}
-              Export to Excel
-            </Button> */}
+            
           </div>
         </div>
 
@@ -331,14 +313,7 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        {/* Search and Filter
-        <SearchFilter
-          onSearch={handleSearch}
-          onFilter={handleFilter}
-          searchPlaceholder="Search by physician, ID, speciality, or hospital code..."
-          filterOptions={getUniqueSpecialities()}
-          showDateFilter={true}
-        /> */}
+        
 
         {/* Recent Survey Submissions Table */}
         <Card className="bg-white shadow-sm border-0 overflow-x-auto">
@@ -352,9 +327,7 @@ export default function Dashboard() {
               <table className="min-w-full text-sm">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    {/* <th className="text-left py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
-                      Date
-                    </th> */}
+                    
                     <th className="text-left py-3 px-4 font-medium text-gray-600 text-sm uppercase tracking-wider">
                       Physician Name
                     </th>
