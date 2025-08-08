@@ -136,7 +136,7 @@ export function SingleSelect({
         </div>
       )}
 
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+      {error && <p className="text-red-500 text-sm mt-1">{error.message || error}</p>}
     </div>
   );
 }
