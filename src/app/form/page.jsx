@@ -1,4 +1,3 @@
-
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -118,15 +117,26 @@ export default function HealthcareSurveyForm() {
           )}
 
           {/* Add the Additional Insights component here */}
-          <AdditionalInsights 
-            formData={formData} 
-            handleInputChange={handleInputChange} 
+          <AdditionalInsights
+            formData={formData}
+            handleInputChange={handleInputChange}
           />
 
           <div className="text-center">
             <Button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105 cursor-pointer"
+              disabled={
+                Object.keys(errors).length > 0 ||
+                !formData.selectedHospitalCodes.length
+              }
+              title={
+                Object.keys(errors).length > 0
+                  ? "Please fix errors before submitting"
+                  : !formData.selectedHospitalCodes.length
+                  ? "Please select at least one hospital before submitting"
+                  : "Submit Survey"
+              }
             >
               Submit Survey
             </Button>

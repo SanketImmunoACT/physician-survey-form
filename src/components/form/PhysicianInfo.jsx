@@ -1,11 +1,5 @@
 "use client";
-import {
-  Stethoscope,
-  User,
-  ShieldCheck,
-  PlusCircle,
-  Info,
-} from "lucide-react";
+import { Stethoscope, User, ShieldCheck, PlusCircle, Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SingleSelect } from "@/components/ui/SingleSelect";
 import * as RadioGroup from "@radix-ui/react-radio-group";
@@ -115,7 +109,9 @@ export const PhysicianInfo = ({
             />
 
             {errors.speciality && (
-              <p className="text-red-500 text-sm">{errors.speciality.message}</p>
+              <p className="text-red-500 text-sm">
+                {errors.speciality.message}
+              </p>
             )}
           </div>
 
@@ -124,7 +120,7 @@ export const PhysicianInfo = ({
               <Label className="text-sm font-medium">Select Hospitals *</Label>
               <div className="relative group inline-block">
                 <Info className="w-3 h-3 cursor-pointer" />
-                <div className="absolute z-10 hidden group-hover:block bg-black text-white text-xs rounded-md py-1 px-2 right-0 mt-1 w-64">
+                <div className="absolute z-10 hidden group-hover:block bg-black text-white text-xs rounded-md py-1 px-2 -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap mt-1 w-auto">
                   Ask the doctor how many hospitals they regularly consult at.
                 </div>
               </div>
