@@ -136,6 +136,11 @@ export const useFormLogic = () => {
     });
   };
 
+  // Add this function to handle input changes for the textarea
+  const handleInputChange = (field, value) => {
+    setValue(field, value);
+  };
+
   return {
     register,
     handleSubmit: handleSubmit(onSubmit),
@@ -154,5 +159,6 @@ export const useFormLogic = () => {
     handleDeleteCustomHospital,
     setNewHospitalName,
     setShowAddHospitalInput,
+    handleInputChange, // Now this function is defined
   };
 };

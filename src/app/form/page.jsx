@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useFormLogic } from "@/hooks/useFormLogic";
 import { PhysicianInfo } from "@/components/form/PhysicianInfo";
 import { HospitalData } from "@/components/form/HospitalData";
+import { AdditionalInsights } from "@/components/form/AdditionalInsights"; // Import the new component
 import doctors from "@/data/doctors.json";
 
 const patientTypes = [
@@ -45,7 +46,10 @@ export default function HealthcareSurveyForm() {
     handleDeleteCustomHospital,
     setNewHospitalName,
     setShowAddHospitalInput,
+    handleInputChange, // Add this
   } = useFormLogic();
+
+  const formData = watch(); // Get all form data for the AdditionalInsights component
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -112,6 +116,12 @@ export default function HealthcareSurveyForm() {
               </CardContent>
             </Card>
           )}
+
+          {/* Add the Additional Insights component here */}
+          <AdditionalInsights 
+            formData={formData} 
+            handleInputChange={handleInputChange} 
+          />
 
           <div className="text-center">
             <Button
