@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  password  String
+  role      Role     @default(SALESPERSON)
+  status    Status   @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  surveySubmissions SurveySubmission[]
+}
+
+enum Role {
+  SUPERADMIN
+  SALESPERSON
+}
+
+enum Status {
+  PENDING
+  ACTIVE
+}
+
+model Hospital {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  status    Status   @default(PENDING)
+  requestedBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Physician {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  status    Status   @default(PENDING)
+  requestedBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SurveySubmission {
+  id                        Int       @id @default(autoincrement())
+  physicianName             String
+  speciality                String
+  selectedHospitalCodes     Json
+  hospitalData              Json
+  sourceFunds               Json
+  patientDistributionMatrix Json
+  additionalInsights        String?   @db.Text
+  submittedBy               Int
+  user                      User      @relation(fields: [submittedBy], references: [id])
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
+}
