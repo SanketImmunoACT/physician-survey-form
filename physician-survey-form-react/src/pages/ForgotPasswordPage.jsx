@@ -3,6 +3,7 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Button } from "../components/ui/button";
 import toast from "react-hot-toast";
+import api from '../api/axios';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -14,15 +15,7 @@ export default function ForgotPasswordPage() {
 
     try {
       // This API endpoint will need to be replaced with your new backend API endpoint
-      const res = await fetch("http://localhost:5000/api/auth/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-        credentials: 'include',
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "Something went wrong");
+      const res = await api.post("/auth/forgot-password", { email }); // Use api.post
 
       toast.success("Password reset link sent to your email.");
     } catch (err) {

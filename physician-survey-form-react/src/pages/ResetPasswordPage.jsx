@@ -4,6 +4,7 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Button } from "../components/ui/button";
 import toast from "react-hot-toast";
+import api from '../api/axios';
 
 export default function ResetPasswordPage() {
   const [searchParams] = useSearchParams();
@@ -19,15 +20,7 @@ export default function ResetPasswordPage() {
     setLoading(true);
     try {
       // This API endpoint will need to be replaced with your new backend API endpoint
-      const res = await fetch("http://localhost:5000/api/auth/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, password }),
-        credentials: 'include',
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "Failed to reset password");
+      const res = await api.post("/auth/reset-password", { token, password }); // Use api.post
 
       toast.success("Password updated successfully!");
       window.location.href = "/"; // Redirect to home or login page

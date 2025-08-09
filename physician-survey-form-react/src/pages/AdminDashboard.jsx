@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Button } from "../components/ui/button";
 import toast from "react-hot-toast";
 import { LogOut } from "lucide-react";
+import api from '../api/axios';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -19,46 +20,31 @@ export default function AdminDashboard() {
 
   const fetchPendingUsers = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/admin/users?status=PENDING", { credentials: 'include' });
-      if (response.ok) {
-        const users = await response.json();
-        setPendingUsers(users);
-      } else {
-        toast.error("Failed to fetch pending users");
-      }
+      const response = await api.get("/admin/users?status=PENDING"); // Use api.get
+      setPendingUsers(response.data); // Axios puts data in .data
     } catch (error) {
       console.error("Failed to fetch pending users", error);
-      toast.error("An error occurred while fetching pending users");
+      toast.error(error.response?.data?.message || "An error occurred while fetching pending users"); // Axios error handling
     }
   };
 
   const fetchPendingHospitals = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/hospitals?status=PENDING", { credentials: 'include' });
-      if (response.ok) {
-        const hospitals = await response.json();
-        setPendingHospitals(hospitals.filter(h => h.status === 'PENDING'));
-      } else {
-        toast.error("Failed to fetch pending hospitals");
-      }
+      const response = await api.get("/hospitals?status=PENDING"); // Use api.get
+      setPendingHospitals(response.data.filter(h => h.status === 'PENDING')); // Axios puts data in .data
     } catch (error) {
       console.error("Failed to fetch pending hospitals", error);
-      toast.error("An error occurred while fetching pending hospitals");
+      toast.error(error.response?.data?.message || "An error occurred while fetching pending hospitals"); // Axios error handling
     }
   };
 
   const fetchPendingPhysicians = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/physicians?status=PENDING", { credentials: 'include' });
-      if (response.ok) {
-        const physicians = await response.json();
-        setPendingPhysicians(physicians.filter(p => p.status === 'PENDING'));
-      } else {
-        toast.error("Failed to fetch pending physicians");
-      }
+      const response = await api.get("/physicians?status=PENDING"); // Use api.get
+      setPendingPhysicians(response.data.filter(p => p.status === 'PENDING')); // Axios puts data in .data
     } catch (error) {
       console.error("Failed to fetch pending physicians", error);
-      toast.error("An error occurred while fetching pending physicians");
+      toast.error(error.response?.data?.message || "An error occurred while fetching pending physicians"); // Axios error handling
     }
   };
 
@@ -70,87 +56,55 @@ export default function AdminDashboard() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/users/${userId}/approve`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: newPassword }),
-        credentials: 'include',
-      });
-      if (response.ok) {
-        toast.success("User approved successfully");
-        fetchPendingUsers();
-      } else {
-        toast.error("Failed to approve user");
-      }
+      const response = await api.put(`/admin/users/${userId}/approve`, { password: newPassword }); // Use api.put
+      toast.success("User approved successfully");
+      fetchPendingUsers();
     } catch (error) {
       console.error("Failed to approve user", error);
-      toast.error("An error occurred while approving the user");
+      toast.error(error.response?.data?.message || "An error occurred while approving the user"); // Axios error handling
     }
   };
 
   const handleDenyUser = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/users/${userId}/deny`, {
-        method: "DELETE",
-        credentials: 'include',
-      });
-      if (response.ok) {
-        toast.success("User denied successfully");
-        fetchPendingUsers();
-      } else {
-        toast.error("Failed to deny user");
-      }
+      const response = await api.delete(`/admin/users/${userId}/deny`); // Use api.delete
+      toast.success("User denied successfully");
+      fetchPendingUsers();
     } catch (error) {
       console.error("Failed to deny user", error);
-      toast.error("An error occurred while denying the user");
+      toast.error(error.response?.data?.message || "An error occurred while denying the user"); // Axios error handling
     }
   };
 
   const handleApproveHospital = async (hospitalId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/hospitals/${hospitalId}/approve`, {
-        method: "PUT",
-        credentials: 'include',
-      });
-      if (response.ok) {
-        toast.success("Hospital approved successfully");
-        fetchPendingHospitals();
-      } else {
-        toast.error("Failed to approve hospital");
-      }
+      const response = await api.put(`/admin/hospitals/${hospitalId}/approve`); // Use api.put
+      toast.success("Hospital approved successfully");
+      fetchPendingHospitals();
     } catch (error) {
       console.error("Failed to approve hospital", error);
-      toast.error("An error occurred while approving the hospital");
+      toast.error(error.response?.data?.message || "An error occurred while approving the hospital"); // Axios error handling
     }
   };
 
   const handleApprovePhysician = async (physicianId) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/admin/physicians/${physicianId}/approve`,
-        {
-          method: "PUT",
-          credentials: 'include',
-        }
-      );
-      if (response.ok) {
-        toast.success("Physician approved successfully");
-        fetchPendingPhysicians();
-      } else {
-        toast.error("Failed to approve physician");
-      }
+      const response = await api.put(`/admin/physicians/${physicianId}/approve`); // Use api.put
+      toast.success("Physician approved successfully");
+      fetchPendingPhysicians();
     } catch (error) {
       console.error("Failed to approve physician", error);
-      toast.error("An error occurred while approving the physician");
+      toast.error(error.response?.data?.message || "An error occurred while approving the physician"); // Axios error handling
     }
   };
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:5000/api/auth/logout", { method: "POST", credentials: 'include' });
+      await api.post("/auth/logout"); // Use api.post
       navigate("/auth");
     } catch (error) {
       console.error("Logout failed", error);
+      toast.error(error.response?.data?.message || "Logout failed"); // Axios error handling
     }
   };
 

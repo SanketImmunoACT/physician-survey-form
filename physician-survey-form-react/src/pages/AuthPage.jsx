@@ -6,6 +6,7 @@ import { Label } from "../components/ui/label";
 import { SignInButton } from "../components/ui/button";
 import { User, Stethoscope } from "lucide-react";
 import toast from "react-hot-toast";
+import api from '../api/axios';
 
 export default function AuthPage() {
   const navigate = useNavigate();
@@ -31,23 +32,12 @@ export default function AuthPage() {
       }
 
       // These API endpoints will need to be replaced with your new backend API endpoints
-      const endpoint = isLogin ? "http://localhost:5000/api/auth/login" : "http://localhost:5000/api/auth/register";
-      const body = isLogin ? { email, password } : { name, email };
+      const endpoint = isLogin ? "/auth/login" : "/auth/register"; // Use relative path for axios
+      const body = isLogin ? { email, password } : { name, email, password }; // Added password for register
 
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-        credentials: 'include',
-      });
+      const response = await api.post(endpoint, body); // Use api.post, Axios sends JSON by default
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Something went wrong");
-      }
+      const data = response.data; // Axios puts data in .data
 
       if (isLogin) {
         console.log("Login successful, API response:", data);
@@ -70,8 +60,8 @@ export default function AuthPage() {
         setIsLogin(true);
       }
     } catch (err) {
-      setError(err.message);
-      toast.error(err.message);
+      setError(err.response?.data?.error || err.message || "Something went wrong"); // Axios error handling
+      toast.error(err.response?.data?.error || err.message || "Something went wrong");
     } finally {
       setLoading(false);
     }

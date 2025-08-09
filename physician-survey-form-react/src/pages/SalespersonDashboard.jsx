@@ -14,6 +14,7 @@ import {
   Calendar,
   LogOut,
 } from 'lucide-react';
+import api from '../api/axios';
 
 export default function SalespersonDashboard() {
   const navigate = useNavigate();
@@ -36,13 +37,8 @@ export default function SalespersonDashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/auth/me', { credentials: 'include' });
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
-        } else {
-          navigate('/');
-        }
+        const response = await api.get('/auth/me');
+        setUser(response.data); // Axios puts data in .data
       } catch (error) {
         console.error('Failed to fetch user', error);
         navigate('/');
@@ -56,34 +52,30 @@ export default function SalespersonDashboard() {
   const loadRequests = async () => {
     try {
       const [hospitalRes, physicianRes] = await Promise.all([
-        fetch("http://localhost:5000/api/hospitals", { credentials: 'include' }),
-        fetch("http://localhost:5000/api/physicians", { credentials: 'include' }),
+        api.get("/hospitals"), // Use api.get
+        api.get("/physicians"), // Use api.get
       ]);
 
-      if (hospitalRes.ok && physicianRes.ok) {
-        const hospitalReqs = await hospitalRes.json();
-        const physicianReqs = await physicianRes.json();
-        setRequests({
-          hospitalRequests: hospitalReqs,
-          physicianRequests: physicianReqs,
-        });
-      } else {
-        toast.error("Failed to load requests");
-      }
+      const hospitalReqs = hospitalRes.data; // Axios puts data in .data
+      const physicianReqs = physicianRes.data; // Axios puts data in .data
+      setRequests({
+        hospitalRequests: hospitalReqs,
+        physicianRequests: physicianReqs,
+      });
     } catch (error) {
       console.error("Failed to load requests", error);
-      toast.error("An error occurred while loading requests");
+      toast.error(error.response?.data?.message || "An error occurred while loading requests"); // Axios error handling
     }
   };
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:5000/api/auth/logout', { method: 'POST', credentials: 'include' });
+      await api.post('/auth/logout'); // Use api.post
       toast.success('Logged out successfully');
       navigate('/');
     } catch (error) {
       console.error('Logout failed', error);
-      toast.error('Logout failed');
+      toast.error(error.response?.data?.message || 'Logout failed'); // Axios error handling
     }
   };
 
@@ -93,24 +85,13 @@ export default function SalespersonDashboard() {
     );
     if (hospitalName && hospitalName.trim()) {
       try {
-        const response = await fetch("http://localhost:5000/api/hospitals", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: hospitalName.trim() }),
-          credentials: 'include',
-        });
+        const response = await api.post("/hospitals", { name: hospitalName.trim() }); // Use api.post
 
-        const data = await response.json();
-
-        if (response.ok) {
-          toast.success(data.message);
-          loadRequests();
-        } else {
-          toast.error(data.error || "Failed to submit hospital request");
-        }
+        toast.success(response.data.message); // Axios puts data in .data
+        loadRequests();
       } catch (error) {
         console.error("Failed to submit hospital request", error);
-        toast.error("An error occurred while submitting the hospital request");
+        toast.error(error.response?.data?.error || "An error occurred while submitting the hospital request"); // Axios error handling
       }
     }
   };
@@ -121,24 +102,13 @@ export default function SalespersonDashboard() {
     );
     if (physicianName && physicianName.trim()) {
       try {
-        const response = await fetch("http://localhost:5000/api/physicians", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: physicianName.trim() }),
-          credentials: 'include',
-        });
+        const response = await api.post("/physicians", { name: physicianName.trim() }); // Use api.post
 
-        const data = await response.json();
-
-        if (response.ok) {
-          toast.success(data.message);
-          loadRequests();
-        } else {
-          toast.error(data.error || "Failed to submit physician request");
-        }
+        toast.success(response.data.message); // Axios puts data in .data
+        loadRequests();
       } catch (error) {
         console.error("Failed to submit physician request", error);
-        toast.error("An error occurred while submitting the physician request");
+        toast.error(error.response?.data?.error || "An error occurred while submitting the physician request"); // Axios error handling
       }
     }
   };

@@ -2,7 +2,9 @@ import { useState, useMemo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "../lib/schema"; // Adjusted path
+
 import { toast } from "react-hot-toast";
+import api from '../api/axios';
 
 const getInitialFormData = () => ({
   physicianName: "",
@@ -102,19 +104,7 @@ export const useFormLogic = () => {
     console.log("Form submitted:", data);
     try {
       // This API endpoint will need to be implemented in your backend
-      const response = await fetch("http://localhost:5000/api/submit-survey", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-        credentials: 'include',
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to submit survey");
-      }
+      const response = await api.post("/submit-survey", data); // Use api.post, Axios sends JSON by default
 
       toast.success("Survey submitted successfully!");
       if (typeof window !== "undefined") {
@@ -125,13 +115,13 @@ export const useFormLogic = () => {
         speciality: "",
         selectedHospitalCodes: [],
         hospitalData: {},
-        sourceFunds: {},
+        sourceFunds: {}, 
         patientDistributionMatrix: {},
         additionalInsights: "",
       });
     } catch (error) {
       console.error("Survey submission error:", error);
-      toast.error(error.message || "Error submitting survey.");
+      toast.error(error.response?.data?.message || error.message || "Error submitting survey."); // Axios error handling
     }
   };
 

@@ -38,305 +38,194 @@ const protect = (req, res, next) => {
   }
 };
 
+// Import and use auth routes
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
+// Import and use admin user routes
+const adminUserRoutes = require('./routes/adminUserRoutes');
+app.use('/api/admin/users', adminUserRoutes);
+
+// Import and use admin hospital routes
+const adminHospitalRoutes = require('./routes/adminHospitalRoutes');
+app.use('/api/admin/hospitals', adminHospitalRoutes);
+
+// Import and use admin physician routes
+const adminPhysicianRoutes = require('./routes/adminPhysicianRoutes');
+app.use('/api/admin/physicians', adminPhysicianRoutes);
+
+// Import and use hospital routes
+const hospitalRoutes = require('./routes/hospitalRoutes');
+app.use('/api/hospitals', hospitalRoutes);
+
+// Import and use physician routes
+const physicianRoutes = require('./routes/physicianRoutes');
+app.use('/api/physicians', physicianRoutes);
+
 // --- API Routes (will be populated from Next.js API logic) ---
 
 // Auth Routes
-app.post('/api/auth/register', async (req, res) => {
-  const { name, email } = req.body;
-  try {
-    // In Next.js, this route might have handled password directly or sent an email for password setup.
-    // For now, we'll just create a pending user. Password setup will be handled via reset-password flow.
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        // For registration, we don't set a password directly here. It will be set via the approval/reset flow.
-        // A placeholder or null password might be used depending on your user model and approval flow.
-        password: '', // Placeholder, will be updated on approval
-        role: 'SALESPERSON', // Default role for new registrations
-        status: 'PENDING', // User needs admin approval
-      },
-    });
-    res.status(201).json({ message: 'Registration request submitted. Awaiting admin approval.', user: { id: user.id, email: user.email, status: user.status } });
-  } catch (error) {
-    if (error.code === 'P2002') {
-      return res.status(400).json({ error: 'User with this email already exists.' });
-    }
-    console.error('Registration error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
-app.post('/api/auth/login', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await prisma.user.findUnique({ where: { email } });
 
-    if (!user) {
-      return res.status(400).json({ error: 'Invalid credentials' });
-    }
 
-    if (user.status === 'PENDING') {
-      return res.status(403).json({ error: 'Account is pending approval.' });
-    }
 
-    if (user.status === 'DENIED') {
-      return res.status(403).json({ error: 'Account has been denied.' });
-    }
 
-    const isMatch = await bcrypt.compare(password, user.password);
 
-    if (!isMatch) {
-      return res.status(400).json({ error: 'Invalid credentials' });
-    }
 
-    const token = jwt.sign({ id: user.id, role: user.role, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-      maxAge: 3600000, // 1 hour
-      sameSite: 'Lax', // Adjust as needed for your deployment
-    }).json({ message: 'Logged in successfully', role: user.role });
 
-  } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
-app.post('/api/auth/logout', (req, res) => {
-  res.cookie('token', '', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    expires: new Date(0),
-    sameSite: 'Lax',
-  }).json({ message: 'Logged out successfully' });
-});
 
-app.get('/api/auth/me', protect, async (req, res) => {
-  try {
-    const user = await prisma.user.findUnique({ where: { id: req.user.id } });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    res.json({ id: user.id, name: user.name, email: user.email, role: user.role, status: user.status });
-  } catch (error) {
-    console.error('Fetch user error:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-app.post('/api/auth/forgot-password', async (req, res) => {
-  const { email } = req.body;
-  try {
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    // Generate a password reset token (e.g., using crypto or a dedicated library)
-    const resetToken = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' }); // Token expires in 1 hour
-
-    // In a real application, you would send an email to the user with this resetToken
-    // For this example, we'll just log it and return it (for testing purposes)
-    console.log(`Password reset token for ${email}: ${resetToken}`);
-
-    // You would typically send an email like this:
-    // await sendEmail({
-    //   to: user.email,
-    //   subject: 'Password Reset Request',
-    //   text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\nPlease click on the following link, or paste this into your browser to complete the process:\n\n${process.env.FRONTEND_URL}/reset-password?token=${resetToken}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n`,
-    // });
-
-    res.json({ message: 'Password reset link sent to your email.', resetToken }); // Returning resetToken for testing
-  } catch (error) {
-    console.error('Forgot password error:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-app.post('/api/auth/reset-password', async (req, res) => {
-  const { token, password } = req.body;
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    const userId = decoded.id;
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    await prisma.user.update({
-      where: { id: userId },
-      data: { password: hashedPassword, status: 'ACTIVE' }, // Activate user on password set
-    });
-
-    res.json({ message: 'Password has been reset.' });
-  } catch (error) {
-    console.error('Reset password error:', error);
-    res.status(400).json({ message: 'Invalid or expired token.' });
-  }
-});
 
 // Admin Routes
-app.get('/api/admin/users', protect, async (req, res) => {
-  if (req.user.role !== 'SUPERADMIN') {
-    return res.status(403).json({ message: 'Forbidden: Admins only' });
+
+
+
+
+
+
+// Zonal Manager 1 Routes
+const protectZM1 = (req, res, next) => {
+  if (req.user.role !== 'ZONAL_MANAGER_1') {
+    return res.status(403).json({ message: 'Forbidden: Zonal Manager 1 only' });
   }
-  const { status } = req.query;
+  next();
+};
+
+app.get('/api/zm1/submissions', protect, protectZM1, async (req, res) => {
   try {
-    const users = await prisma.user.findMany({
-      where: status ? { status } : {},
-      select: { id: true, name: true, email: true, role: true, status: true },
+    const submissions = await prisma.surveySubmission.findMany({
+      where: {
+        zm1_approval_status: 'PENDING',
+      },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
     });
-    res.json(users);
+    res.json(submissions);
   } catch (error) {
-    console.error('Fetch admin users error:', error);
+    console.error('Fetch ZM1 submissions error:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-app.put('/api/admin/users/:userId/approve', protect, async (req, res) => {
-  if (req.user.role !== 'SUPERADMIN') {
-    return res.status(403).json({ message: 'Forbidden: Admins only' });
-  }
-  const { userId } = req.params;
-  const { password } = req.body;
-
-  if (!password) {
-    return res.status(400).json({ message: 'Password is required for approval' });
-  }
-
+app.put('/api/zm1/submissions/:submissionId/approve', protect, protectZM1, async (req, res) => {
+  const { submissionId } = req.params;
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.user.update({
-      where: { id: parseInt(userId) },
-      data: { status: 'ACTIVE', password: hashedPassword },
+    const submission = await prisma.surveySubmission.update({
+      where: { id: parseInt(submissionId) },
+      data: {
+        zm1_approval_status: 'APPROVED',
+        zm1_approver_id: req.user.id,
+      },
     });
-    res.json({ message: 'User approved', user: { id: user.id, email: user.email, status: user.status } });
+    res.json({ message: 'Submission approved by Zonal Manager 1', submission });
   } catch (error) {
-    console.error('Approve user error:', error);
+    console.error('ZM1 approve submission error:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-app.delete('/api/admin/users/:userId/deny', protect, async (req, res) => {
-  if (req.user.role !== 'SUPERADMIN') {
-    return res.status(403).json({ message: 'Forbidden: Admins only' });
-  }
-  const { userId } = req.params;
+app.put('/api/zm1/submissions/:submissionId/reject', protect, protectZM1, async (req, res) => {
+  const { submissionId } = req.params;
   try {
-    await prisma.user.delete({
-      where: { id: parseInt(userId) },
+    const submission = await prisma.surveySubmission.update({
+      where: { id: parseInt(submissionId) },
+      data: {
+        zm1_approval_status: 'REJECTED',
+        zm1_approver_id: req.user.id,
+      },
     });
-    res.json({ message: 'User denied and deleted' });
+    res.json({ message: 'Submission rejected by Zonal Manager 1', submission });
   } catch (error) {
-    console.error('Deny user error:', error);
+    console.error('ZM1 reject submission error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Zonal Manager 2 Routes
+const protectZM2 = (req, res, next) => {
+  if (req.user.role !== 'ZONAL_MANAGER_2') {
+    return res.status(403).json({ message: 'Forbidden: Zonal Manager 2 only' });
+  }
+  next();
+};
+
+app.get('/api/zm2/submissions', protect, protectZM2, async (req, res) => {
+  try {
+    const submissions = await prisma.surveySubmission.findMany({
+      where: {
+        zm1_approval_status: 'APPROVED',
+        zm2_approval_status: 'PENDING',
+      },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+    res.json(submissions);
+  } catch (error) {
+    console.error('Fetch ZM2 submissions error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.put('/api/zm2/submissions/:submissionId/approve', protect, protectZM2, async (req, res) => {
+  const { submissionId } = req.params;
+  try {
+    const submission = await prisma.surveySubmission.update({
+      where: { id: parseInt(submissionId) },
+      data: {
+        zm2_approval_status: 'APPROVED',
+        zm2_approver_id: req.user.id,
+      },
+    });
+    res.json({ message: 'Submission approved by Zonal Manager 2', submission });
+  } catch (error) {
+    console.error('ZM2 approve submission error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.put('/api/zm2/submissions/:submissionId/reject', protect, protectZM2, async (req, res) => {
+  const { submissionId } = req.params;
+  try {
+    const submission = await prisma.surveySubmission.update({
+      where: { id: parseInt(submissionId) },
+      data: {
+        zm2_approval_status: 'REJECTED',
+        zm2_approver_id: req.user.id,
+      },
+    });
+    res.json({ message: 'Submission rejected by Zonal Manager 2', submission });
+  } catch (error) {
+    console.error('ZM2 reject submission error:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 // Hospital Routes
-app.get('/api/hospitals', protect, async (req, res) => {
-  const { status } = req.query;
-  try {
-    const hospitals = await prisma.hospital.findMany({
-      where: status ? { status } : {},
-    });
-    res.json(hospitals);
-  } catch (error) {
-    console.error('Fetch hospitals error:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
 
-app.post('/api/hospitals', protect, async (req, res) => {
-  const { name } = req.body;
-  try {
-    const userEmail = req.user.email; // Store in local variable
-    const hospital = await prisma.hospital.create({
-      data: {
-        name,
-        status: 'PENDING',
-        requestedBy: userEmail,
-      },
-    });
-    res.status(201).json({ message: 'Hospital request submitted', hospital });
-  } catch (error) {
-    if (error.code === 'P2002') {
-      return res.status(400).json({ error: 'Hospital with this name already exists.' });
-    }
-    console.error('Create hospital error:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
 
-app.put('/api/admin/hospitals/:hospitalId/approve', protect, async (req, res) => {
-  if (req.user.role !== 'SUPERADMIN') {
-    return res.status(403).json({ message: 'Forbidden: Admins only' });
-  }
-  const { hospitalId } = req.params;
-  try {
-    const hospital = await prisma.hospital.update({
-      where: { id: parseInt(hospitalId) },
-      data: { status: 'ACTIVE' },
-    });
-    res.json({ message: 'Hospital approved', hospital });
-  } catch (error) {
-    console.error('Approve hospital error:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
+
+
+
 
 // Physician Routes
-app.get('/api/physicians', protect, async (req, res) => {
-  const { status } = req.query;
-  try {
-    const physicians = await prisma.physician.findMany({
-      where: status ? { status } : {},
-    });
-    res.json(physicians);
-  } catch (error) {
-    console.error('Fetch physicians error:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
 
-app.post('/api/physicians', protect, async (req, res) => {
-  const { name } = req.body;
-  try {
-    const userEmail = req.user.email; // Store in local variable
-    const physician = await prisma.physician.create({
-      data: {
-        name,
-        status: 'PENDING',
-        requestedBy: userEmail,
-      },
-    });
-    res.status(201).json({ message: 'Physician request submitted', physician });
-  } catch (error) {
-    if (error.code === 'P2002') {
-      return res.status(400).json({ error: 'Physician with this name already exists.' });
-    }
-    console.error('Create physician error:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
 
-app.put('/api/admin/physicians/:physicianId/approve', protect, async (req, res) => {
-  if (req.user.role !== 'SUPERADMIN') {
-    return res.status(403).json({ message: 'Forbidden: Admins only' });
-  }
-  const { physicianId } = req.params;
-  try {
-    const physician = await prisma.physician.update({
-      where: { id: parseInt(physicianId) },
-      data: { status: 'ACTIVE' },
-    });
-    res.json({ message: 'Physician approved', physician });
-  } catch (error) {
-    console.error('Approve physician error:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
+
+
+
 
 // Survey Submission Route
 app.post('/api/submit-survey', protect, async (req, res) => {

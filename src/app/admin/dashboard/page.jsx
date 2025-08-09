@@ -147,7 +147,7 @@ export default function AdminDashboard() {
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
-      router.push("/auth");
+      router.push("/");
     } catch (error) {
       console.error("Logout failed", error);
     }
